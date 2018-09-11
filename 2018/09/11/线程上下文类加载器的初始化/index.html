@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="网站简要描述,如：mudaoren's blog."><meta name="keywords" content="网站关键字, key, key1, key2, key3"><title> | 木道人</title><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">木道人</h1><a id="logo" href="/.">木道人</a><p class="description">看风的必不撒种；望云的必不收割。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title"></h1><div class="post-meta"><a href="/2018/09/11/线程上下文类加载器的初始化/#comments" class="comment-count"></a><p><span class="date">Sep 11, 2018</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h1 id="线程上下文类加载器的初始化"><a href="#线程上下文类加载器的初始化" class="headerlink" title="线程上下文类加载器的初始化"></a><center>线程上下文类加载器的初始化</center></h1><hr>
+<p>　　线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码</p>
+<pre><code>public static void main(String[] args) throws ClassNotFoundException,
+        SQLException
+{
+    System.out.println(Thread.currentThread().getContextClassLoader());
+}
+</code></pre><p>　　输出结果是</p>
+<pre><code>sun.misc.Launcher$AppClassLoader@c387f44
+</code></pre><p>　　即使用的是AppClassLoader类加载器，但是这个上下文中的加载器是什么时候设置进去的？<br>　　我们都知道，在调用类的静态方法时，类及其父类都会被初始化，初始化过程中最重要的部分就是执行类中的静态代码块、及初始化成员变量。但Thread的静态代码块中只是注册了一个本地方法而已。</p>
+<pre><code>static {
+    registerNatives();
+}
+</code></pre><p>　　我们看看Thread对象被初始化时做了什么？</p>
+<pre><code>public Thread() {
+    init(null, null, &quot;Thread-&quot; + nextThreadNum(), 0);
+}
+
+private void init(ThreadGroup g, Runnable target, String name,
+                  long stackSize) {
+    init(g, target, name, stackSize, null);
+}
+
+private void init(ThreadGroup g, Runnable target, String name,
+                  long stackSize, AccessControlContext acc) {
+    if (name == null) {
+        throw new NullPointerException(&quot;name cannot be null&quot;);
+    }
+
+    this.name = name.toCharArray();
+
+    Thread parent = currentThread();
+    SecurityManager security = System.getSecurityManager();
+    if (g == null) {
+        /* Determine if it&apos;s an applet or not */
+
+        /* If there is a security manager, ask the security manager
+           what to do. */
+        if (security != null) {
+            g = security.getThreadGroup();
+        }
+
+        /* If the security doesn&apos;t have a strong opinion of the matter
+           use the parent thread group. */
+        if (g == null) {
+            g = parent.getThreadGroup();
+        }
+    }
+
+    /* checkAccess regardless of whether or not threadgroup is
+       explicitly passed in. */
+    g.checkAccess();
+
+    /*
+     * Do we have the required permissions?
+     */
+    if (security != null) {
+        if (isCCLOverridden(getClass())) {
+            security.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);
+        }
+    }
+
+    g.addUnstarted();
+
+    this.group = g;
+    this.daemon = parent.isDaemon();
+    this.priority = parent.getPriority();
+    // 这里在做线程上下文类加载器的赋值操作，如果系统没有设置安全管理器，则会调用Thread的getContextClassLoader()方法获取类加载器。而parent是currentThread()即启动本线程的线程。把父线程的上下文类加载器给继承过来。这里的父子关系是指谁启动谁的关系，比如在线程A里面启动了线程B，那B线程的父线程就是A。
+    if (security == null || isCCLOverridden(parent.getClass()))
+        this.contextClassLoader = parent.getContextClassLoader();
+    else
+        this.contextClassLoader = parent.contextClassLoader;
+    this.inheritedAccessControlContext =
+            acc != null ? acc : AccessController.getContext();
+    this.target = target;
+    setPriority(priority);
+    if (parent.inheritableThreadLocals != null)
+        this.inheritableThreadLocals =
+            ThreadLocal.createInheritedMap(parent.inheritableThreadLocals);
+    /* Stash the specified stack size in case the VM cares */
+    this.stackSize = stackSize;
+
+    /* Set thread ID */
+    tid = nextThreadID();
+}
+
+@CallerSensitive
+public ClassLoader getContextClassLoader() {
+    if (contextClassLoader == null)
+        return null;
+    SecurityManager sm = System.getSecurityManager();
+    if (sm != null) {
+        ClassLoader.checkClassLoaderPermission(contextClassLoader,
+                                               Reflection.getCallerClass());
+    }
+    return contextClassLoader;
+}
+</code></pre><p>第一个被启动的线程是哪个？那第一个启动的线程（包含main方法的那个线程）里面的contextClassLoader是谁设置的呢？不要忘记，Main本身就启动了一个线程。<br>这要看 sun.misc.Launcher 这个类的源码。Launcher是JRE中用于启动程序入口main()的类。</p>
+<pre><code>loader = AppClassLoader.getAppClassLoader(extcl);
+Thread.currentThread().setContextClassLoader(loader);
+</code></pre><p>这里截取的两行代码出自 Launcher 的构造方法。第一行用一个扩展类加载器extcl构造了一个系统类加载器loader，第二行把loader设置为当前线程（包含main方法）的类加载器。所以，我们启动一个线程的时候，如果之前都没有调用 setContextClassLoader 方法明确指定的话，默认的就是系统类加载器。</p>
+<p>参考<br><a href="https://www.cnblogs.com/cz123/p/6867345.html" target="_blank" rel="noopener">https://www.cnblogs.com/cz123/p/6867345.html</a><br><a href="https://blog.csdn.net/gabele/article/details/71250108" target="_blank" rel="noopener">https://blog.csdn.net/gabele/article/details/71250108</a></p>
+</div><div class="tags"></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/09/11/库存/" class="pre"></a><a href="/2018/09/07/CAS/" class="next"></a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#线程上下文类加载器的初始化"><span class="toc-text">线程上下文类加载器的初始化</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/11/库存/">库存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/11/线程上下文类加载器的初始化/">线程上下文类加载器的初始化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/07/CAS/">CAS</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/03/JDBC类加载过程分析/">JDBC类加载过程分析</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">mudaoren.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script></body></html>
