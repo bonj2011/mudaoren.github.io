@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-08-19T15:12:00.675Z</updated>
+  <updated>2018-09-11T16:03:49.054Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/09/12/%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB/"/>
+    <id>http://yoursite.com/2018/09/12/索引分类/</id>
+    <published>2018-09-11T16:03:58.217Z</published>
+    <updated>2018-09-11T16:03:49.054Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="MySQL索引"><a href="#MySQL索引" class="headerlink" title="MySQL索引"></a>MySQL索引</h1><h2 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h2><ul><li>按照字段个数划分：单列索引、组合索引</li><li>按照唯一性划分：普通索引、唯一索引</li><li>MyISAM特殊索引：全文索引（char、varchar、text类型的列，不支持多列，用于全文搜索）、空间索引（非空字段）</li></ul><h2 id="索引创建"><a href="#索引创建" class="headerlink" title="索引创建"></a>索引创建</h2><p>方法一：创建表时创建</p><pre><code>CREATE TABLE &lt;table_name&gt; [col_name data_type][UNIQUE|FULLTEXT|SPATIAL][INDEX|KEY][index_name](col_name[length],...)[ASC|DESC]</code></pre><ul><li>UNIQUE|FULLTEXT|SPATIAL 均为可选，分别表示唯一索引、全文索引、空间索引。</li><li>INDEX|KEY 含义相同均指创建索引。</li><li>index_name为索引名，不指定时与列名相同。</li><li>col_name要创建索引的列名。</li><li>length可选，表示索引长度，只有字符串类型的字段才可以指定。</li><li>ASC|DESC可选，表示升序还是降序。</li></ul><p>方法二：已存在的表上创建索引</p><pre><code>ALTER TABLE &lt;table_name&gt; ADD [UNIQUE|FULLTEXT|SPATIAL][INDEX|KEY][index_name](col_name[length],...)[ASC|DESC]CREATE [UNIQUE|FULLTEXT|SPATIAL][INDEX|KEY][index_name] ON &lt;table_name&gt;(col_name[length],...)[ASC|DESC]</code></pre><h2 id="索引删除"><a href="#索引删除" class="headerlink" title="索引删除"></a>索引删除</h2><p>方法一：ALTER语句删除</p><pre><code>ALTER TABLE DROP INDEX &lt;index_name&gt;</code></pre><p>方法二：DROP语句删除</p><pre><code>DROP INDEX &lt;index_name&gt; ON &lt;table_name&gt;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;MySQL索引&quot;&gt;&lt;a href=&quot;#MySQL索引&quot; class=&quot;headerlink&quot; title=&quot;MySQL索引&quot;&gt;&lt;/a&gt;MySQL索引&lt;/h1&gt;&lt;h2 id=&quot;索引分类&quot;&gt;&lt;a href=&quot;#索引分类&quot; class=&quot;headerlink&quot; titl
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/09/12/SQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B8%80%E2%80%94%E2%80%94%E5%87%8F%E5%B0%91%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%A4%E4%BA%92%E6%AC%A1%E6%95%B0/"/>
+    <id>http://yoursite.com/2018/09/12/SQL性能优化一——减少数据库交互次数/</id>
+    <published>2018-09-11T16:00:27.655Z</published>
+    <updated>2018-09-11T16:05:52.833Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="SQL性能优化一——减少数据库交互次数"><a href="#SQL性能优化一——减少数据库交互次数" class="headerlink" title="SQL性能优化一——减少数据库交互次数"></a>SQL性能优化一——减少数据库交互次数</h1><p>把多条SQL语句合并为一条，可减少数据库交互次数，提高性能，这是一种简单的优化改进。</p><p><strong>创建表t_user</strong></p><pre><code>CREATE TABLE `t_user` (　　`id` tinyint(10) UNSIGNED AUTO_INCREMENT NOT NULL,　　`name` varchar(255) DEFAULT NULL,　　`age` int(10) DEFAULT NULL,　　`updatetime` datetime DEFAULT NULL,　　INDEX index_name(name),) ENGINE=InnoDB DEFAULT CHARSET=utf8;</code></pre><h2 id="1-整合DDL语句"><a href="#1-整合DDL语句" class="headerlink" title="1 整合DDL语句"></a>1 整合DDL语句</h2><p>多条的写法：</p><pre><code>ALTER table t_user ADD COLUMN uid TINYINT UNSIGNED;ALTER table t_user ADD UNIQUE INDEX (uid); ALTER table t_user DROP INDEX index_name, ADD INDEX index_name_age (name, age);ALTER TABLE t_user ADD PRIMARY KEY (id);</code></pre><p>合并为一条：</p><pre><code>ALTER TABLE t_user ADD COLUMN uid TINYINT UNSIGNED,　ADD UNIQUE INDEX (uid),　DROP INDEX index_name,　ADD INDEX index_name_age (NAME, age),　ADD PRIMARY KEY (id);</code></pre><h2 id="2-整合DML语句"><a href="#2-整合DML语句" class="headerlink" title="2 整合DML语句"></a>2 整合DML语句</h2><h3 id="2-1-INSERT的整合"><a href="#2-1-INSERT的整合" class="headerlink" title="2.1 INSERT的整合"></a>2.1 INSERT的整合</h3><pre><code>INSERT INTO &lt; table_name &gt; (　　　　columnname1,　　　　columnname2 ,...)VALUES(    　　columnvalue1,    　　columnvalue2 ,...) ,    ..., (        columnvalue1,        columnvalue2 ,...);</code></pre><p><strong>整合前：</strong></p><pre><code>INSERT INTO t_user (id, name, age) VALUES (1, &apos;张三丰&apos;, 200);INSERT INTO t_user (id, name, age) VALUES  (2, &apos;张无忌&apos;, 50) ;</code></pre><p><strong>整合后</strong></p><pre><code>INSERT INTO t_user (id, name, age) VALUES (1, &apos;张三丰&apos;, 200), (2, &apos;张无忌&apos;, 50) ;</code></pre><h3 id="2-2-UPDATE的整合"><a href="#2-2-UPDATE的整合" class="headerlink" title="2.2 UPDATE的整合"></a>2.2 UPDATE的整合</h3><p>在更新目标一致的情况下可使用下面语句整合。</p><pre><code>UPDATE &lt;table_name&gt; set &lt;columnname&gt;=&lt;columnvalue&gt;, ... where &lt;columnnamen&gt; in (value1, value2,...);</code></pre><h3 id="2-3-INSERT和UPDATE的整合"><a href="#2-3-INSERT和UPDATE的整合" class="headerlink" title="2.3 INSERT和UPDATE的整合"></a>2.3 INSERT和UPDATE的整合</h3><p>当在满足条件时，可合并：先检查要插入的主键是否存在，如果不存在就插入行，如果存在就执行update操作。</p><pre><code>INSERT ... ON DUPLICATE KEY UPDATE</code></pre><p>举例： id是主键，当不存在id=1的数据是，插入一行；若存在，则将id=1的那行数据的age更新为201。</p><pre><code>INSERT INTO t_user (id, name, age) VALUES (1, &apos;张三丰&apos;, 200) ON DUPLICATE KEY UPDATE age = 201;</code></pre><p>注意：该语句存在死锁风险，请在满足以下两条件时使用（1、尽量不对存在多个唯一键的table使用该语句；2、在有可能有并发事务执行的insert 的内容一样情况下不使用该语句）<a href="https://blog.csdn.net/pml18710973036/article/details/78452688" target="_blank" rel="noopener">bug</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;SQL性能优化一——减少数据库交互次数&quot;&gt;&lt;a href=&quot;#SQL性能优化一——减少数据库交互次数&quot; class=&quot;headerlink&quot; title=&quot;SQL性能优化一——减少数据库交互次数&quot;&gt;&lt;/a&gt;SQL性能优化一——减少数据库交互次数&lt;/h1&gt;&lt;p&gt;把多
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/09/11/MySQL%E5%94%AF%E4%B8%80%E6%80%A7%E7%BA%A6%E6%9D%9F/"/>
+    <id>http://yoursite.com/2018/09/11/MySQL唯一性约束/</id>
+    <published>2018-09-11T15:50:38.572Z</published>
+    <updated>2018-09-11T15:50:28.929Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="MySQL唯一性约束"><a href="#MySQL唯一性约束" class="headerlink" title="MySQL唯一性约束"></a>MySQL唯一性约束</h1><h2 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h2><p>一个表只能存在一个，且不允许空值 </p><ul><li>定义列时指定：</li></ul><p>　　<code>&lt;col_name&gt; &lt;data_type&gt; PRIMARY KEY [DEFAULT &lt;value&gt;]</code> </p><ul><li>定义完列后指定：</li></ul><p>　　<code>[CONSTANT&lt;key_name&gt;] PRIMARY KEY(&lt;col_name1&gt;,...)</code></p><h2 id="唯一性约束"><a href="#唯一性约束" class="headerlink" title="唯一性约束"></a>唯一性约束</h2><p>一个表允许有多个，且允许列上存在一个空值   </p><ul><li><p>定义列时指定：</p><p>  <code>&lt;col_name&gt; &lt;data_type&gt; UNIQUE</code></p></li><li><p>定义完列后指定：</p></li></ul><p>　　<code>[CONSTANT&lt;key_name&gt;] UNIQUE(&lt;col_name1&gt;,...)</code></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;MySQL唯一性约束&quot;&gt;&lt;a href=&quot;#MySQL唯一性约束&quot; class=&quot;headerlink&quot; title=&quot;MySQL唯一性约束&quot;&gt;&lt;/a&gt;MySQL唯一性约束&lt;/h1&gt;&lt;h2 id=&quot;主键&quot;&gt;&lt;a href=&quot;#主键&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/09/11/AUTO_INCREMENT/"/>
+    <id>http://yoursite.com/2018/09/11/AUTO_INCREMENT/</id>
+    <published>2018-09-11T15:44:32.540Z</published>
+    <updated>2018-09-11T15:44:07.426Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="AUTO-INCREMENT"><a href="#AUTO-INCREMENT" class="headerlink" title="AUTO_INCREMENT"></a>AUTO_INCREMENT</h1><p>一个表只能有一个字段使用自增约束，且字段必须是主键的一部分。其约束的字段可以是任何整型类型（TINYINT、INT、SMALLIN、BIGINT）。默认从1开始，每增加一行自动加1。</p><p>设置语法：</p><pre><code>&lt;col_name&gt; &lt;data_type&gt; AUTO_INCREMENT</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;AUTO-INCREMENT&quot;&gt;&lt;a href=&quot;#AUTO-INCREMENT&quot; class=&quot;headerlink&quot; title=&quot;AUTO_INCREMENT&quot;&gt;&lt;/a&gt;AUTO_INCREMENT&lt;/h1&gt;&lt;p&gt;一个表只能有一个字段使用自增约束，且字段必须
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title></title>
