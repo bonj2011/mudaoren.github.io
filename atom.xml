@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-12T15:40:32.019Z</updated>
+  <updated>2018-09-12T15:44:33.683Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,15 +21,15 @@
     <link href="http://yoursite.com/2018/09/12/CAP%E7%90%86%E8%AE%BA/"/>
     <id>http://yoursite.com/2018/09/12/CAP理论/</id>
     <published>2018-09-12T15:36:58.684Z</published>
-    <updated>2018-09-12T15:40:32.019Z</updated>
+    <updated>2018-09-12T15:44:33.683Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="CAP、BASE理论"><a href="#CAP、BASE理论" class="headerlink" title="CAP、BASE理论"></a>CAP、BASE理论</h1><h2 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h2><p>分布式系统不可能同时满足一致性（Consistency）、可用性（Availability）、分区容错性（Partition rolerance）这三项基本需求，最多只能同时满足两种。</p><ul><li>一致性：分布式环境中，数据在多个副本间保持一致。数据在两个节点上存在副本，数据在一个节点上更新后，在另一个节点上能马上读取到新的值（强一致性或严格一致性）。</li><li>可用性：对于用户的操作，总能在有限时间内返回结果。</li><li>分区容错性：分布式系统在遇到任何网络分区发生故障时，仍然能保证对外提供满足一致性和可用性的服务，除非是整个网络故障。</li></ul><p><strong>CAP理论示意图</strong><br><img src="https://i.imgur.com/Hujjfja.png" alt=""></p><p><strong>CAP理论应用</strong><br><img src="https://i.imgur.com/3wlzQjE.png" alt=""></p><p>既然是分布式系统，肯定是能满足分区容错性的，特别是现在的微服务系统。所以设计师往往会在一致性（Consistency）和可用性（Availability）之间抉择。</p><p><em>参考《从PAXOS到ZOOKEEPER分布式一致性原理与实践》</em></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h1><p>分布式系统不可能同时满足一致性（Consistency）、可用性（Availability）、分区容错性（Partition rolerance）这三项基本需求，最多只能同时满足两种。</p><ul><li>一致性：分布式环境中，数据在多个副本间保持一致。数据在两个节点上存在副本，数据在一个节点上更新后，在另一个节点上能马上读取到新的值（强一致性或严格一致性）。</li><li>可用性：对于用户的操作，总能在有限时间内返回结果。</li><li>分区容错性：分布式系统在遇到任何网络分区发生故障时，仍然能保证对外提供满足一致性和可用性的服务，除非是整个网络故障。</li></ul><p><strong>CAP理论示意图</strong><br><img src="https://i.imgur.com/Hujjfja.png" alt=""></p><p><strong>CAP理论应用</strong><br><img src="https://i.imgur.com/3wlzQjE.png" alt=""></p><p>既然是分布式系统，肯定是能满足分区容错性的，特别是现在的微服务系统。所以设计师往往会在一致性（Consistency）和可用性（Availability）之间抉择。</p><p><em>参考《从PAXOS到ZOOKEEPER分布式一致性原理与实践》</em></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;CAP、BASE理论&quot;&gt;&lt;a href=&quot;#CAP、BASE理论&quot; class=&quot;headerlink&quot; title=&quot;CAP、BASE理论&quot;&gt;&lt;/a&gt;CAP、BASE理论&lt;/h1&gt;&lt;h2 id=&quot;CAP理论&quot;&gt;&lt;a href=&quot;#CAP理论&quot; class=&quot;he
+        &lt;h1 id=&quot;CAP理论&quot;&gt;&lt;a href=&quot;#CAP理论&quot; class=&quot;headerlink&quot; title=&quot;CAP理论&quot;&gt;&lt;/a&gt;CAP理论&lt;/h1&gt;&lt;p&gt;分布式系统不可能同时满足一致性（Consistency）、可用性（Availability）、分区容错性（Parti
       
     
     </summary>
