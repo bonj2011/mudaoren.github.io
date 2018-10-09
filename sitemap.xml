@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/10/10/ACID/</loc>
+    
+    <lastmod>2018-10-09T23:36:46.926Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/09/12/CAP%E7%90%86%E8%AE%BA/</loc>
     
     <lastmod>2018-09-12T15:44:33.683Z</lastmod>
