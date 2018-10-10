@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="网站简要描述,如：mudaoren's blog."><meta name="keywords" content="网站关键字, key, key1, key2, key3"><title> | 木道人</title><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">木道人</h1><a id="logo" href="/.">木道人</a><p class="description">看风的必不撒种；望云的必不收割。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title"></h1><div class="post-meta"><a href="/2018/10/11/2PC和3PC/#comments" class="comment-count"></a><p><span class="date">Oct 11, 2018</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h1 id="2PC与3PC"><a href="#2PC与3PC" class="headerlink" title="2PC与3PC"></a>2PC与3PC</h1><p>在分布式系统中，当一个事务操作需要跨越多个分布式节点时，为了保证事务处理的ACID特性，需要引入一个“协调者”的组件来统一调度所有分布式节点的执行逻辑，被调度的分布式节点称为“参与者”。<br>协调者负责调度参与者的行为，并最终决定这些参与者是否要把事务真正进行提交。这个思想衍生出二阶段提交和三阶段提交两种协议。</p>
+<h2 id="2PC（Two-Phase-Commit）"><a href="#2PC（Two-Phase-Commit）" class="headerlink" title="2PC（Two-Phase Commit）"></a>2PC（Two-Phase Commit）</h2><p>目的是为了保证分布式系统架构下所有节点在进行事务处理过程中能够保持原子性和一致性而设计的算法。绝大部分关系型数据库采用的都是二阶段提交协议来完成分布式事务的处理。</p>
+<p><strong>协议说明</strong></p>
+<ul>
+<li>阶段一：提交事务请求<ol>
+<li>事务询问。<br>协调者向所有参与者发送事务内容，询问是否可以执行事务提交操作，并开始等待各参与者的响应。</li>
+<li>执行事务。<br>各参与者执行事务操作，并将Undo和Redo信息记入事务日志中。</li>
+<li>各参与者向协调者反馈事务询问的响应。<br>如果参与者成功执行了事务操作，则反馈给协调者Yes响应，表示事务可执行；否则就给协调者反馈NO响应，表示事务不可以执行。</li>
+</ol>
+</li>
+</ul>
+<p>这个阶段通常也称为“投票阶段”。</p>
+<ul>
+<li><p>阶段二：执行事务提交<br>协调者根据各参与者的反馈情况决定是否进行事务提交操作。包含两种可能：</p>
+<p><strong>执行事务提交</strong><br>当所有参与者都反馈Yes响应时，协调者就会执行事务提交。执行过程如下</p>
+<ol>
+<li>发送提交请求<br>协调者向所有参与者发送Commit请求。</li>
+<li>事务提交<br>参与者收到Commit请求后正式执行事务提交操作，在完成提交后释放整个事务执行期间占用的事务资源。</li>
+<li>返回事务提交结果<br>向协调者发送Ack消息。</li>
+<li>完成事务<br>协调者接收到所有参与者反馈的Ack消息后，完成事务。</li>
+</ol>
+<p><strong>中断事务</strong><br>当任何一个参与者向协调者反馈NO，或超时后协调者仍未收到某些参与者的响应，就会中断事务。</p>
+<ol>
+<li>发送事务回滚请求。<br>协调者向所有参与者发送Rollback请求。</li>
+<li>事务回滚。<br>参与者接收到Rollback后，会利用其在阶段一种记录的Undo信息来执行事务回滚操作，并在完成回滚之后释放在整个事务执行期间占用的资源。</li>
+<li>反馈事务回滚结果。<br>参与者在完成事务回滚之后，向协调者发送Ack消息。</li>
+<li><p>中断事务。<br>协调者收到所有参与者的Ack消息后，完成事务中断。</p>
+<p><img src="https://i.imgur.com/uVAXMiZ.png" alt=""></p>
+<p><img src="https://i.imgur.com/WYubkPJ.png" alt=""></p>
+</li>
+</ol>
+</li>
+</ul>
+<p><strong>优缺点</strong><br>优点：原理简单，实现方便<br>缺点：同步阻塞、单点问题、脑裂、保守</p>
+<ul>
+<li><p>同步阻塞<br>提交的执行过程中，所以参与者都需要等待其他参与者的响应，无法执行其他任何操作。限制性能。这是最大的问题。</p>
+</li>
+<li><p>单点问题<br>协调者如果出现问题，整个系统提交流程将无法进行，如果恰好在阶段二故障，则参与者将一直锁定事务资源状态，无法继续工作。</p>
+</li>
+<li><p>数据不一致<br>阶段二时，若协调者已向参与者发送Commit，此时发生局部网络异常或协调者只发送了部分Commit后自身崩溃，则只有部分参与者接收到Commit请求。就会出现部分参与者提交，部分未提交，导致数据不一致现象。</p>
+</li>
+<li><p>保守<br>协调者指示参与者进行事务提交询问的过程中，参与值故障无法响应时，协调者只能通过超时判断是否中断。缺少一个完善的容错机制，任意一个节点失败都会导致整个事务的失败。</p>
+</li>
+</ul>
+<h2 id="3PC-Three-Phase-Commit"><a href="#3PC-Three-Phase-Commit" class="headerlink" title="3PC(Three-Phase Commit)"></a>3PC(Three-Phase Commit)</h2><p>三阶段提交协议，对二阶段提交协议的不足进行了改进。</p>
+<p><strong>协议说明</strong></p>
+<p>其将二阶段提交的“提交事务请求”过程一分为二，形成了由CanCommit、PreCommit、do Commit三个阶段组成的事务处理协议。<br><img src="https://i.imgur.com/oaKJeoh.png" alt=""></p>
+<ul>
+<li>阶段一：CanCommit</li>
+</ul>
+<ol>
+<li><p>事务询问<br>协调者向所有参与者发送一个包含事务内容的canCommit请求，询问是否可以执行事务提交操作，并开始等待参与者响应。</p>
+</li>
+<li><p>各参与者向协议者反馈事务询问响应<br>参与者受到canCommit请求后，正常情况下，如果认为可以执行事务，则返回Yes响应，并进入预备状态，否则反馈No响应。</p>
+</li>
+</ol>
+<ul>
+<li><p>阶段二：PreCommit<br>两种可能的操作：</p>
+<p><strong>执行事务预提交</strong><br>假如协调者收到所有的响应Yes,则会执行事务预提交。</p>
+<ol>
+<li>发送预提交请求<br>协调者向所有参与者发出preCommit请求，并进入Prepared阶段。</li>
+<li>事务预提交<br>参与者收到preCommit后，执行事务操作，并将Undo和Redo信息记录到事务日志中。</li>
+<li>各参与值向协调者反馈事务执行的响应<br>如果参与者执行了事务操作，就会给协调者反馈Ack响应，同时等待最终的指令：提交（commit）或中止（abort）；</li>
+</ol>
+<p><strong>中断事务</strong><br>假如任何一个参与者反馈的是No响应，或者超时未响应，那么协调者就会中断事务。</p>
+<ol>
+<li>发送中断请求<br>协调者向所有参与者发送abort请求。</li>
+<li>中断事务<br>无论收到来自协调者的abort请求，或是等待协调者请求过程中出现超时，参与者都会中断事务。</li>
+</ol>
+</li>
+<li><p>阶段三：doCommit<br>进行真正的事务提交操作，存在两种情况：</p>
+<p>  <strong>执行提交</strong></p>
+<ol>
+<li>发送提交请求<br>协调者收到所有响应者的Ack响应，他将从“预提交”状态转化到“提交”状态，并向所有参与者发送doCommit请求。</li>
+<li>执行事务提交<br>参与者收到coCommit请求后，会正式执行事务提交操作，并在完成提交之后释放在整个事务执行期间占用的事务资源。</li>
+<li>反馈事务提交结果<br>参与者在完成事务提交之后，向协调者发送Ack消息。</li>
+<li>完成事务<br>协调者接收到所有参与者的Ack消息后，完成事务。</li>
+</ol>
+<p><strong>中断事务</strong><br>任意一个参与者反馈No响应，或协调者等待超时后，协调者就会中断事务。</p>
+<ol>
+<li>发送中断请求</li>
+<li>事务回滚</li>
+<li>反馈事务回滚结果</li>
+<li>中断事务</li>
+</ol>
+</li>
+</ul>
+</div><div class="tags"></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/10/11/BASE理论/" class="next"></a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2PC与3PC"><span class="toc-text">2PC与3PC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2PC（Two-Phase-Commit）"><span class="toc-text">2PC（Two-Phase Commit）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3PC-Three-Phase-Commit"><span class="toc-text">3PC(Three-Phase Commit)</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/2PC和3PC/">2PC和3PC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/BASE理论/">BASE理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/10/ACID/">ACID</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/CAP理论/">CAP理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/索引分类/">索引分类</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/SQL性能优化一——减少数据库交互次数/">SQL性能优化一——减少数据库交互次数</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/11/MySQL唯一性约束/">MySQL唯一性约束</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/11/AUTO_INCREMENT/">AUTO_INCREMENT</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/11/库存/">库存</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/11/线程上下文类加载器的初始化/">线程上下文类加载器的初始化</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">mudaoren.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script></body></html>
