@@ -196,15 +196,16 @@
     <link href="http://yoursite.com/2018/09/11/AUTO_INCREMENT/"/>
     <id>http://yoursite.com/2018/09/11/AUTO_INCREMENT/</id>
     <published>2018-09-11T15:44:32.540Z</published>
-    <updated>2018-09-11T15:44:07.426Z</updated>
+    <updated>2018-10-13T23:21:00.088Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="AUTO-INCREMENT"><a href="#AUTO-INCREMENT" class="headerlink" title="AUTO_INCREMENT"></a>AUTO_INCREMENT</h1><p>一个表只能有一个字段使用自增约束，且字段必须是主键的一部分。其约束的字段可以是任何整型类型（TINYINT、INT、SMALLIN、BIGINT）。默认从1开始，每增加一行自动加1。</p><p>设置语法：</p><pre><code>&lt;col_name&gt; &lt;data_type&gt; AUTO_INCREMENT</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="AUTO-INCREMENT"><a href="#AUTO-INCREMENT" class="headerlink" title="AUTO_INCREMENT"></a>AUTO_INCREMENT</h1><hr><p>一个表只能有一个字段使用自增约束，且字段必须是主键的一部分。其约束的字段可以是任何整型类型（TINYINT、INT、SMALLIN、BIGINT）。默认从1开始，每增加一行自动加1。</p><p>设置语法：</p><pre><code>&lt;col_name&gt; &lt;data_type&gt; AUTO_INCREMENT</code></pre>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;AUTO-INCREMENT&quot;&gt;&lt;a href=&quot;#AUTO-INCREMENT&quot; class=&quot;headerlink&quot; title=&quot;AUTO_INCREMENT&quot;&gt;&lt;/a&gt;AUTO_INCREMENT&lt;/h1&gt;&lt;p&gt;一个表只能有一个字段使用自增约束，且字段必须
+        &lt;h1 id=&quot;AUTO-INCREMENT&quot;&gt;&lt;a href=&quot;#AUTO-INCREMENT&quot; class=&quot;headerlink&quot; title=&quot;AUTO_INCREMENT&quot;&gt;&lt;/a&gt;AUTO_INCREMENT&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;一个表只能有一个字段使用自增约束，
       
     
     </summary>
