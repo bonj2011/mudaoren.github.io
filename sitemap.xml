@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/10/12/Paxos%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2018-10-14T00:11:31.206Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/10/10/ACID/</loc>
     
     <lastmod>2018-10-14T00:09:02.213Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/2018/09/11/AUTO_INCREMENT/</loc>
     
     <lastmod>2018-10-13T23:21:00.088Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/10/12/Paxos%E7%AE%97%E6%B3%95/</loc>
-    
-    <lastmod>2018-10-11T23:15:23.870Z</lastmod>
     
   </url>
   
