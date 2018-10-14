@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/10/10/ACID/</loc>
+    
+    <lastmod>2018-10-14T00:09:02.213Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/09/11/AUTO_INCREMENT/</loc>
     
     <lastmod>2018-10-13T23:21:00.088Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>http://yoursite.com/2018/10/11/2PC%E5%92%8C3PC/</loc>
     
     <lastmod>2018-10-11T15:21:43.646Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/10/10/ACID/</loc>
-    
-    <lastmod>2018-10-09T23:36:46.926Z</lastmod>
     
   </url>
   
