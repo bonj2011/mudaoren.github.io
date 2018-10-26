@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-22T15:19:22.127Z</updated>
+  <updated>2018-10-26T23:31:06.144Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring MVC如何接受请求参数</title>
+    <link href="http://yoursite.com/2018/10/27/Spring%20MVC%E5%A6%82%E4%BD%95%E6%8E%A5%E5%8F%97%E5%8F%82%E6%95%B0%E8%AF%B7%E6%B1%82/"/>
+    <id>http://yoursite.com/2018/10/27/Spring MVC如何接受参数请求/</id>
+    <published>2018-10-26T23:32:35.027Z</published>
+    <updated>2018-10-26T23:31:06.144Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　当用户与服务器交互时，需要将用户的输入传递到服务端。这时就涉及到Spring MVC控制器接收客户端请求参数。<br>　　<br>控制器接收客户端请求参数的方式主要包括：</p><ul><li>查询参数</li><li>表单参数</li><li>路径参数</li></ul><p>方式一：查询参数。请求中的查询参数作为Controller的方法参数。<br>请求 url：<code>http://localhost:8080/spittles?max=10&amp;count=2</code></p><pre><code>@Controller@RequestMapping(&quot;/spittles&quot;)public class SpittleController{    private static final String MAX_LONG_AS_STRING = &quot;9223372036854775807&quot;;    @Autowired    private SpittleRepository spittleRepository;    @RequestMapping(method = RequestMethod.GET)    public List&lt;Spittle&gt; spittles(            @RequestParam(value = &quot;max&quot;, defaultValue = MAX_LONG_AS_STRING) long max,            @RequestParam(value = &quot;count&quot;, defaultValue = &quot;20&quot;) int count)    {        return spittleRepository.findSpittles(max, count);    }}</code></pre><p>方式二：路径变量。请求路径中的一部分作为查询参数。<br>请求 url：<code>http://localhost:8080/spittles/1845647</code></p><p>尽管，这个也可以使用如<code>http://localhost:8080/spittles？spittleId=1845647</code>这样的rul来请求，但是一般在使用GET方法获取资源时，最合适的方式是通过路径，而不是参数。如果这里改成第二种url，则本质上是通过HTTP发起的RPC。</p><pre><code>@Controller@RequestMapping(&quot;/spittles&quot;)public class SpittleController{        @Autowired    private SpittleRepository spittleRepository;    @RequestMapping(value = &quot;/{spittleId}&quot;, method = RequestMethod.GET)    public String spittle(@PathVariable(&quot;spittleId&quot;) long spittleId, Model model)    {        model.addAttribute(spittleRepository.findOne(spittleId));        return &quot;spittle&quot;;    }}</code></pre><p>@RequestMapping(value = “/{spittleId}”, method = RequestMethod.GET)中的spittleId是一个占位符，这个占位符的名字可以随意取，但是这个占位符在url路径中的位置必须与请求url中的位置保持一致。另外，这个占位符与注解PathVariable的值spittleId是一致的，如果注解PathVariable不带参数，那么spittle方法的一个参数spittleId必须与占位符的名字一致。</p><p>方式三：表单参数。表单参数用于接收大量的用户输入参数，以对输入参数完成处理。</p><pre><code>@Controller@RequestMapping(&quot;/spittles&quot;)public class SpittleController{    @Autowired    private SpittleRepository spittleRepository;    @RequestMapping(value = &quot;/register&quot;, method = GET)    public String showRegistrationForm()    {        return &quot;registerForm&quot;;    }    @RequestMapping(value = &quot;/register&quot;, method = POST)    public String processRegistration(@Valid Spitter spitter, Errors errors)    {        if (errors.hasErrors())        {            return &quot;registerForm&quot;;        }        spitterRepository.save(spitter);        return &quot;redirect:/spitter/&quot; + spitter.getUsername();    }    @RequestMapping(value = &quot;/{username}&quot;, method = GET)    public String showSpitterProfile(@PathVariable String username, Model model)    {        Spitter spitter = spitterRepository.findByUsername(username);        model.addAttribute(spitter);        return &quot;profile&quot;;    }}</code></pre><p>　　方法showRegistrationForm()和processRegistration(@Valid Spitter spitter, Errors errors)所接收的url都是“/spittles/register”，前者用于接收GET查询，并返回一个“registerForm”视图，后者用于接收POST提交的表单，并重定向到”/spitter/“ + spitter.getUsername()视图。也就是重定向（redirect）到showSpitterProfile(@PathVariable String username, Model model)方法所表示的视图，这里的Model中保存的GET请求获取到的结果参数集。</p><p>　　本例中的接收用户提交表单的方法processRegistration(@Valid Spitter spitter, Errors errors)，输入参数包含一个Spitter对象，这个对象中的对象名与用户HTML中填写的参数名是对应的，如下：</p><pre><code>public class Spitter {  private Long id;  @NotNull  @Size(min=5, max=16)  private String username;  @NotNull  @Size(min=5, max=25)  private String password;  @NotNull  @Size(min=2, max=30)  private String firstName;  @NotNull  @Size(min=2, max=30)  private String lastName;  @NotNull  @Email  private String email;}&lt;html&gt;      &lt;head&gt;        &lt;title&gt;Spitter&lt;/title&gt;        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot;               href=&quot;&lt;c:url value=&quot;/resources/style.css&quot; /&gt;&quot; &gt;      &lt;/head&gt;     &lt;body&gt;        &lt;h1&gt;Register&lt;/h1&gt;        &lt;form method=&quot;POST&quot;&gt;          First Name: &lt;input type=&quot;text&quot; name=&quot;firstName&quot; /&gt;&lt;br/&gt;          Last Name: &lt;input type=&quot;text&quot; name=&quot;lastName&quot; /&gt;&lt;br/&gt;          Email: &lt;input type=&quot;email&quot; name=&quot;email&quot; /&gt;&lt;br/&gt;          Username: &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;&lt;br/&gt;          Password: &lt;input type=&quot;password&quot; name=&quot;password&quot; /&gt;&lt;br/&gt;          &lt;input type=&quot;submit&quot; value=&quot;Register&quot; /&gt;        &lt;/form&gt;     &lt;/body&gt;&lt;/html&gt;</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;　　当用户与服务器交互时，需要将用户的输入传递到服务端。这时就涉及到Spring MVC控制器接收客户端请求参数。&lt;br&gt;　　&lt;br&gt;控制器接收客户端请求参数的方式主要包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;查询参数&lt;/li&gt;
+&lt;li&gt;表单参数&lt;/li&gt;
+&lt;li&gt;路径参数&lt;/li
+      
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://yoursite.com/categories/Spring/"/>
+    
+    
+      <category term="Spring MVC" scheme="http://yoursite.com/tags/Spring-MVC/"/>
+    
+  </entry>
   
   <entry>
     <title>基于dubbo的微服务部分容器化部署</title>
