@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-10-28T23:47:46.473Z</updated>
+  <updated>2018-10-29T00:03:44.100Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Spring MVM请求处理流程</title>
+    <title>Spring MVC请求处理流程</title>
     <link href="http://yoursite.com/2018/10/29/Spring%20MVC%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/"/>
     <id>http://yoursite.com/2018/10/29/Spring MVC请求处理流程/</id>
     <published>2018-10-28T23:47:55.305Z</published>
-    <updated>2018-10-28T23:47:46.473Z</updated>
+    <updated>2018-10-29T00:03:44.100Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://i.imgur.com/LnG9M8k.png" alt=""></p><p>① 请求离开浏览器，并携带用户的请求信息。首先到达一个单例的前端控制器DispatcherServlet。</p><p>② DispatcherServlet对请求URL进行解析，得到请求资源标识符（URI）。然后根据该URI，查询一个或多个处理映射器（handler mapping），获得下一步的Handler（Controller)。</p><p>③ DispatcherServlet 根据上一步获得的Handler，选择一个合适的HandlerAdapter。（附注：如果成功获得HandlerAdapter后，此时将开始执行拦截器的preHandler(…)方法）</p><p>④ 提取Request中的请求消息，转换成Handler入参，开始执行Handler（Controller)。 在填充Handler的入参过程中，根据你的配置，Spring将帮你做一些额外的工作：</p><ul><li>HttpMessageConveter： 将请求消息（如Json、xml等数据）转换成一个对象，将对象转换为指定的响应信息</li><li>数据转换：对请求消息进行数据转换。如String转换成Integer、Double等</li><li>数据根式化：对请求消息进行数据格式化。 如将字符串转换成格式化数字或格式化日期等</li><li>数据验证： 验证数据的有效性（长度、格式等），验证结果存储到BindingResult或Error中</li></ul><p>⑤ 控制器执行完成后，产生一些信息，这些信息保存在模型（model）中。但是这些信息不可能直接展示，必须以一个友好的界面（html/jsp）来承载，这个界面就是视图（view）表示的界面。然后将模型和视图名返回给DispatcherServlet。</p><p>⑥ 上一步的视图名标示了一个界面，需要通过视图解析器（ViewResoler）来为view找到对应的视图实现（界面，比如JSP）。</p><p>⑦ 视图使用模型数据进行渲染。</p><p>⑧ 将渲染结果返回给用户。</p><blockquote><p>参考：<br>《Spring In Action》<br><a href="https://www.cnblogs.com/dreamworlds/p/5396112.html" target="_blank" rel="noopener">https://www.cnblogs.com/dreamworlds/p/5396112.html</a></p></blockquote>]]></content>
     
@@ -39,7 +39,7 @@
       <category term="Spring" scheme="http://yoursite.com/categories/Spring/"/>
     
     
-      <category term="Spring，请求处理" scheme="http://yoursite.com/tags/Spring%EF%BC%8C%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86/"/>
+      <category term="Spring MVC，请求处理" scheme="http://yoursite.com/tags/Spring-MVC%EF%BC%8C%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86/"/>
     
   </entry>
   
