@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/10/30/Tomcat%E7%9A%84web%E9%85%8D%E7%BD%AE/</loc>
+    
+    <lastmod>2018-10-30T00:00:57.493Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/10/29/Spring%20MVC%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/</loc>
     
     <lastmod>2018-10-29T00:03:44.100Z</lastmod>
