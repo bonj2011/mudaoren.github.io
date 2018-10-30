@@ -27,7 +27,173 @@
 </code></pre><h3 id="display-name和description"><a href="#display-name和description" class="headerlink" title="display-name和description"></a>display-name和description</h3><p>这两个一般会配套使用，比如：</p>
 <pre><code>&lt;display-name&gt;Tomcat Manager Application&lt;/display-name&gt;
 &lt;description&gt;A scriptable management web application for the Tomcat Web Server;    Manager lets you view, load/unload/etc particular web applications.&lt;/description&gt;
-</code></pre><p>###context-param###<br>定义传递给servlet或JSP的参数。比如数据库连接参数、文件名或网站信息等。<br>    <context-param><br>        <param-name>ContextParameter<br>        <param-value>test</param-value><br>        <description>It is a test parameter.</description><br>    </param-name></context-param></p>
+</code></pre><p>###context-param###<br>定义传递给servlet或JSP的参数。比如数据库连接参数、文件名或网站信息等。</p>
+<pre><code>&lt;context-param&gt;    
+    &lt;param-name&gt;ContextParameter&lt;/para-name&gt;    
+    &lt;param-value&gt;test&lt;/param-value&gt;    
+    &lt;description&gt;It is a test parameter.&lt;/description&gt;    
+&lt;/context-param&gt;
+</code></pre><p>上面的配置对webapp的所有servlet生效。也可以设置仅仅对某个servlet生效，但是此时context-param元素必须在servlet元素中，如下：</p>
+<pre><code>&lt;servlet&gt;
+    &lt;servlet-name&gt;SampleServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;mypack.SampleServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;initParam1&lt;/param-name&gt;
+        &lt;param-value&gt;2&lt;/param-value&gt;
+    &lt;/init-param&gt;
+&lt;/servlet&gt;
+</code></pre><p>###filter和filter-mapping###<br>过滤器在指定的URL传递给servlet之前，或执行servlet之后执行。<br>filter的子元素包括：</p>
+<pre><code>&lt;filter-name&gt;CharacterEncoding&lt;/filter-name&gt;  定义过滤器的名字。当有多个过滤器时，不能同名
+&lt;filter-class&gt;org.apache.catalina.filters.SetCharacterEncodingFilter&lt;/filter-class&gt;  指定实现这一过滤的类，这个类负责具体的过滤事务
+&lt;init-param&gt;  配置过滤器的初始化参数
+    &lt;param-name&gt;encoding&lt;/param-name&gt;  参数名
+    &lt;param-value&gt;UTF-8&lt;/param-value&gt;  参数值
+&lt;/init-param&gt;
+</code></pre><p>过滤器配置完成后，需要通过filter-mapping来配置过滤器生效的对象，生效对象可以是URL或servlet。</p>
+<ul>
+<li><p>对URL生效，使用url-pattern进行配置，所有符合模式的入向URL都会被过滤器处理。如：</p>
+<p>  <filter-mapping></filter-mapping></p>
+<pre><code>&lt;filter-name&gt;CharacterEncoding&lt;/filter-name&gt;  在filter中定义的过滤器名字
+&lt;url-pattern&gt;/*&lt;/url-pattern&gt;  指定filter所对应的URL
+</code></pre><p>  <br>在servlet 2.5之后，filter-mapping中可以使用多个url-pattern，进而把多个pattern映射为该过滤器。</p>
+</li>
+<li><p>对servlet生效，使用servlet-name配置，会将过滤器的输出传给指定的servlet。如：</p>
+</li>
+</ul>
+<pre><code>&lt;filter-mapping&gt;
+    &lt;filter-name&gt;CharacterEncoding&lt;/filter-name&gt; 过滤器名称
+    &lt;servlet-name&gt;HTMLManager&lt;/servlet-name&gt;  servlet名称。这个servlet必须在前面定义过。
+&lt;/filter-mapping&gt;
+</code></pre><p>###listener###<br>用来指定事件监听器。事件监听程序在建立、修改和删除会话或servlet环境时得到通知。</p>
+<pre><code>&lt;listener&gt;
+    &lt;listener-class&gt;listeners.ContextListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+&lt;listener&gt;
+    &lt;listener-class&gt;listeners.SessionListener&lt;/listener-class&gt;
+&lt;/listener&gt;
+</code></pre><p>###servlet和servlet-mapping###<br>定义servlet，以用于servlet-mapping或者filter-mapping中。</p>
+<pre><code>&lt;!-- 基本配置 --&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;snoopImpl&lt;/servlet-name&gt;  servlet名字
+    &lt;servlet-class&gt;com.SnoopImplServlet&lt;/servlet-class&gt;  servlet代表的类
+&lt;/servlet&gt;
+&lt;!-- 高级配置 --&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;snoop&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;com.SnoopServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;foo&lt;/param-name&gt;  servlet类的参数名
+        &lt;param-value&gt;bar&lt;/param-value&gt;  servlet类的参数值
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;3&lt;/load-on-startup&gt;  指定当Web应用启动时，装载Servlet的次序。当值为正数或零时：Servlet容器先加载数值小的servlet，再依次加载其他数值大的servlet。当值为负或未定义：Servlet容器将在Web客户首次访问这个servlet时加载它。
+    &lt;run-as&gt;
+        &lt;description&gt;Security role for anonymous access&lt;/description&gt;
+        &lt;role-name&gt;tomcat&lt;/role-name&gt;  执行此servlet的角色名称。
+    &lt;/run-as&gt;
+&lt;/servlet&gt;
+</code></pre><p>上述元素并不是servlet的全部子元素，除此之外还有jsp-file和security-role-ref。</p>
+<p>默认情况下，web对servlet的请求必须包含servlet的完整类名。但这样使用起来极不方便，可读性不好，因此，常用servlet的别名代替，而servlet-mapping就是用来做servlet与别名映射的元素。</p>
+<pre><code>&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;snoop&lt;/servlet-name&gt;  前面定义的servlet名称
+    &lt;url-pattern&gt;/snoop&lt;/url-pattern&gt;  指定servlet所对应的别名URL或别名
+&lt;/servlet-mapping&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;snoop&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre><p>这样配置的servlet，web可以通过应用的Context路径拼接url-pattern来访问对应的servlet。上述配置中所有的以“.jsp”结尾的文件名都会由snoop来处理。</p>
+<p>另外一种用法, 会将所有的请求都映射成指定的JSP文件，如下例中的redirector.jsp，这里与重定向不完全相同，因为它动态的计算用于新Context的精确链接。</p>
+<pre><code>&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;snoop&lt;/servlet-name&gt;  前面定义的servlet名称
+    &lt;jsp-file&gt;/redirector.jsp&lt;/jsp-file&gt;  指定web站台中的某个JSP网页的完整路径
+&lt;/servlet-mapping&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;snoop&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre><p>###session-config###<br>用于设置会话闲置时间。当用户访问的会话超过这个时间时，Tomcat将会丢弃该会话，并回收内存。</p>
+<pre><code>&lt;session-config&gt;    
+   &lt;session-timeout&gt;120&lt;/session-timeout&gt;  会话闲置120分钟后超时   
+&lt;/session-config&gt;
+</code></pre><p>###welcome-file-list###<br>配置欢迎页面。假如用户输入了一个<a href="http://host/webAppPrefix/directoryName/这样的包含一个目录名但没有包含文件名的URL时，会发生什么呢？用户能得到一个目录表？一个错误？还是标准文件的内容？如果得到标准文件内容，是index.html、index.jsp、default.html、default.htm或别的什么东西呢？" target="_blank" rel="noopener">http://host/webAppPrefix/directoryName/这样的包含一个目录名但没有包含文件名的URL时，会发生什么呢？用户能得到一个目录表？一个错误？还是标准文件的内容？如果得到标准文件内容，是index.html、index.jsp、default.html、default.htm或别的什么东西呢？</a><br>Welcome-file-list 元素及其辅助的welcome-file元素解决了这个模糊的问题。例如，下面的web.xml项指出，如果一个URL给出一个目录名但未给出文件名，服务器应该首先试用index.jsp，然后再试用index.html。如果两者都没有找到，则结果有赖于所用的服务器（如一个目录列表）。</p>
+<pre><code>&lt;welcome-file-list&gt;    
+  &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;    
+  &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;    
+  &lt;welcome-file&gt;index.htm&lt;/welcome-file&gt;    
+&lt;/welcome-file-list&gt;  
+</code></pre><p>可以通过将DefaultServlet参数设置为false,来关闭Tomcat全部的打印目录清单功能：</p>
+<pre><code>&lt;servlet&gt;
+    &lt;servlet-name&gt;default&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.apache.catalina.servlet.DefaultServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;debug&lt;/param-name&gt;
+        &lt;param-value&gt;0&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;listings&lt;/param-name&gt;
+        &lt;param-value&gt;true&lt;/param-value&gt;
+    &lt;/init-param&gt;
+&lt;/servlet&gt;
+</code></pre><p>###jsp-config###<br>jsp-config包括taglib和jsp-property-group两个子元素。</p>
+<ul>
+<li><p>JSP taglib元素具有一个必要的uri属性，它给出一个TLD（Tag Library Descriptor）文件相对于Web应用的根的位置。TLD文件的实际名称在发布新的标签库版本时可能会改变，但我们希望避免更改所有现有JSP页面。此外，可能还希望使用保持taglib元素的简练性的一个简短的uri。这就是部署描述符文件的taglib元素派用场的所在了。Taglib包含两个子元素：taglib-uri和taglib-location。 taglib-uri元素应该与用于JSP taglib元素的uri属性的东西相匹配。Taglib-location元素给出TLD文件的实际位置。例如，假如你将文件chart-tags-1.3beta.tld放在WebApp/WEB-INF/tlds中。现在，假如web.xml在webapp元素内包含下列内容。</p>
+</li>
+<li><p>jsp-property-group的作用是允许将Web应用程序的一组资源配置为不同于全局设置的JSP行为。<br>Scriptlet是个不乐意被见到的东西，因为它会使得HTML与Java程式码交相混杂，对于程式的维护来说相当的麻烦，必要的时候，可以在web.xml 中加上<script-invalid> 标签，设定所有的JSP 网页都不可以使用Scriptlet。 </script-invalid></p>
+<p>  <jsp-config></jsp-config></p>
+<pre><code>&lt;taglib&gt; 
+    &lt;taglib-uri&gt;/charts.tld&lt;/taglib-uri&gt; 
+    &lt;taglib-location&gt;/WEB-INF/tlds/chart-tags-1.3beta.tld&lt;/taglib-location&gt; 
+&lt;/taglib&gt;
+&lt;taglib&gt;
+    &lt;taglib-uri&gt;http://tomcat.apache.org/example-taglib&lt;/taglib-uri&gt;
+    &lt;taglib-location&gt;/WEB-INF/jsp/example-taglib.tld&lt;/taglib-location&gt;
+&lt;/taglib&gt;
+&lt;jsp-property-group&gt;
+    &lt;description&gt;Special property group for JSP Configuration JSP example.&lt;/description&gt;
+    &lt;display-name&gt;JSPConfiguration&lt;/display-name&gt;  设定名称
+    &lt;url-pattern&gt;/jsp/jsp2/misc/config.jsp&lt;/url-pattern&gt;  设定值所影响的范围，如： /CH2 或 /*.jsp
+    &lt;el-ignored&gt;true&lt;/el-ignored&gt;  若为 true，表示不支持 EL 语法
+    &lt;page-encoding&gt;ISO-8859-1&lt;/page-encoding&gt;  设定 JSP 网页的编码
+    &lt;scripting-invalid&gt;true&lt;/scripting-invalid&gt;  若为 true，表示不支持 &lt;% scripting %&gt;语法
+    &lt;include-prelude&gt;/jsp/jsp2/misc/prelude.jspf&lt;/include-prelude&gt; 设置 JSP 网页的抬头，扩展名为 .jspf
+    &lt;include-coda&gt;/jsp/jsp2/misc/coda.jspf&lt;/include-coda&gt; 设置 JSP 网页的结尾，扩展名为 .jspf
+&lt;/jsp-property-group&gt;
+</code></pre><p>   </p>
+</li>
+</ul>
+<p>给出这个说明后，JSP页面可通过下面的简化形式使用标签库。</p>
+<pre><code>&lt;%@ taglib uri=&quot;/charts.tld&quot; prefix=&quot;somePrefix&quot; %&gt; 
+</code></pre><p>###security-constraint###<br>用来指定访问设定的资源（目录/url）时所需要的身份验证。一般情况下，用来保护Web应用中的特殊目录。</p>
+<pre><code>&lt;security-constraint&gt;
+  &lt;display-name&gt;Example Security Constraint - part 1&lt;/display-name&gt;
+  &lt;web-resource-collection&gt;  描述Web应用程序中的哪些web资源受到指定安全限制的保护
+     &lt;web-resource-name&gt;Protected Area - Allow methods&lt;/web-resource-name&gt;
+     &lt;url-pattern&gt;/jsp/security/protected/*&lt;/url-pattern&gt;
+     &lt;http-method&gt;DELETE&lt;/http-method&gt; 指定安全限制覆盖的HTTP方法
+     &lt;http-method&gt;GET&lt;/http-method&gt;
+     &lt;http-method&gt;POST&lt;/http-method&gt;
+     &lt;http-method&gt;PUT&lt;/http-method&gt;
+  &lt;/web-resource-collection&gt;
+  &lt;auth-constraint&gt;  描述允许访问Web组件的安全角色
+     &lt;role-name&gt;tomcat&lt;/role-name&gt;
+     &lt;role-name&gt;role1&lt;/role-name&gt;
+  &lt;/auth-constraint&gt;
+&lt;/security-constraint&gt;
+</code></pre><p>###login-config###<br>登录验证设置。Web应用程序通过login-config元素来认证用户，并确认该用户是否为正确的角色。<br>longin-config包含的auth-method子元素用来指定认证方法，BASIC是一种常见的Web认证方式，浏览器给用户提示一个对话框，要求输入用户名和密码，随后Tomcat将给出的用户名和密码与tomcat-users.xml中的用户名和密码进行比较，然后使用前面的security-constraint配置来确定用户是否可访问受保护的servlet。</p>
+<p><strong>这种认证方法实际上有两个步骤：</strong><br>1、检查提供的用户名和密码是否正确。<br>2、判断用户是否映射到特定的安全角色。例如，用户可能提供了正确的用户名和密码，但没有映射到特定的安全角色，也将被禁止访问特定的Web资源。</p>
+<pre><code>&lt;login-config&gt;
+  &lt;auth-method&gt;FORM&lt;/auth-method&gt;  指定验证方法，它有四个可选值：BASIC(基本验证)、DIGEST(摘要验证)、FORM(表单验证)、CLIENT-CERT
+  &lt;realm-name&gt;Example Form-Based Authentication Area&lt;/realm-name&gt; 设定当客户端访问受保护区域时，浏览器在其登录对话窗中显示的名称
+  &lt;form-login-config&gt; 当验证方法为FORM时，配置验证网页和出错网页
+    &lt;form-login-page&gt;/jsp/security/protected/login.jsp&lt;/form-login-page&gt; 当验证方法为FORM时，设定验证网页
+    &lt;form-error-page&gt;/jsp/security/protected/error.jsp&lt;/form-error-page&gt; 当验证方法为FORM时，设定出错网页
+  &lt;/form-login-config&gt;
+&lt;/login-config&gt;
+</code></pre><p>login-conf通常会紧跟在security-constraint元素之后，表示要使用哪种安全防护方法来访问受保护的区域。</p>
 <p>未完待续…</p>
-</div><div class="tags"><a href="/tags/tomcat，web-xml/">tomcat，web.xml</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/10/29/Spring MVC请求处理流程/" class="next">Spring MVC请求处理流程</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml出现的位置"><span class="toc-text">web.xml出现的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml中元素配置的顺序要求"><span class="toc-text">web.xml中元素配置的顺序要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml中元素的加载顺序"><span class="toc-text">web.xml中元素的加载顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml的配置说明"><span class="toc-text">web.xml的配置说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#display-name和description"><span class="toc-text">display-name和description</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/30/Tomcat的web配置/">Tomcat的web.xml配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/29/Spring MVC请求处理流程/">Spring MVC请求处理流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/27/Spring MVC如何接受参数请求/">Spring MVC如何接收请求参数</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/22/基于dubbo的微服务部分容器化部署/">基于dubbo的微服务部分容器化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/BASE理论/">BASE理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/2PC和3PC/">2PC与3PC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/10/ACID/">ACID理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/CAP理论/">CAP理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/索引分类/">MySQL索引</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/SQL性能优化一——减少数据库交互次数/">SQL性能优化一——减少数据库交互次数</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tomcat/">tomcat</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/容器化/">容器化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/电商/">电商</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">6</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/容器化/" style="font-size: 15px;">容器化</a> <a href="/tags/分布式算法/" style="font-size: 15px;">分布式算法</a> <a href="/tags/并发理论/" style="font-size: 15px;">并发理论</a> <a href="/tags/mysql性能优化/" style="font-size: 15px;">mysql性能优化</a> <a href="/tags/Spring-MVC，请求处理/" style="font-size: 15px;">Spring MVC，请求处理</a> <a href="/tags/tomcat，web-xml/" style="font-size: 15px;">tomcat，web.xml</a> <a href="/tags/mysql基础/" style="font-size: 15px;">mysql基础</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/dubbo/" style="font-size: 15px;">dubbo</a> <a href="/tags/库存管理，电商架构/" style="font-size: 15px;">库存管理，电商架构</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a> <a href="/tags/类加载/" style="font-size: 15px;">类加载</a> <a href="/tags/java基础/" style="font-size: 15px;">java基础</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">mudaoren.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+<p>参考：</p>
+<blockquote>
+<p>《Tomcat权威指南》<br>《深入剖析Tomcat》<br><a href="http://www.cnblogs.com/cljdream/archive/2013/11/29/3449308.html" target="_blank" rel="noopener">http://www.cnblogs.com/cljdream/archive/2013/11/29/3449308.html</a><br><a href="https://www.cnblogs.com/hellojava/archive/2012/12/28/2835730.html" target="_blank" rel="noopener">https://www.cnblogs.com/hellojava/archive/2012/12/28/2835730.html</a></p>
+</blockquote>
+</div><div class="tags"><a href="/tags/tomcat，web-xml/">tomcat，web.xml</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/10/29/Spring MVC请求处理流程/" class="next">Spring MVC请求处理流程</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml出现的位置"><span class="toc-text">web.xml出现的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml中元素配置的顺序要求"><span class="toc-text">web.xml中元素配置的顺序要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml中元素的加载顺序"><span class="toc-text">web.xml中元素的加载顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web-xml的配置说明"><span class="toc-text">web.xml的配置说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#display-name和description"><span class="toc-text">display-name和description</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/30/Tomcat的web配置/">Tomcat的web.xml配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/29/Spring MVC请求处理流程/">Spring MVC请求处理流程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/27/Spring MVC如何接受参数请求/">Spring MVC如何接收请求参数</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/22/基于dubbo的微服务部分容器化部署/">基于dubbo的微服务部分容器化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/BASE理论/">BASE理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/2PC和3PC/">2PC与3PC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/10/ACID/">ACID理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/CAP理论/">CAP理论</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/索引分类/">MySQL索引</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/12/SQL性能优化一——减少数据库交互次数/">SQL性能优化一——减少数据库交互次数</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-gui"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tomcat/">tomcat</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/容器化/">容器化</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/电商/">电商</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a><span class="category-list-count">6</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/容器化/" style="font-size: 15px;">容器化</a> <a href="/tags/分布式算法/" style="font-size: 15px;">分布式算法</a> <a href="/tags/并发理论/" style="font-size: 15px;">并发理论</a> <a href="/tags/mysql性能优化/" style="font-size: 15px;">mysql性能优化</a> <a href="/tags/Spring-MVC，请求处理/" style="font-size: 15px;">Spring MVC，请求处理</a> <a href="/tags/tomcat，web-xml/" style="font-size: 15px;">tomcat，web.xml</a> <a href="/tags/mysql基础/" style="font-size: 15px;">mysql基础</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/dubbo/" style="font-size: 15px;">dubbo</a> <a href="/tags/库存管理，电商架构/" style="font-size: 15px;">库存管理，电商架构</a> <a href="/tags/类加载/" style="font-size: 15px;">类加载</a> <a href="/tags/java基础/" style="font-size: 15px;">java基础</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a></li></ul></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">mudaoren.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
 </script></body></html>
