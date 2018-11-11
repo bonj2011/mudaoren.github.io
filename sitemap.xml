@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2018-11-11T15:38:38.690Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2018-11-11T15:38:10.666Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/categories/index.html</loc>
+    
+    <lastmod>2018-11-11T15:07:25.423Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index%20-%20%20BlueLake.html</loc>
+    
+    <lastmod>2018-11-11T15:05:40.599Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/11/11/%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E7%9A%84SHELL%E5%8F%82%E6%95%B0/</loc>
     
     <lastmod>2018-11-11T09:29:57.816Z</lastmod>
@@ -166,27 +194,6 @@
     <loc>http://yoursite.com/2018/09/11/AUTO_INCREMENT/</loc>
     
     <lastmod>2018-10-14T05:37:36.910Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/tags/index.html</loc>
-    
-    <lastmod>2018-09-03T15:17:10.728Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/categories/index.html</loc>
-    
-    <lastmod>2018-09-03T15:17:10.726Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2018-09-03T15:17:10.725Z</lastmod>
     
   </url>
   
