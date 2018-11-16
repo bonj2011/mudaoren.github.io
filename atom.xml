@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-16T15:51:08.950Z</updated>
+  <updated>2018-11-16T16:06:17.650Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,22 +21,15 @@
     <link href="http://yoursite.com/2018/11/16/%E5%85%AD%E9%A1%B6%E6%80%9D%E8%80%83%E5%B8%BD/"/>
     <id>http://yoursite.com/2018/11/16/六顶思考帽/</id>
     <published>2018-11-16T15:51:24.174Z</published>
-    <updated>2018-11-16T15:51:08.950Z</updated>
+    <updated>2018-11-16T16:06:17.650Z</updated>
     
-    <content type="html"><![CDATA[<div class="row">    <embed src="/images/六顶思考帽.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+    <content type="html"><![CDATA[<p><img src="/images/sixhit/0.jpg" alt=""><br><img src="/images/sixhit/1.jpg" alt=""><br><img src="/images/sixhit/2.jpg" alt=""><br><img src="/images/sixhit/3.jpg" alt=""></p><div class="row">    <embed src="/images/六顶思考帽.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
     
     <summary type="html">
     
       
       
-        
-
-	&lt;div class=&quot;row&quot;&gt;
-    &lt;embed src=&quot;/images/六顶思考帽.pdf&quot; width=&quot;100%&quot; height=&quot;550&quot; type=&quot;application/pdf&quot;&gt;
-	&lt;/div&gt;
-
-
-
+        &lt;p&gt;&lt;img src=&quot;/images/sixhit/0.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/sixhit/1.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/images/sixhit/2.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src
       
     
     </summary>
