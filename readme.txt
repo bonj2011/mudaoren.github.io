@@ -1,0 +1,2 @@
+images 中存放博文中的图片
+_posts 中存放md博文
