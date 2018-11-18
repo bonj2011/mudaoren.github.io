@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/11/05/%E8%83%BD%E5%8A%9B%E6%8F%90%E5%8D%87%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/</loc>
+    
+    <lastmod>2018-11-18T12:00:12.222Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/10/30/Tomcat%E7%9A%84web%E9%85%8D%E7%BD%AE/</loc>
     
     <lastmod>2018-11-18T11:56:41.443Z</lastmod>
@@ -117,13 +124,6 @@
     <loc>http://yoursite.com/2018/11/11/MySQL%E7%B4%A2%E5%BC%95%E5%92%8C%E7%BA%A6%E6%9D%9F/</loc>
     
     <lastmod>2018-11-11T09:20:09.073Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/11/05/%E8%83%BD%E5%8A%9B%E6%8F%90%E5%8D%87%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/</loc>
-    
-    <lastmod>2018-11-04T23:44:58.525Z</lastmod>
     
   </url>
   
