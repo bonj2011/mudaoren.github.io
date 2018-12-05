@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,环境变量," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="木道人" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。 1.Linux下的环境变量Linux的环境变量存在于多个文件中，主要有以下几个文件：  系统环境变量文件/etc/profile和/etc/environment。 用户环境变量文件~/.bash_pro">
+<meta name="keywords" content="linux,环境变量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux环境变量设置">
+<meta property="og:url" content="http://yoursite.com/2018/12/06/Linux环境变量设置/index.html">
+<meta property="og:site_name" content="木道人">
+<meta property="og:description" content="操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。 1.Linux下的环境变量Linux的环境变量存在于多个文件中，主要有以下几个文件：  系统环境变量文件/etc/profile和/etc/environment。 用户环境变量文件~/.bash_pro">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/f85RcMn.png">
+<meta property="og:image" content="https://i.imgur.com/KiUjqJQ.png">
+<meta property="og:updated_time" content="2018-12-05T15:59:49.194Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux环境变量设置">
+<meta name="twitter:description" content="操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。 1.Linux下的环境变量Linux的环境变量存在于多个文件中，主要有以下几个文件：  系统环境变量文件/etc/profile和/etc/environment。 用户环境变量文件~/.bash_pro">
+<meta name="twitter:image" content="https://i.imgur.com/f85RcMn.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/06/Linux环境变量设置/"/>
+
+
+
+
+
+  <title>Linux环境变量设置 | 木道人</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木道人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/06/Linux环境变量设置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木道人">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木道人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux环境变量设置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-06T00:00:06+08:00">
+                2018-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。</p>
+<h2 id="1-Linux下的环境变量"><a href="#1-Linux下的环境变量" class="headerlink" title="1.Linux下的环境变量"></a>1.Linux下的环境变量</h2><p>Linux的环境变量存在于多个文件中，主要有以下几个文件：</p>
+<ul>
+<li>系统环境变量文件/etc/profile和/etc/environment。</li>
+<li>用户环境变量文件~/.bash_profile、~/.bash_login和~/.profile。bash的login shell设定只会读取上面三个文件的其中一个， 而读取得顺序则是依照上面的顺序。</li>
+</ul>
+<h3 id="1-1-etc-profile-login-shell时读取）"><a href="#1-1-etc-profile-login-shell时读取）" class="headerlink" title="1.1 /etc/profile(login shell时读取）"></a>1.1 /etc/profile(login shell时读取）</h3><p>用户登录时才会读取的文件，是操作系统获取环境变量时第一个读取的文件。<br>这个文件会主动引用其他的文件/etc/profile.d 、/etc/profile.d/*.sh和/etc/bash.bashrc。因此虽然login时读取文件/etc/profile，实际上获取到的环境变量不止在/etc/profile中。</p>
+<h3 id="1-2-etc-environment"><a href="#1-2-etc-environment" class="headerlink" title="1.2 /etc/environment"></a>1.2 /etc/environment</h3><p>用户在登录操作系统之后，操作系统配置环境时所使用的第二个文件。<br>顾名思义，该文件中保存了一系列环境变量，这些变量将对所有的用户和终端起效。</p>
+<p>到这一级为止，文件定义的都是系统环境变量，之后的文件都是在定义用户变量。</p>
+<h3 id="1-3-bash-profile-login-shell-才会读"><a href="#1-3-bash-profile-login-shell-才会读" class="headerlink" title="1.3 ~/.bash_profile (login shell 才会读)"></a>1.3 ~/.bash_profile (login shell 才会读)</h3><p>~/.bash_profile、~/.bash_login和~/.profile。bash的login shell设定只会读取上面三个文件的其中一个， 而读取得顺序则是依照上面的顺序。<br>在我使用的Ubuntu操作系统中，实际存在的是~/.profile。我们看一下文件的内容：</p>
+<p><img src="https://i.imgur.com/f85RcMn.png" alt=""></p>
+<p>if…then中又判断了第二个文件~/.bashrc是否存在，如果存在就会引用。<br>最后一行，以累加的方式对/etc/profile中设置过的path增加了~/bin等目录作为额外的执行文件存放目录。用户可以将自己建立的执行文件放到这个目录下（不需要再使用绝对路径或者相对路径执行了）。</p>
+<h3 id="1-4-bashrc"><a href="#1-4-bashrc" class="headerlink" title="1.4 ~/.bashrc"></a>1.4 ~/.bashrc</h3><p>该文件包含了专用于一个用户的bash的环境信息，每次登录或者新开shell的时候（包括在图形界面下打开新的终端），该文件被读取。<br>该文件只会在新开的终端中起效。原有终端不会受到影响。</p>
+<h3 id="1-5-bash-logout"><a href="#1-5-bash-logout" class="headerlink" title="1.5 ~/.bash_logout"></a>1.5 ~/.bash_logout</h3><p>每次退出bash的时候会执行。</p>
+<h3 id="1-6-小结"><a href="#1-6-小结" class="headerlink" title="1.6 小结"></a>1.6 小结</h3><p><strong>login shell的读取顺序：</strong></p>
+<p><img src="https://i.imgur.com/KiUjqJQ.png" alt=""></p>
+<p>实线是主流程，虚线是被动应用的配置文件。</p>
+<h2 id="2-环境变量的查看方法及相关命令"><a href="#2-环境变量的查看方法及相关命令" class="headerlink" title="2.环境变量的查看方法及相关命令"></a>2.环境变量的查看方法及相关命令</h2><ul>
+<li>env查看当前用户的环境变量与常用变量</li>
+<li>set查看shell所有变量（环境变量和用户自定义变量）</li>
+<li>export若不带参数则显示用户变量的shell变量，若带参数，则将该shell参数添加至用户变量。如果在命令行直接使用这个参数设置变量（如export HELLO=”hello”），则变量只对当前shell（BASH）有效（临时的），重新登录后会失效。</li>
+<li>source读入环境配置文件的指令。因为/etc/profile和~/.bash_profile在login是才会被读取，因此如果用户修改了这两个文件中的变量后，只能在重新登录后才会生效。此时可以使用source或者小数点加空格将新设置的环境变量读取到shell中。</li>
+<li>echo $变量名，查看具体的变量设置。</li>
+</ul>
+<h2 id="3-常见的环境变量"><a href="#3-常见的环境变量" class="headerlink" title="3.常见的环境变量"></a>3.常见的环境变量</h2><ul>
+<li>PATH：决定了shell将在哪些目录中寻找命令和程序</li>
+<li>HOME：当前用户的主目录</li>
+<li>MAIL：当前用户的邮件存放目录</li>
+<li>SHELL：当前用户用的是那种Shell</li>
+<li>HISTSIZE：保存历史命令记录的条数</li>
+<li>LOGNAME：当前用户的登录名</li>
+<li>HOSTNAME：主机的名称。</li>
+<li>LANG/LANGUGE：和语言相关的环境变量，使用多种语言的用户可以修改此环境变量</li>
+<li>PS1：基本提示符，对于root是#，对于普通用户为$，在我手中的ubuntu10.10中则是一个字符串，显示了用户名、系统名和当前目录名在内的信息。</li>
+<li>PS2：是附属提示符，默认是”&gt;”。可以修改此环境变量来修改当前的命令符。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/环境变量/" rel="tag"># 环境变量</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/24/开源License/" rel="next" title="开源License">
+                <i class="fa fa-chevron-left"></i> 开源License
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木道人</p>
+              <p class="site-description motion-element" itemprop="description">看风的必不撒种；望云的必不收割。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="0" target="_blank">0</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="1" target="_blank">1</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="2" target="_blank">2</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Linux下的环境变量"><span class="nav-number">1.</span> <span class="nav-text">1.Linux下的环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-etc-profile-login-shell时读取）"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 /etc/profile(login shell时读取）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-etc-environment"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 /etc/environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-bash-profile-login-shell-才会读"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 ~/.bash_profile (login shell 才会读)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-bashrc"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 ~/.bashrc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-bash-logout"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 ~/.bash_logout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-小结"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-环境变量的查看方法及相关命令"><span class="nav-number">2.</span> <span class="nav-text">2.环境变量的查看方法及相关命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-常见的环境变量"><span class="nav-number">3.</span> <span class="nav-text">3.常见的环境变量</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木道人</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
