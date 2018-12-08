@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-06T14:28:46.424Z</updated>
+  <updated>2018-12-08T08:32:24.670Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Web.xml中配置spring配置文件</title>
+    <link href="http://yoursite.com/2018/12/08/web.xml%E4%B8%AD%E9%85%8D%E7%BD%AEspring%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"/>
+    <id>http://yoursite.com/2018/12/08/web.xml中配置spring配置文件/</id>
+    <published>2018-12-08T08:33:33.170Z</published>
+    <updated>2018-12-08T08:32:24.670Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-web-xml的上下文参数配置方法"><a href="#1-web-xml的上下文参数配置方法" class="headerlink" title="1. web.xml的上下文参数配置方法"></a>1. web.xml的上下文参数配置方法</h2><p>web.xml介绍请参见<a href="https://mudaoren.github.io/2018/10/30/Tomcat%E7%9A%84web%E9%85%8D%E7%BD%AE/" title="Tomcat的web.xml配置" target="_blank" rel="noopener">Tomcat的web.xml配置</a>。</p><pre><code>&lt;context-param&gt;  &lt;param-name&gt;webmaster&lt;/param-name&gt;  &lt;param-value&gt;myaddress@mycompany.com&lt;/param-value&gt;  &lt;description&gt;    The EMAIL address of the administrator to whom questions    and comments about this application should be addressed.  &lt;/description&gt;&lt;/context-param&gt;</code></pre><p>web.xml中直接配置的上下文变量，可以被本webapp中的所有jsp和servlet调用。代码中可以通过如下代码获取</p><pre><code>String value = getServletContext().getInitParameter(&quot;webmaster&quot;);</code></pre><h2 id="2-Spring上下文配置文件在web-xml中的配置方法"><a href="#2-Spring上下文配置文件在web-xml中的配置方法" class="headerlink" title="2. Spring上下文配置文件在web.xml中的配置方法"></a>2. Spring上下文配置文件在web.xml中的配置方法</h2><p>Tomcat中集成Spring服务，也可以通过web.xml配置完成spring配置文件的加载，即Spring上下文的加载。</p><p>首先，需要在web.xml中配置Spring的上下文监听器。当webapp被加载时，将启动Spring的监听器。</p><pre><code>&lt;listener&gt;   &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;  &lt;/listener&gt;</code></pre><p>Spring上下文加载监听器启动时会读取contextConfigLocation来获取配置文件。<br>1）当web.xml中没有配置contextConfigLocation时，将默认加载<code>/WEB-INF/applicationContext.xml</code>。<br>2）如果web.xml中配置了上下文参数contextConfigLocation，则会加载这个参数指定路径下的文件。在web.xml中可以通过如下配置：</p><pre><code>&lt;context-param&gt;    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;    &lt;param-value&gt;classpath*:**/spring-*.xml&lt;/param-value&gt;&lt;/context-param&gt;</code></pre><h2 id="3-Spring的contextConfigLocation参数不同配置方式说明"><a href="#3-Spring的contextConfigLocation参数不同配置方式说明" class="headerlink" title="3. Spring的contextConfigLocation参数不同配置方式说明"></a>3. Spring的contextConfigLocation参数不同配置方式说明</h2><p>contextConfigLocation在web.xml中可以通过指定具体的路径或者class目录下的路径如<code>classpath:</code>和<code>classpath*:</code>两种配置方式，这两种配置方式是指定配置文件的位置信息。</p><ul><li>classpath：到webapp的class路径中查找找文件。</li><li>classpath*：到webapp的class路径及jar文件中(class路径)进行查找。</li></ul><h3 id="3-1-指定具体的文件名"><a href="#3-1-指定具体的文件名" class="headerlink" title="3.1 指定具体的文件名"></a>3.1 指定具体的文件名</h3><p>1) 指定目录下的具体文件。</p><pre><code>&lt;context-param&gt;    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;    &lt;param-value&gt;WEB-INF/applicationContext.xml&lt;/param-value&gt;&lt;/context-param&gt;</code></pre><p>2）class路径下的具体文件</p><pre><code>&lt;context-param&gt;    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;    &lt;param-value&gt;classpath:spring-base.xml,classpath:spring-datasource.xml&lt;/param-value&gt;&lt;/context-param&gt;</code></pre><p>3）指定目录下文件及jar中的配置文件，在哪里找到都可以。</p><pre><code>&lt;context-param&gt;    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;    &lt;param-value&gt;classpath*:spring-base.xml,classpath:spring-datasource.xml&lt;/param-value&gt;&lt;/context-param&gt;</code></pre><h3 id="3-2-使用通配符"><a href="#3-2-使用通配符" class="headerlink" title="3.2 使用通配符"></a>3.2 使用通配符</h3><p>1）class路径下以spring-或者spring-datasource-开头的xml类型的配置文件<br>    <context-param><br>        <param-name>contextConfigLocation</param-name><br>        <param-value>classpath:spring-<em>.xml,classpath:spring-datasource-</em>.xml</param-value><br>    </context-param></p><p>2）class路径及所有子路径下以spring-或者spring-datasource-开头的xml类型的配置文件<br>    <context-param><br>        <param-name>contextConfigLocation</param-name><br>        <param-value>classpath:*<em>spring-</em>.xml,classpath:spring-datasource-*.xml</param-value><br>    </context-param></p><p>3）class路径下以spring-或者spring-datasource-开头的xml类型的配置文件。<strong>注意，使用通配符时，无法匹配jar中的配置文件了</strong>，如果需要匹配，只能指定具体的文件名。</p><pre><code>&lt;context-param&gt;    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;    &lt;param-value&gt;classpath*:spring-*.xml,classpath:spring-datasource-*.xml&lt;/param-value&gt;&lt;/context-param&gt;</code></pre><p><strong>最佳实践：</strong></p><ul><li>如果配置内容比较多，建议分不同的配置文件存放。</li><li>配置文件较多时，建议统一目录存放。</li><li>如果多个配置文件分属不同的功能模块，可以划分配置子目录存放。</li><li>如果需要加载的配置文件较多时，建议在web.xml中统一加载为spring-context.xml，将需要加载的配置文件使用Spring配置文件的import方法集中到spring-context.xml中加载。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;1-web-xml的上下文参数配置方法&quot;&gt;&lt;a href=&quot;#1-web-xml的上下文参数配置方法&quot; class=&quot;headerlink&quot; title=&quot;1. web.xml的上下文参数配置方法&quot;&gt;&lt;/a&gt;1. web.xml的上下文参数配置方法&lt;/h2&gt;&lt;p&gt;
+      
+    
+    </summary>
+    
+      <category term="tomcat" scheme="http://yoursite.com/categories/tomcat/"/>
+    
+    
+      <category term="tomcat" scheme="http://yoursite.com/tags/tomcat/"/>
+    
+      <category term="web" scheme="http://yoursite.com/tags/web/"/>
+    
+      <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux挂载命令mount用法</title>
@@ -400,9 +429,9 @@
       <category term="其他" scheme="http://yoursite.com/categories/%E5%85%B6%E4%BB%96/"/>
     
     
-      <category term="书单" scheme="http://yoursite.com/tags/%E4%B9%A6%E5%8D%95/"/>
-    
       <category term="能力提升" scheme="http://yoursite.com/tags/%E8%83%BD%E5%8A%9B%E6%8F%90%E5%8D%87/"/>
+    
+      <category term="书单" scheme="http://yoursite.com/tags/%E4%B9%A6%E5%8D%95/"/>
     
   </entry>
   
@@ -538,35 +567,6 @@
     
     
       <category term="Spring MVC" scheme="http://yoursite.com/tags/Spring-MVC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基于dubbo的微服务部分容器化部署</title>
-    <link href="http://yoursite.com/2018/10/22/%E5%9F%BA%E4%BA%8Edubbo%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%83%A8%E5%88%86%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2018/10/22/基于dubbo的微服务部分容器化部署/</id>
-    <published>2018-10-22T15:20:07.273Z</published>
-    <updated>2018-11-01T23:44:57.896Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Vmall微服务特点"><a href="#Vmall微服务特点" class="headerlink" title="Vmall微服务特点"></a><table><tr><td bgcolor="#54FF9F"><strong>Vmall微服务特点</strong></td></tr></table></h2><ul><li>Vmall采用基于dubbo+zookeeper的RPC微服务化架构方案，划分40多个微服务。缓存层采用redis、memcache，持久层采用mysql，消息框架使用rocketMQ。</li><li>微服务间即存在RPC调用，又包含部分http调用。</li><li>生产环境同时部署在华为公有云的北京、廊坊和广州三地，三地间通过专线建立连接。</li></ul><h2 id="容器化策略"><a href="#容器化策略" class="headerlink" title="容器化策略"></a><table><tr><td bgcolor="#54FF9F"><strong>容器化策略</strong></td></tr></table></h2><ul><li>将服务分成有状态服务和无状态服务，因对数据要求较高，所以数据库等有状态服务暂时保持部署在ECS，仅对无状态服务实行容器化。</li><li>分步骤实施，初始阶段选取两个微服务进行容器化灰度试点，保证容器化的风险可控。</li><li>对docker swarm、k8s、mesos+Marathon、华为公有云CCE和华为IT平台的HIC的对比，鉴于成本、可靠性、稳定性等因素，决定采用华为公有云CCE。</li></ul><h2 id="面临的问题"><a href="#面临的问题" class="headerlink" title="面临的问题"></a><table><tr><td bgcolor="#54FF9F"><strong>面临的问题</strong></td></tr></table></h2><p>因为华为云的CCE是基于K8s的云服务引擎，很好的保证了高可用、弹性伸缩、监控告警、滚动升级、镜像管理等功能，所以我们只需要应对一下几个关键问题：</p><ul><li>统一配置中心，容器化需要统一配置中心的支持。</li><li>日志采集，需要解决日志的集中采集和处理问题。</li><li>部分服务的容器化，需要解决容器服务的dubbo注册问题和容器服务与非容器服务之间的网络通信问题。</li></ul><h2 id="实施过程"><a href="#实施过程" class="headerlink" title="实施过程"></a><table><tr><td bgcolor="#54FF9F"><strong>实施过程</strong></td></tr></table></h2><p>1.统一配置中心。选用携程的apollo开源组件。<br>2.日志采集与处理。将应用日志输出到宿主机目录，通过统一开源组件收集。<br>3.容器部署：<br>　步骤一 镜像制作</p><p>开机启动脚本</p><pre><code>#!/bin/bashif [[&quot;${ELB_IP}&quot;x!=&quot;&quot;x]]&amp;&amp;[SERVICE_NAME] ; then    cp /etc/hosts /etc/hosts.temp    sed -i &apos;s/^.*$&apos;{SERVICE_NAME}&apos;/&apos;${ELB_IP}&apos; $&apos;{SERVICE_NAME}&apos;/g&apos; /etc/hosts.temp    cat /etc/hosts.temp &gt; /etc/hostselse    echo &quot;Please set env SERVICE_NAME and ELB_IP&quot;    return1fisource /etc/profilebash /root/myApp/bin/start.sh run</code></pre><p>　步骤二 镜像上传<br>　步骤三 创建cce集群<br>　步骤四 创建工作负载<br>　步骤五 创建负载均衡<br>　步骤六 为工作负载创建访问方式<br>  步骤七 域名访问方式<br>　　　　四层负载均衡和七层负载均衡</p><p>遇到的问题？<br><strong>1）跨k8s集群的docker与zookeeper间的通信问题！</strong><br><strong>dubbo注册原理：</strong><br>dubbo服务提供者在注册服务到zookeeper时，如果dubbo:protocol中配置了本机IP和port会使用配置的参数到zookeeper注册，本机则会监听该port，如果服务的dubbo:protocol没有配置过本机IP和port时，dubbo服务提供者将通过网卡自己获取本机IP，同时port默认取20880，docker中的dubbo服务会获取到docker的私有ip。<br><strong>问题：</strong><br>实际试点时，dubbo和zookeeper是在单独的虚拟机上，并不属于k8s集群，而服务提供者在docker中，此时服务提供者将docker私有IP注册到zookeeper上，服务提供者定时向zookeeper发送TCP心跳保持连接，当消费者查找到这个docker的Ip，并去连接时就会出现找不到IP的问题，因为docker的私有Ip不能暴露到pod外。<br><strong>解决方法：</strong><br>方法一 通过iptables路由规则，通过多层桥接配置实现网络连通。<br>方法二 通过配置私网四层负载均衡，将负载均衡和docker做IP端口映射，并将负载均衡IP配置到dubbo:protocol中。消费者会访问负载均衡IP和端口，进而找到docker中的应用。在公有云上四层负载均衡是免费的，建议每个服务申请一个负载均衡，这样端口配置会更灵活。这里需要配套修改镜像，使用环境变量的方式将负载均衡IP替换docker的hosts文件中的私有IP，并在k8s的工作负载上配置环境变量。这个方法还存在一个缺点，相同负载均衡对应的相同服务注册到zookeeper上时，显示是完全相同的两条，无法区分。<br>方法三 升级dubbo到最新的2.6.4版本，该版本增加了对容器化的支持，它将注册IP、port与监听IP、port做了区分，向zookeeper注册时可以使用负载均衡的参数，docker服务本地监听仍然使用本地私有IP和port。</p><p>日志输出问题<br>配置中心问题<br><a href="https://blog.csdn.net/liu306487103/article/details/52221986" target="_blank" rel="noopener">https://blog.csdn.net/liu306487103/article/details/52221986</a><br><a href="https://www.kancloud.cn/good-rain/micro-services/248954" target="_blank" rel="noopener">https://www.kancloud.cn/good-rain/micro-services/248954</a><br><a href="https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D</a></p><p>VPC与子网<br>k8s<br>docker</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;Vmall微服务特点&quot;&gt;&lt;a href=&quot;#Vmall微服务特点&quot; class=&quot;headerlink&quot; title=&quot;Vmall微服务特点&quot;&gt;&lt;/a&gt;&lt;table&gt;&lt;tr&gt;&lt;td bgcolor=&quot;#54FF9F&quot;&gt;&lt;strong&gt;Vmall微服务特点&lt;/str
-      
-    
-    </summary>
-    
-      <category term="容器化" scheme="http://yoursite.com/categories/%E5%AE%B9%E5%99%A8%E5%8C%96/"/>
-    
-    
-      <category term="容器化" scheme="http://yoursite.com/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/"/>
-    
-      <category term="docker" scheme="http://yoursite.com/tags/docker/"/>
-    
-      <category term="dubbo" scheme="http://yoursite.com/tags/dubbo/"/>
     
   </entry>
   
