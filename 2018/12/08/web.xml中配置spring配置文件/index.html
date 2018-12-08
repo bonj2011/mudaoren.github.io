@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="1. web.xml的上下文参数配置方法web.xml介绍请参见Tomcat的web.xml配置。 &amp;lt;context-param&amp;gt;   &amp;lt;param-name&amp;gt;webmaster&amp;lt;/param-name&amp;gt;   &amp;lt;param-value&amp;gt;myaddress@mycompany.com&amp;lt;/param-value&amp;gt;   &amp;lt;descript">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-08T08:32:24.670Z">
+<meta property="og:updated_time" content="2018-12-08T09:41:50.197Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web.xml中配置spring配置文件">
 <meta name="twitter:description" content="1. web.xml的上下文参数配置方法web.xml介绍请参见Tomcat的web.xml配置。 &amp;lt;context-param&amp;gt;   &amp;lt;param-name&amp;gt;webmaster&amp;lt;/param-name&amp;gt;   &amp;lt;param-value&amp;gt;myaddress@mycompany.com&amp;lt;/param-value&amp;gt;   &amp;lt;descript">
@@ -375,7 +375,7 @@
     &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
     &lt;param-value&gt;classpath*:**/spring-*.xml&lt;/param-value&gt;
 &lt;/context-param&gt;
-</code></pre><h2 id="3-Spring的contextConfigLocation参数不同配置方式说明"><a href="#3-Spring的contextConfigLocation参数不同配置方式说明" class="headerlink" title="3. Spring的contextConfigLocation参数不同配置方式说明"></a>3. Spring的contextConfigLocation参数不同配置方式说明</h2><p>contextConfigLocation在web.xml中可以通过指定具体的路径或者class目录下的路径如<code>classpath:</code>和<code>classpath*:</code>两种配置方式，这两种配置方式是指定配置文件的位置信息。</p>
+</code></pre><h2 id="3-Spring的contextConfigLocation参数不同配置方式说明"><a href="#3-Spring的contextConfigLocation参数不同配置方式说明" class="headerlink" title="3. Spring的contextConfigLocation参数不同配置方式说明"></a>3. Spring的contextConfigLocation参数不同配置方式说明</h2><p>contextConfigLocation在web.xml中可以通过指定具体的路径或者class目录下的路径如<code>classpath:</code>和<code>classpath*:</code>两种配置方式，这两种配置方式是指定配置文件的位置信息。配置文件的名称可以使用功能通配符。</p>
 <ul>
 <li>classpath：到webapp的class路径中查找找文件。</li>
 <li>classpath*：到webapp的class路径及jar文件中(class路径)进行查找。</li>
@@ -409,6 +409,7 @@
 <li>如果多个配置文件分属不同的功能模块，可以划分配置子目录存放。</li>
 <li>如果需要加载的配置文件较多时，建议在web.xml中统一加载为spring-context.xml，将需要加载的配置文件使用Spring配置文件的import方法集中到spring-context.xml中加载。</li>
 </ul>
+<p>spring监听器ContextLoaderListener初始化过程可参见<a href="https://blog.csdn.net/datoubangzhu/article/details/78856235。" target="_blank" rel="noopener">https://blog.csdn.net/datoubangzhu/article/details/78856235。</a></p>
 
       
     </div>
