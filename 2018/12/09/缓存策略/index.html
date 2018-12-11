@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化  1. 缓存的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-10T23:40:52.813Z">
+<meta property="og:updated_time" content="2018-12-11T23:31:16.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="缓存设计">
 <meta name="twitter:description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化  1. 缓存的">
@@ -392,7 +392,30 @@
 <blockquote>
 <p><a href="https://en.wikipedia.org/wiki/Bloom_filter" title="布隆过滤器相关知识" target="_blank" rel="noopener">布隆过滤器相关知识</a><br><a href="https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter" target="_blank" rel="noopener">布隆过滤器开源代码</a></p>
 </blockquote>
-<h2 id="6-无底洞问题"><a href="#6-无底洞问题" class="headerlink" title="6. 无底洞问题"></a>6. 无底洞问题</h2>
+<h2 id="6-无底洞问题"><a href="#6-无底洞问题" class="headerlink" title="6. 无底洞问题"></a>6. 无底洞问题</h2><p>　　分布式缓存架构中，当缓存数据过多时，被划分成多个缓存节点。当缓存节点达到一定的数量时，如果继续增加节点可能会导致一次业务需要请求多个节点的缓存数据（典型的如批量数据操作），反而导致性能降低。也就是节点多，不一定性能好。<br>　　出现这个现象的原因是键值数据一般会采用哈希函数将key置于不同的节点上，这种哈希分配与业务无关，当一个业务需要批量操作数据时，可能要跨多个节点，这就涉及到多个网络操作，造成耗时增多。<br>　　如何避免无底洞问题？当数据量庞大时，必然会造成节点数增多，这种情况无法避免，但是可以采取措施，降低无底洞问题造成的影响。</p>
+<ul>
+<li>并行操作。在批量处理数据时采用多线程并行，虽然网络访问次数未改变，但总耗时降低。</li>
+<li>分业务存放数据。使用缓存中间件的现有功能，比如redis的hashtag功能，将业务相关的数据放到一个节点下。但是这种方法会造成业务数据分布不均，另外数据分布与业务强相关会造成维护成本提高。</li>
+</ul>
+<h2 id="7-缓存雪崩"><a href="#7-缓存雪崩" class="headerlink" title="7. 缓存雪崩"></a>7. 缓存雪崩</h2><p>　　缓存层宕掉后，流量会集中涌向后端存储层，导致存储层调用量暴增。如何避免出现缓存雪崩？</p>
+<ul>
+<li>提高缓存层可用性。比如主从缓存架构，灾备部署等，redis的Sentinel和Cluster功能等。</li>
+<li>缓存降级或者隔离。当缓存层出现故障时，做降级处理或者对不同的重要数据做好依赖隔离，避免一种数据出现问题影响到整个存储层。常用的降级和依赖隔离工具Hystrix。</li>
+</ul>
+<ol start="8">
+<li>热点数据更新策略<br>　　一般缓存都会设置过期时间，当某一条热点数据失效瞬间，可能会有大量请求来访问，造成否段瞬间负载过大。比如微博系统，宝强事件、小璐事件、丽颖结婚官宣等都造成了微博的瞬间不可用，除此之外还有电商网站的抢购活动，比如淘宝双十一、小米抢购等都可能出现这种问题。<br>　　系统该如何避免这种情况的出现呢？</li>
+</ol>
+<ul>
+<li>重建线程互斥。当热点数据失效时，只允许一个请求线程去后端存储层获取数据，其他线程等待（设定等待超时时间）或直接返回（一般会采用后者），避免所有请求都到后端</li>
+<li>过期前主动更新。这种方式可以完全避免数据失效对后端带来的冲击，实现简单，但处理不好可能会出现线程间的调度问题。</li>
+<li>永不过期的缓存数据。设立单独的线程，主动检查过期数据，在数据过期前主动进行刷新。这种方式并不能完全避免热点数据失效，因为在刷新线程执行前恰好一条数据出现失效且恰好属于热点数据，这就会出现问题，并且这种方法也会增加维护工作量。</li>
+</ul>
+<p>　　除此之外，缓存数据还有一些优秀实践，比如数据预热、不用数据过期时间不同。</p>
+<ul>
+<li>数据预热。为防止数据失效，电商抢购等活动开始前可以提前对缓存系统进行预热，通过自动化手段提前发起可控的大量业务请求，刷新缓存中的数据。</li>
+<li>设置不同的过期时间。将缓存数据的过期时间打散，避免集中失效时大量请求同时访问后端存储层。</li>
+</ul>
+
       
     </div>
     
@@ -595,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-缓存的利与弊"><span class="nav-number">1.</span> <span class="nav-text">1. 缓存的利与弊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-利："><span class="nav-number">1.1.</span> <span class="nav-text">1.1 利：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-弊"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 弊</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-缓存使用的前提与场景"><span class="nav-number">2.</span> <span class="nav-text">2. 缓存使用的前提与场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-使用前提"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-使用场景"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-更新策略"><span class="nav-number">3.</span> <span class="nav-text">3. 更新策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-LRU-LFU-FIFO算法剔除。"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 LRU/LFU/FIFO算法剔除。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-超时剔除。"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 超时剔除。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-主动更新。"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 主动更新。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-缓存粒度控制"><span class="nav-number">4.</span> <span class="nav-text">4.缓存粒度控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-缓存穿透"><span class="nav-number">5.</span> <span class="nav-text">5.缓存穿透</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-将空对象缓存。"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 将空对象缓存。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-布隆过滤器"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 布隆过滤器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-无底洞问题"><span class="nav-number">6.</span> <span class="nav-text">6. 无底洞问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-缓存的利与弊"><span class="nav-number">1.</span> <span class="nav-text">1. 缓存的利与弊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-利："><span class="nav-number">1.1.</span> <span class="nav-text">1.1 利：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-弊"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 弊</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-缓存使用的前提与场景"><span class="nav-number">2.</span> <span class="nav-text">2. 缓存使用的前提与场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-使用前提"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-使用场景"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-更新策略"><span class="nav-number">3.</span> <span class="nav-text">3. 更新策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-LRU-LFU-FIFO算法剔除。"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 LRU/LFU/FIFO算法剔除。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-超时剔除。"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 超时剔除。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-主动更新。"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 主动更新。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-缓存粒度控制"><span class="nav-number">4.</span> <span class="nav-text">4.缓存粒度控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-缓存穿透"><span class="nav-number">5.</span> <span class="nav-text">5.缓存穿透</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-将空对象缓存。"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 将空对象缓存。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-布隆过滤器"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 布隆过滤器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-无底洞问题"><span class="nav-number">6.</span> <span class="nav-text">6. 无底洞问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-缓存雪崩"><span class="nav-number">7.</span> <span class="nav-text">7. 缓存雪崩</span></a></li></ol></div>
             
 
           </div>
