@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  缓存使用场景和更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化">
+<meta name="description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化  1. 缓存的">
 <meta name="keywords" content="缓存，分布式，高性能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="缓存设计">
 <meta property="og:url" content="http://yoursite.com/2018/12/09/缓存策略/index.html">
 <meta property="og:site_name" content="木道人">
-<meta property="og:description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  缓存使用场景和更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化">
+<meta property="og:description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化  1. 缓存的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-09T15:51:17.557Z">
+<meta property="og:updated_time" content="2018-12-10T23:40:52.813Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="缓存设计">
-<meta name="twitter:description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  缓存使用场景和更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化">
+<meta name="twitter:description" content="互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。 　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：  更新策略 缓存粒度控制 缓存击穿 缓存雪崩 无底洞问题 热点数据优化  1. 缓存的">
 
 
 
@@ -357,7 +357,7 @@
         <p><strong><em>互联网技术的发展遵循的一个基本原则：时间换空间或者空间换时间。</em></strong></p>
 <p>　　缓存就是将数据存放在距离计算最快的地方，以加快处理速度。缓存也能有效隔离前端请求压力的传递，降低后端负载。然而事物都具有两面性，缓存层的加入往往会增加系统复杂性，增大系统维护的难度。因此是否设置缓存层往往需要权衡利弊，考虑缓存层会带来问题，如：</p>
 <ul>
-<li>缓存使用场景和更新策略</li>
+<li>更新策略</li>
 <li>缓存粒度控制</li>
 <li>缓存击穿</li>
 <li>缓存雪崩</li>
@@ -381,7 +381,18 @@
 <li>需要快速响应的场景：比如涉及到大量图片的访问时，因为图片占用带宽，往往会选用CDN。对数据访问速度有要求的场景可以选用redis等缓存中间件或者本地缓存。</li>
 <li>并发高的场景。抢购、促销等活动时，往往瞬间请求量很大，为了降低后端压力，可以将库存等热点数据放到缓存中，降低流量对后端数据库的冲击。</li>
 </ul>
-
+<h2 id="3-更新策略"><a href="#3-更新策略" class="headerlink" title="3. 更新策略"></a>3. 更新策略</h2><p>　　缓存中的数据一般是由生效时间的，除非把具有持久化功能的缓存当做数据库使用。常用的缓存更新策略主要有几种，具体选用哪种策略，需要根据业务场景对一致性的要求进行选择。</p>
+<h3 id="3-1-LRU-LFU-FIFO算法剔除。"><a href="#3-1-LRU-LFU-FIFO算法剔除。" class="headerlink" title="3.1 LRU/LFU/FIFO算法剔除。"></a>3.1 LRU/LFU/FIFO算法剔除。</h3><p>　　这些剔除算法执行自动更新策略，认为干预少，数据一致性差。</p>
+<h3 id="3-2-超时剔除。"><a href="#3-2-超时剔除。" class="headerlink" title="3.2 超时剔除。"></a>3.2 超时剔除。</h3><p>　　缓存中的数据都设置一个过期时间，使用缓存中的数据时，每次都判断数据是否过期，如果过期，重新从数据源获取。如果数据源数据被更改而缓存数据未过期，此时会存在不一致的问题。</p>
+<h3 id="3-3-主动更新。"><a href="#3-3-主动更新。" class="headerlink" title="3.3 主动更新。"></a>3.3 主动更新。</h3><p>　　数据源的数据被改动时，主动推送到缓存来更新数据。这种方式数据一致性会非常好。为了保证可靠性，这种方式往往也会设置过期时间，如果过期后未被更新，则需要主动从数据源获取。</p>
+<h2 id="4-缓存粒度控制"><a href="#4-缓存粒度控制" class="headerlink" title="4.缓存粒度控制"></a>4.缓存粒度控制</h2><p>　　缓存粒度就是在做缓存层时，需要考虑缓存的数据范围。缓存全部数据？缓存部分数据的部分字段？一般缓存层是用来缓存热点数据。<br>　　为何要考虑缓存粒度？因为做缓存的过程是会占用空间和时间的，缓存数据量大时，会占用大量内存，缓存更新的过程也会更频繁，缓存过程更耗时。而如果仅仅缓存部分数据的部分字段，如果数据字段有变动，代码就需要及时更新。因此要根据具体使用情况来确定粒度。<br>　　在实践中商城的购物车往往对数据的准确性并不敏感，此时可选用具有持久化功能的全缓存数据库替代mysql等数据源。</p>
+<h2 id="5-缓存穿透"><a href="#5-缓存穿透" class="headerlink" title="5.缓存穿透"></a>5.缓存穿透</h2><p>　　缓存穿透是指查询一个根本不存在的数据（一般为非热点数据），在缓存层和数据持久层都不会被命中。这种请求的特点是每次都会经过缓存层再到数据源，这会导致流量直接冲击到后端数据源。<br>　　如果出现大量的缓存穿透也会造成很大的问题，比如数据源并发量过大响应超时、宕机等。<br>　　如何避免？</p>
+<h3 id="5-1-将空对象缓存。"><a href="#5-1-将空对象缓存。" class="headerlink" title="5.1 将空对象缓存。"></a>5.1 将空对象缓存。</h3><p>　　将空对象做缓存会将请求隔离到缓存层，避免对后端的冲击，但是如果缓存失效前，存储层数据被添加，此时会存在数据不一致的问题。建议超时时间设置短一点。</p>
+<h3 id="5-2-布隆过滤器"><a href="#5-2-布隆过滤器" class="headerlink" title="5.2 布隆过滤器"></a>5.2 布隆过滤器</h3><p>　　将持久层拥有的数据的逐渐集合存设置到缓存中，如果在缓存中获取数据失败，则先查询缓存中的主键集合，如果集合中不存在该数据主键，则不需要再到持久层查询数据。这种方式代码会比较复杂。</p>
+<blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Bloom_filter" title="布隆过滤器相关知识" target="_blank" rel="noopener">布隆过滤器相关知识</a><br><a href="https://github.com/erikdubbelboer/redis-lua-scaling-bloom-filter" target="_blank" rel="noopener">布隆过滤器开源代码</a></p>
+</blockquote>
+<h2 id="6-无底洞问题"><a href="#6-无底洞问题" class="headerlink" title="6. 无底洞问题"></a>6. 无底洞问题</h2>
       
     </div>
     
@@ -584,7 +595,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-缓存的利与弊"><span class="nav-number">1.</span> <span class="nav-text">1. 缓存的利与弊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-利："><span class="nav-number">1.1.</span> <span class="nav-text">1.1 利：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-弊"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 弊</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-缓存使用的前提与场景"><span class="nav-number">2.</span> <span class="nav-text">2. 缓存使用的前提与场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-使用前提"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-使用场景"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 使用场景</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-缓存的利与弊"><span class="nav-number">1.</span> <span class="nav-text">1. 缓存的利与弊</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-利："><span class="nav-number">1.1.</span> <span class="nav-text">1.1 利：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-弊"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 弊</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-缓存使用的前提与场景"><span class="nav-number">2.</span> <span class="nav-text">2. 缓存使用的前提与场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-使用前提"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 使用前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-使用场景"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-更新策略"><span class="nav-number">3.</span> <span class="nav-text">3. 更新策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-LRU-LFU-FIFO算法剔除。"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 LRU/LFU/FIFO算法剔除。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-超时剔除。"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 超时剔除。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-主动更新。"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 主动更新。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-缓存粒度控制"><span class="nav-number">4.</span> <span class="nav-text">4.缓存粒度控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-缓存穿透"><span class="nav-number">5.</span> <span class="nav-text">5.缓存穿透</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-将空对象缓存。"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 将空对象缓存。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-布隆过滤器"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 布隆过滤器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-无底洞问题"><span class="nav-number">6.</span> <span class="nav-text">6. 无底洞问题</span></a></li></ol></div>
             
 
           </div>
