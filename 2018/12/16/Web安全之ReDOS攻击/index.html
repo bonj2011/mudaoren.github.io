@@ -96,7 +96,7 @@
 <meta property="og:image" content="https://i.imgur.com/1GELwiZ.png">
 <meta property="og:image" content="https://i.imgur.com/yoemEiG.png">
 <meta property="og:image" content="https://i.imgur.com/cjuUvZH.png">
-<meta property="og:updated_time" content="2018-12-16T10:31:34.113Z">
+<meta property="og:updated_time" content="2018-12-16T12:42:57.760Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web安全之ReDOS攻击">
 <meta name="twitter:description" content="正则表达式　　正则表达式（regular expression）又称为规则表达式，就是用一个“字符串”来描述一个特征，然后去检索、替换另一个符合这个特征“字符串”。 正则表达式引擎分类　　正则表达式引擎分为两类：NFA和DFA。  　　NFA：匹配过程面临很多的岔路，需要做出选择，一旦某条岔路失败，就需要回朔。类似于回溯法。执行复杂度最大为O（2^n)。 　　DFA：匹配过程是确定的，每个字母需要">
@@ -389,7 +389,8 @@
 <li>(.*a){x} | for x &gt; 10</li>
 </ul>
 <h2 id="哪些环节易受攻击"><a href="#哪些环节易受攻击" class="headerlink" title="哪些环节易受攻击"></a>哪些环节易受攻击</h2><p><img src="https://i.imgur.com/yoemEiG.png" alt=""><br>　　网络系统的每一个环节都有正则表达式的存在，因此都有可能受到ReDos攻击。因此每一层设备的正则表达式都应该经过准确的验证。</p>
-<h2 id="如何测试"><a href="#如何测试" class="headerlink" title="如何测试"></a>如何测试</h2><p>　　使用微软测试工具<a href="https://pcwin.com/Utilities/Misc__Utilities/SDL_Regex_Fuzzer/download.htm" title="Downloading SDL Regex Fuzzer 1.1" target="_blank" rel="noopener">Microsoft SDL Regex Fuzzer</a>，测试<code>^(a+)+$</code>，测试结果是Failed。<br>　　<img src="https://i.imgur.com/cjuUvZH.png" alt=""></p>
+<h2 id="如何测试"><a href="#如何测试" class="headerlink" title="如何测试"></a>如何测试</h2><p>　　使用微软测试工具<a href="https://pcwin.com/Utilities/Misc__Utilities/SDL_Regex_Fuzzer/download.htm" title="Downloading SDL Regex Fuzzer 1.1" target="_blank" rel="noopener">Microsoft SDL Regex Fuzzer</a>，测试<code>^(a+)+$</code>，测试结果是Failed。<a href="https://github.com/mudaoren/-/raw/master/RegexFuzzerSetup.zip" target="_blank" rel="noopener">点击下载。</a><br>　　<img src="https://i.imgur.com/cjuUvZH.png" alt="">
+　　</p>
 <p>参考资料：</p>
 <blockquote>
 <p>《精通正则表达式》<br>《编译原理龙书第二版》<br><a href="https://xz.aliyun.com/t/2723#toc-9" target="_blank" rel="noopener">https://xz.aliyun.com/t/2723#toc-9</a><br><a href="https://www.regular-expressions.info/catastrophic.html" target="_blank" rel="noopener">https://www.regular-expressions.info/catastrophic.html</a><br><a href="https://www.andseclab.com/2018/04/19/owasp%E6%B1%89%E5%8C%96%E6%94%BB%E5%87%BB%E7%B3%BB%E5%88%97%E5%A4%A7%E5%85%A8%E4%BA%94%E5%8D%81%E4%B8%80%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/" target="_blank" rel="noopener">https://www.andseclab.com/2018/04/19/owasp%E6%B1%89%E5%8C%96%E6%94%BB%E5%87%BB%E7%B3%BB%E5%88%97%E5%A4%A7%E5%85%A8%E4%BA%94%E5%8D%81%E4%B8%80%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/</a></p>
@@ -437,6 +438,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/17/大型网站中常用的缓存类型/" rel="prev" title="大型网站中常用的缓存类型">
+                大型网站中常用的缓存类型 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -513,7 +518,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -535,7 +540,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
