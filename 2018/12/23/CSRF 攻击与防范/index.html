@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Web安全,CSRF,Token," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="木道人" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="CSRF（Cross Site Request Forgery），跨站点请求伪造，是一种常见的Web攻击方式。 1. CSRF如何攻击？　　CSRF攻击之所以会成功是由于请求操作的所有参数都能被攻击者所预知。　　1） 一个普通的银行用户A，通过银行网站http://huixfeng.bank.com/transfer?account=A&amp;amp;amount=20000&amp;amp;to=B， 向">
+<meta name="keywords" content="Web安全,CSRF,Token">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSRF 攻击与防范">
+<meta property="og:url" content="http://yoursite.com/2018/12/23/CSRF 攻击与防范/index.html">
+<meta property="og:site_name" content="木道人">
+<meta property="og:description" content="CSRF（Cross Site Request Forgery），跨站点请求伪造，是一种常见的Web攻击方式。 1. CSRF如何攻击？　　CSRF攻击之所以会成功是由于请求操作的所有参数都能被攻击者所预知。　　1） 一个普通的银行用户A，通过银行网站http://huixfeng.bank.com/transfer?account=A&amp;amp;amount=20000&amp;amp;to=B， 向">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/QcuxlgF.png">
+<meta property="og:updated_time" content="2018-12-23T09:08:41.486Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSRF 攻击与防范">
+<meta name="twitter:description" content="CSRF（Cross Site Request Forgery），跨站点请求伪造，是一种常见的Web攻击方式。 1. CSRF如何攻击？　　CSRF攻击之所以会成功是由于请求操作的所有参数都能被攻击者所预知。　　1） 一个普通的银行用户A，通过银行网站http://huixfeng.bank.com/transfer?account=A&amp;amp;amount=20000&amp;amp;to=B， 向">
+<meta name="twitter:image" content="https://i.imgur.com/QcuxlgF.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/23/CSRF 攻击与防范/"/>
+
+
+
+
+
+  <title>CSRF 攻击与防范 | 木道人</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木道人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/23/CSRF 攻击与防范/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木道人">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木道人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CSRF 攻击与防范</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-23T19:16:30+08:00">
+                2018-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/安全隐私/" itemprop="url" rel="index">
+                    <span itemprop="name">安全隐私</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　CSRF（Cross Site Request Forgery），跨站点请求伪造，是一种常见的Web攻击方式。</p>
+<h2 id="1-CSRF如何攻击？"><a href="#1-CSRF如何攻击？" class="headerlink" title="1. CSRF如何攻击？"></a>1. CSRF如何攻击？</h2><p>　　CSRF攻击之所以会成功是由于<strong>请求操作的所有参数都能被攻击者所预知</strong>。<br>　　1） 一个普通的银行用户A，通过银行网站<code>http://huixfeng.bank.com/transfer?account=A&amp;amount=20000&amp;to=B</code>， 向B用户账户转账20000。正常情况，服务端会对用户A的请求进行验证，假设是通过session完成。<br>　　2） 攻击者X也了解到该银行的转账链接<code>http://huixfeng.bank.com/transfer?account=A&amp;amount=10000&amp;to=X</code>，希望从A的账户向自己的账户X，转账10000元。但是因为服务端会通过session验证，他无法成功完成转账。<br>　　3） X想到了CSRF攻击，他自己做了一个木马网站，通过某些手段诱导了A用户点击这个木马网站。并且木马网站中植入代码<code>http://huixfeng.bank.com/transfer?account=A&amp;amount=10000&amp;to=X</code>,这时，如果A用户点击了木马链接，就会向银行服务发起转账请求。<br>　　4） 尽管X成功的诱导了A向银行发起了转账请求，但是由于银行端需要session验证，所以此时转账并不会成功。 假设用户A在点击木马链接前，恰好登陆过银行的网站，那么A的浏览器cookie中可能还存有认证信息，如果A用户在银行服务器的session此时没有过期，那么这个攻击就成功了。</p>
+<h2 id="2-CSRF-攻击的目标"><a href="#2-CSRF-攻击的目标" class="headerlink" title="2. CSRF 攻击的目标"></a>2. CSRF 攻击的目标</h2><p>　　浏览器具有同源策略，攻击者无法解析浏览器返回的结果。因此<strong>CSRF攻击主要是通过请求连接来触发Web端的某些操作，常见的操作是服务器端数据的增删改</strong>，如同上例中的银行账户数据的变化。Google的Gmail邮箱曾经出现过一个CSRF漏洞，攻击者诱导用户点击木马链接后，向服务端发送了一个为用户设置邮件自动转发规则，将用户的邮件自动转发到攻击者指定的邮箱。</p>
+<h2 id="3-如何防范CSRF"><a href="#3-如何防范CSRF" class="headerlink" title="3. 如何防范CSRF"></a>3. 如何防范CSRF</h2><p>　　目前常用的防御措施：</p>
+<ul>
+<li>验证码</li>
+<li>增加HTTP Referer验证</li>
+<li>增加token验证</li>
+</ul>
+<h3 id="3-1-验证码"><a href="#3-1-验证码" class="headerlink" title="3.1 验证码"></a>3.1 验证码</h3><p>　　重要操作增加验证码校验，强制用户完成互动。比如银行转账或消费时，当超过10000时自动触发验证码验证，当用户输入正确验证码后才能继续操作。但是这种方式严重影响用户体验，并不适合所有场景。</p>
+<h3 id="3-2-增加HTTP-Referer验证"><a href="#3-2-增加HTTP-Referer验证" class="headerlink" title="3.2 增加HTTP Referer验证"></a>3.2 增加HTTP Referer验证</h3><p>　　HTTP Referer是HTTP Header中的字段叫Referer，它记录了该HTTP请求的来源地址。</p>
+<p><img src="https://i.imgur.com/QcuxlgF.png" alt=""></p>
+<p>　　通常情况下，当用户登录一个网站后，在Web页面上的任何操作都是来源于这个网站，这个页面上的所有操作请求的Referer值就是操作所在的页面url。因此服务端可以通过对HTTP Referer进行验证，即可判断该请求是否合法。<br>　　还是以文章开头的例子，用户A在银行界面上发起的所有操作的HTTP Referer值都会带有该网站的域名。而攻击者通过木马网站触发的转账请求的HTTP Referer值是木马网站的url。银行服务端只需要增加对Referer的验证就可以判断该转账操作是否合法。</p>
+<p><strong>优点：</strong><br>　　简单方便。只需要在服务端增加拦截器对请求的HTTP Referer统一校验，没有侵入性。</p>
+<p><strong>缺点：</strong><br>　　1） Referer的值是浏览器提供，尽管你理论上HTTP协议和浏览器可以共同保证。但浏览器并不是完全可信的，有些浏览器比如IE6有方法可以篡改Referer值。<br>　　2） Referer记录下用户的访问来源，涉及到用户隐私保护，在某些地区如欧洲北美等地区用户保护组织并不认可通过Referer发送来源信息，用户可以自己在浏览器中设置禁止发送Referer信息。</p>
+<h3 id="3-3-增加token验证"><a href="#3-3-增加token验证" class="headerlink" title="3.3 增加token验证"></a>3.3 增加token验证</h3><p>　　CSRF的攻击者通过完整伪造用户请求，诱导用户在自己的浏览器发起了操作请求，而此时请求的验证信息完全来源于用户浏览器的cookie。<br>　　基于上述事实使用token验证时，token必须是不可预测的，并且不能存储在cookie中。惯用的做法是在HTTP请求中增加一个token参数，如CSRFToken，参数值是由服务端随机产生并返回给浏览器的数值，在服务端增加拦截器进行验证。<br>　　具体操作中，Web服务端增加两个拦截器，一个token赋值拦截器，一个token验证拦截器。<br>　　1） 用户在登陆网站时，token赋值拦截器会产生一个随机token并将token置于javascript中返回给浏览器。浏览器在接收到返回消息中的javascript时会立即执行该脚本，该脚本的作用是通知浏览器将CSRFToken设置到下次请求的hander中。<br>　　2） 用户再次发起请求时，hander中会携带CSRFToken到服务端，服务端的token验证拦截器会对该CSRFToken进行验证。<br>　　为了实现方便，一般用户的一次会话会产生一个Token，并保存到session中用于token的验证（注意，分布式系统中需要存在session中）。当然也可以每次请求使用一个token，但是这种方式会造成一个问题：当用户在浏览器中同时打开多个页面同时操作时，一个页面消耗掉token，另外一个页面就不能再使用该token了，此时需要服务端一次产生多个token供多个页面使用，这种方式复杂性就增加了。</p>
+<p><strong>优点：</strong><br>　　安全性高，无侵入性。实现原理也并不复杂。</p>
+<p><strong>缺点：</strong><br>　　1） 返回消息中需要携带JavaScript片段，增加了网络传输负担。<br>　　2） 如果网站支持跳转到用户指定个人网站，那么这种方式会造成token泄露，因此这种情况还需要做特殊处理。</p>
+<h3 id="3-4-开源工具"><a href="#3-4-开源工具" class="headerlink" title="3.4 开源工具"></a>3.4 开源工具</h3><p>　　<a href="https://github.com/aramrami/OWASP-CSRFGuard" target="_blank" rel="noopener">OWASP-CSRFGuard</a>是一个拥有BSD许可的友好开源软件，通过简单配置即可使用。</p>
+<h2 id="4-CSRF测试"><a href="#4-CSRF测试" class="headerlink" title="4. CSRF测试"></a>4. CSRF测试</h2><p>　　开源测试工具<a href="https://www.owasp.org/index.php/CSRFTester" title="CSRFTester" target="_blank" rel="noopener">CSRFTester</a>工具可以进行测试。</p>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p>　　CSRF的Token防御仅能对抗CSRF攻击，如果网站还存在XSS漏洞，攻击者可以通过模拟客户端浏览器执行任意操作，攻击者可以获取到Token，并构造出合法请求而绕过CSRF防御。因此安全防御必须成体系建设。</p>
+<p>参考</p>
+<blockquote>
+<p>《白帽子讲Web安全》<br><a href="https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/index.html?mhq=token%20%20%E6%94%BB%E5%87%BB&amp;mhsrc=ibmsearch_d" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/index.html?mhq=token%20%20%E6%94%BB%E5%87%BB&amp;mhsrc=ibmsearch_d</a><br><a href="http://www.yihaomen.com//article//java//408.htm" target="_blank" rel="noopener">http://www.yihaomen.com//article//java//408.htm</a><br><a href="https://my.oschina.net/langxSpirit/blog/678901" target="_blank" rel="noopener">https://my.oschina.net/langxSpirit/blog/678901</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web安全/" rel="tag"># Web安全</a>
+          
+            <a href="/tags/CSRF/" rel="tag"># CSRF</a>
+          
+            <a href="/tags/Token/" rel="tag"># Token</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/18/中国惠普前总裁孙振耀谈工作与生活/" rel="next" title="中国惠普前总裁孙振耀谈工作与生活">
+                <i class="fa fa-chevron-left"></i> 中国惠普前总裁孙振耀谈工作与生活
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木道人</p>
+              <p class="site-description motion-element" itemprop="description">看风的必不撒种；望云的必不收割。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="0" target="_blank">0</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="1" target="_blank">1</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="2" target="_blank">2</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-CSRF如何攻击？"><span class="nav-text">1. CSRF如何攻击？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-CSRF-攻击的目标"><span class="nav-text">2. CSRF 攻击的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-如何防范CSRF"><span class="nav-text">3. 如何防范CSRF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-验证码"><span class="nav-text">3.1 验证码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-增加HTTP-Referer验证"><span class="nav-text">3.2 增加HTTP Referer验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-增加token验证"><span class="nav-text">3.3 增加token验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-开源工具"><span class="nav-text">3.4 开源工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-CSRF测试"><span class="nav-text">4. CSRF测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-总结"><span class="nav-text">5. 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木道人</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
