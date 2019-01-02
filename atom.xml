@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-02T15:30:34.847Z</updated>
+  <updated>2019-01-02T23:41:19.894Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>我的个人宪法</title>
+    <link href="http://yoursite.com/2019/01/03/%E4%B8%AA%E4%BA%BA%E5%AE%AA%E6%B3%95/"/>
+    <id>http://yoursite.com/2019/01/03/个人宪法/</id>
+    <published>2019-01-02T23:41:58.803Z</published>
+    <updated>2019-01-02T23:41:19.894Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li>家庭第一。</li><li>借重宗教的力量。</li><li>在诚信问题上决不妥协。</li><li>念及相关的每一个人。</li><li>未听取正反双方意见，不妄下断语。</li><li>征求他人意见</li><li>维护不在场的人。</li><li>诚但立场坚定。</li><li>每年掌握一种新技能。</li><li>今天计划明天的工作。</li><li>利用等待的空闲时间。</li><li>态度积极。</li><li>保持幽默感。</li><li>生活与工作有条不紊。</li><li>别怕犯错，怕的是不能吸取教训。</li><li>协助他人成功。</li><li>多请教别人。</li><li>专注于当前的工作，不为下一次任务或晋升瞎担心。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ul&gt;
+&lt;li&gt;家庭第一。&lt;/li&gt;
+&lt;li&gt;借重宗教的力量。&lt;/li&gt;
+&lt;li&gt;在诚信问题上决不妥协。&lt;/li&gt;
+&lt;li&gt;念及相关的每一个人。&lt;/li&gt;
+&lt;li&gt;未听取正反双方意见，不妄下断语。&lt;/li&gt;
+&lt;li&gt;征求他人意见&lt;/li&gt;
+&lt;li&gt;维护不在场的人。&lt;/li&gt;
+&lt;
+      
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://yoursite.com/categories/Spring/"/>
+    
+    
+      <category term="个人宪法" scheme="http://yoursite.com/tags/%E4%B8%AA%E4%BA%BA%E5%AE%AA%E6%B3%95/"/>
+    
+      <category term="原则" scheme="http://yoursite.com/tags/%E5%8E%9F%E5%88%99/"/>
+    
+  </entry>
   
   <entry>
     <title>PDCA循环</title>
@@ -550,33 +585,6 @@
       <category term="思维" scheme="http://yoursite.com/tags/%E6%80%9D%E7%BB%B4/"/>
     
       <category term="思考方法" scheme="http://yoursite.com/tags/%E6%80%9D%E8%80%83%E6%96%B9%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何修改用户的SHELL参数</title>
-    <link href="http://yoursite.com/2018/11/11/%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E7%9A%84SHELL%E5%8F%82%E6%95%B0/"/>
-    <id>http://yoursite.com/2018/11/11/如何修改用户的SHELL参数/</id>
-    <published>2018-11-11T09:30:22.106Z</published>
-    <updated>2018-11-11T09:29:57.816Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>1.查看可用shell</strong><br>cat /etc/shells</p><p><strong>2.假设指定test用户的shell为可用的/bin/sh</strong><br>chsh -s /bin/sh test</p><p><strong>3.在用户下查看 env即可查看到当前shell</strong></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;strong&gt;1.查看可用shell&lt;/strong&gt;&lt;br&gt;cat /etc/shells&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2.假设指定test用户的shell为可用的/bin/sh&lt;/strong&gt;&lt;br&gt;chsh -s /bin/sh test&lt;/p&gt;
-&lt;p&gt;&lt;str
-      
-    
-    </summary>
-    
-      <category term="linux" scheme="http://yoursite.com/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
     
   </entry>
   
