@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-12-24T15:44:15.180Z</updated>
+  <updated>2019-01-02T15:30:34.847Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,20 +17,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>PDCA循环</title>
+    <link href="http://yoursite.com/2019/01/02/PDCA%E5%BE%AA%E7%8E%AF/"/>
+    <id>http://yoursite.com/2019/01/02/PDCA循环/</id>
+    <published>2019-01-02T15:31:09.657Z</published>
+    <updated>2019-01-02T15:30:34.847Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　PDCA循环也叫戴明循环，是一个持续改进模型，包括持续改进和不断学习的四个循环反复步骤。分别是计划（Plan）、执行（Do）、检查（Check）、处理（Action）。</p><h2 id="PDCA的典型适用场景"><a href="#PDCA的典型适用场景" class="headerlink" title="PDCA的典型适用场景"></a>PDCA的典型适用场景</h2><ul><li>个人管理和提升</li><li>项目管理</li><li>人力资源管理</li><li>供应商管理</li><li>流程管理</li><li>持续改进</li></ul><h2 id="PDCA循环步骤"><a href="#PDCA循环步骤" class="headerlink" title="PDCA循环步骤"></a>PDCA循环步骤</h2><ol><li>计划（Plan）。制定行动方案和目标，可以使用5W1H。</li><li>执行（Do）。依据计划具体执行。</li><li>检查（Check）。检查计划执行的过程和结果是否符合预期方案或目标，出现哪些问题和偏差。检查点的选择就是执行过程中的“控制点”、“管理点”。</li><li>效果（Action）。对检查结果进行处理，好的经验进行固化推广，失败的经验要总结改进措施，以便应用到下一个循环。Action如同导演拍电影时使用的Action，由演员按照剧本进行表演，导演对表演效果进行评判。</li></ol><h2 id="PDCA循环的重点"><a href="#PDCA循环的重点" class="headerlink" title="PDCA循环的重点"></a>PDCA循环的重点</h2><p>　　持续改进，不断上升。多个PDCA环是持续上升的过程，预示着效果、质量和水平不断提升。</p><p><img src="https://i.imgur.com/oPugqmw.jpg" alt=""></p><h2 id="相关理论"><a href="#相关理论" class="headerlink" title="相关理论"></a>相关理论</h2><ul><li>Plan的过程建议使用5W1H的方式进行，即why、what、where、who、when、how。</li><li>Check的过程如果能结合AAR（After Action Review）方法进行，效果会更好。AAR是美国陆军的一种任务检视方法，主要有4个方面：当初的目标是什么？ 实际发生了什么？ 从中学到了什么？ 以后该怎么做？</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;　　PDCA循环也叫戴明循环，是一个持续改进模型，包括持续改进和不断学习的四个循环反复步骤。分别是计划（Plan）、执行（Do）、检查（Check）、处理（Action）。&lt;/p&gt;
+&lt;h2 id=&quot;PDCA的典型适用场景&quot;&gt;&lt;a href=&quot;#PDCA的典型适用场景&quot; cl
+      
+    
+    </summary>
+    
+      <category term="管理" scheme="http://yoursite.com/categories/%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="PDCA循环，戴明循环" scheme="http://yoursite.com/tags/PDCA%E5%BE%AA%E7%8E%AF%EF%BC%8C%E6%88%B4%E6%98%8E%E5%BE%AA%E7%8E%AF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>高效能认识的七个习惯读书笔记</title>
     <link href="http://yoursite.com/2018/12/24/%E9%AB%98%E6%95%88%E8%83%BD%E8%AE%A4%E8%AF%86%E7%9A%84%E4%B8%83%E4%B8%AA%E4%B9%A0%E6%83%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     <id>http://yoursite.com/2018/12/24/高效能认识的七个习惯读书笔记/</id>
     <published>2018-12-24T15:44:22.185Z</published>
-    <updated>2018-12-24T15:44:15.180Z</updated>
+    <updated>2018-12-25T14:34:41.375Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="成长过程"><a href="#成长过程" class="headerlink" title="成长过程"></a>成长过程</h2><p>依赖期——&gt;独立期——&gt;互赖期</p><p><img src="https://i.imgur.com/wy6nMAG.jpg" alt=""></p><h2 id="独立"><a href="#独立" class="headerlink" title="独立"></a>独立</h2><p>生理独立：自由行动<br>心智独立：自主思考<br>情感独立：肯定自我<br>精神独立：价值观清晰（合作与奉献）</p><h2 id="互赖"><a href="#互赖" class="headerlink" title="互赖"></a>互赖</h2><p>合作、双赢</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="成长过程"><a href="#成长过程" class="headerlink" title="成长过程"></a>成长过程</h2><p>依赖期——&gt;独立期——&gt;互赖期</p><p><img src="https://i.imgur.com/6Iag2aq.png" alt="七个习惯模型"></p><h2 id="独立"><a href="#独立" class="headerlink" title="独立"></a>独立</h2><p>生理独立：自由行动<br>心智独立：自主思考<br>情感独立：肯定自我<br>精神独立：价值观清晰（合作与奉献）</p><h2 id="互赖"><a href="#互赖" class="headerlink" title="互赖"></a>互赖</h2><p>合作、双赢</p>]]></content>
     
     <summary type="html">
     
       
       
         &lt;h2 id=&quot;成长过程&quot;&gt;&lt;a href=&quot;#成长过程&quot; class=&quot;headerlink&quot; title=&quot;成长过程&quot;&gt;&lt;/a&gt;成长过程&lt;/h2&gt;&lt;p&gt;依赖期——&amp;gt;独立期——&amp;gt;互赖期&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/wy6
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/6Ia
       
     
     </summary>
@@ -551,34 +577,6 @@
     
     
       <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>取模与取余的区别</title>
-    <link href="http://yoursite.com/2018/11/11/%E5%8F%96%E6%A8%A1%E4%B8%8E%E5%8F%96%E4%BD%99%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>http://yoursite.com/2018/11/11/取模与取余的区别/</id>
-    <published>2018-11-11T09:30:22.105Z</published>
-    <updated>2018-11-11T09:28:20.339Z</updated>
-    
-    <content type="html"><![CDATA[<p>对于整型数a，b来说，取模运算或者求余运算的方法都是：</p><p>1.求 整数商： c = a/b;</p><p>2.计算模或者余数： r = a - c*b.</p><p>求模运算和求余运算在第一步不同: 取余运算在取c的值时，向0 方向舍入(fix()函数)；而取模运算在计算c的值时，向负无穷方向舍入(floor()函数)。</p><p>例如：计算-7 Mod 4</p><p>那么：a = -7；b = 4；</p><p>第一步：求整数商c，如进行求模运算c = -2（向负无穷方向舍入），求余c = -1（向0方向舍入）；</p><p>第二步：计算模和余数的公式相同，但因c的值不同，求模时r = 1，求余时r = -3。</p><p>归纳：当a和b符号一致时，求模运算和求余运算所得的c的值一致，因此结果一致。</p><p>当符号不一致时，结果不一样。求模运算结果的符号和b一致，求余运算结果的符号和a一致。</p><p>另外各个环境下%运算符的含义不同，比如c/c++，java 为取余，而python则为取模。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;对于整型数a，b来说，取模运算或者求余运算的方法都是：&lt;/p&gt;
-&lt;p&gt;1.求 整数商： c = a/b;&lt;/p&gt;
-&lt;p&gt;2.计算模或者余数： r = a - c*b.&lt;/p&gt;
-&lt;p&gt;求模运算和求余运算在第一步不同: 取余运算在取c的值时，向0 方向舍入(fix()函数)；而
-      
-    
-    </summary>
-    
-      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="http://yoursite.com/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
