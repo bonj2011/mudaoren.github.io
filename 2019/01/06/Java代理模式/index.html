@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="一、什么是代理模式？　　代理模式也叫做委托模式，为其他对象提供一种代理以控制对这个对象的访问。　　举一个例子，你希望假期出国旅游，但是又不想自己处理诸如签证、行程、交通、食宿等麻烦事，就可以找个旅游公司代办，你只需要按照旅游公司的安排出行。生活中的经纪人、中介、律师所的律师、会计事务所会计、甚至超市等都是现实中代理模式应用。 二、常用的代理模式　　常用的代理模式分为静态代理和动态代理。 2.1 静">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-06T12:05:32.363Z">
+<meta property="og:updated_time" content="2019-01-06T12:48:40.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java代理模式">
 <meta name="twitter:description" content="一、什么是代理模式？　　代理模式也叫做委托模式，为其他对象提供一种代理以控制对这个对象的访问。　　举一个例子，你希望假期出国旅游，但是又不想自己处理诸如签证、行程、交通、食宿等麻烦事，就可以找个旅游公司代办，你只需要按照旅游公司的安排出行。生活中的经纪人、中介、律师所的律师、会计事务所会计、甚至超市等都是现实中代理模式应用。 二、常用的代理模式　　常用的代理模式分为静态代理和动态代理。 2.1 静">
@@ -513,23 +513,41 @@ public class AirlineProxy implements InvocationHandler
 }
 </code></pre><p><strong>通过代理对象调用目标方法</strong></p>
 <pre><code>/**
- * 消费者
+ * 定义一个顾客
  */
 public class Customer
 {
-    // 消费者预订机票
+    // 顾客通过代理订票
     public static void main(String[] args)
     {
-        // 定义一家航空公司,比如南方航空
-        AirlineCompany southernAir = new SouthernAirlines();
+        // 南方航空
+        SouthernAirlines southernAir = new SouthernAirlines();
 
         // 定义一家机票代理商
-        AirlineCompany proxy = (AirlineCompany)new AirlineProxy().getInstance(southernAir);
+        SouthernAirlines proxy = (SouthernAirlines)new AirlineProxy().getInstance(southernAir);
 
         boolean result = proxy.booking();
         String companyName = proxy.company();
 
-        System.out.println(MessageFormat.format(&quot;消费者通过代理[ {0}]，订购[{1}]机票结果[{2}]&quot;, proxy.getClass(), companyName, result));
+        System.out.println(MessageFormat.format(&quot;顾客通过代理[ {0}]，订购[{1}]机票结果[{2}]&quot;, proxy.getClass(), companyName, result));
+
+        // 打印代理类的二进制文件
+        writeProxyByte(proxy);
+    }
+
+    // 输出代理类的二进制文件
+    private static void writeProxyByte(Object object)
+    {
+        try
+        {
+            byte[] $Proxy0s = ProxyGenerator.generateProxyClass(&quot;$Proxy0&quot;, new Class[] {object.getClass()});
+            FileOutputStream fileOutputStream = new FileOutputStream(&quot;$Proxy0.class&quot;);
+            fileOutputStream.write($Proxy0s);
+            fileOutputStream.close();
+        }
+        catch(IOException ex)
+        {
+        }
     }
 }
 </code></pre><p><strong>测试结果：</strong></p>
@@ -610,18 +628,36 @@ public class Customer
         String companyName = proxy.company();
 
         System.out.println(MessageFormat.format(&quot;顾客通过代理[ {0}]，订购[{1}]机票结果[{2}]&quot;, proxy.getClass(), companyName, result));
+
+        // 打印代理类的二进制文件
+        writeProxyByte(proxy);
     }
 
+    // 输出代理类的二进制文件
+    private static void writeProxyByte(Object object)
+    {
+        try
+        {
+            byte[] $Proxy0s = ProxyGenerator.generateProxyClass(&quot;$Proxy0&quot;, new Class[] {object.getClass()});
+            FileOutputStream fileOutputStream = new FileOutputStream(&quot;$Proxy0.class&quot;);
+            fileOutputStream.write($Proxy0s);
+            fileOutputStream.close();
+        }
+        catch(IOException ex)
+        {
+        }
+    }
 }
 </code></pre><p><strong>测试结果：</strong></p>
 <pre><code>创建class com.mudaoren.designPaterns.proxyPaterns.dynamicProxy.cblibrealize.SouthernAirlines的代理对象！
 订票成功，欢迎乘坐南方航空！
 顾客通过代理[ class com.mudaoren.designPaterns.proxyPaterns.dynamicProxy.cblibrealize.SouthernAirlines$$EnhancerByCGLIB$$f6637d97]，订购[南方航空]机票结果[true]
 </code></pre><p>小结：<br>　　cglib的动态代理是针对类来实现代理。对指定目标类产生一个子类，通过方法拦截技术拦截所有父类方法的调用。因为通过继承实现，所以final类无法使用。</p>
-<!-- 
-参考
+<blockquote>
+<p>参考：<br><a href="https://dzone.com/articles/cglib-missing-manual" target="_blank" rel="noopener">https://dzone.com/articles/cglib-missing-manual</a><br><!-- 
 https://mp.weixin.qq.com/s?__biz=MjM5NzMyMjAwMA==&mid=2651482109&idx=1&sn=04445b8b5c493e0bf439e779bb9791c2&chksm=bd250b828a5282944348b26b3d4711f551ad3302d07b1b16a0cb6f93c2067bd8011b1a2d3bc0&scene=0&xtrack=1#rd
-https://mp.weixin.qq.com/s/FGK3DD9bcDS3FwO39-uh6g -->
+https://mp.weixin.qq.com/s/FGK3DD9bcDS3FwO39-uh6g --></p>
+</blockquote>
 
       
     </div>
@@ -750,7 +786,7 @@ https://mp.weixin.qq.com/s/FGK3DD9bcDS3FwO39-uh6g -->
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -761,7 +797,7 @@ https://mp.weixin.qq.com/s/FGK3DD9bcDS3FwO39-uh6g -->
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">59</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
