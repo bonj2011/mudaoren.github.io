@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-07T15:55:57.406Z</updated>
+  <updated>2019-01-08T00:04:53.625Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图解HTTP——（二）简单的HTTP协议</title>
+    <link href="http://yoursite.com/2019/01/08/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AE%80%E5%8D%95%E7%9A%84HTTP%E5%8D%8F%E8%AE%AE/"/>
+    <id>http://yoursite.com/2019/01/08/图解HTTP——（二）简单的HTTP协议/</id>
+    <published>2019-01-08T00:05:03.020Z</published>
+    <updated>2019-01-08T00:04:53.625Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.imgur.com/KeC6zYD.png" alt=""></p><p><img src="https://i.imgur.com/ov5CVZk.png" alt=""><br><img src="https://i.imgur.com/YcxjYSa.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/KeC6zYD.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ov5CVZk.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur
+      
+    
+    </summary>
+    
+      <category term="图解http" scheme="http://yoursite.com/categories/%E5%9B%BE%E8%A7%A3http/"/>
+    
+    
+      <category term="http协议" scheme="http://yoursite.com/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>图解HTTP——（一）Web及网络协议基础</title>
@@ -545,36 +571,6 @@
       <category term="云计算" scheme="http://yoursite.com/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/"/>
     
       <category term="合规体系" scheme="http://yoursite.com/tags/%E5%90%88%E8%A7%84%E4%BD%93%E7%B3%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>精益看板</title>
-    <link href="http://yoursite.com/2018/11/17/%E7%B2%BE%E7%9B%8A%E7%9C%8B%E6%9D%BF/"/>
-    <id>http://yoursite.com/2018/11/17/精益看板/</id>
-    <published>2018-11-17T01:05:52.502Z</published>
-    <updated>2018-11-17T15:09:54.663Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="精益看板在软件方面的八大实践"><a href="#精益看板在软件方面的八大实践" class="headerlink" title="精益看板在软件方面的八大实践"></a>精益看板在软件方面的八大实践</h2><blockquote><h3 id="建立看板"><a href="#建立看板" class="headerlink" title="建立看板"></a>建立看板</h3></blockquote><ol><li>价值流映射：对研发整体流程进行价值流映射，分析典型业务流效率。</li><li>分析请求分配产能：对不同工作项类型，分析价值流请求量并分配产能（划分泳道）。</li><li>显式化流转规则：显式化每个活动上下游流转规则及时发现问题，质量可控。</li><li>限制在制品：限制并行任务数，让任务流动更快，缩短开发周期。</li></ol><blockquote><h3 id="运作看板"><a href="#运作看板" class="headerlink" title="运作看板"></a>运作看板</h3></blockquote><ol><li>消除瓶颈：通过提升瓶颈处的处理能力，从而提升项目的吞吐量。</li><li>加速流动：通过监控流动中的异常状态，及时处理等待和阻塞，加速流动提升吞吐量。</li><li>改进价值流：通过数据驱动的回顾消除浪费，持续不断的改进价值流，提升吞吐量。</li><li>拉动式开发：通过拉动机制平衡开发资源和请求，保证价值持续稳定的流动。</li></ol><hr><h2 id="精益看板开源及收费软件"><a href="#精益看板开源及收费软件" class="headerlink" title="精益看板开源及收费软件"></a>精益看板开源及收费软件</h2><blockquote><p><a href="https://business901.com/blog1/lean-kanban-lessons-from-a-software-developer/" target="_blank" rel="noopener">https://business901.com/blog1/lean-kanban-lessons-from-a-software-developer/</a><br><a href="https://www.leangoo.com/" target="_blank" rel="noopener">https://www.leangoo.com/</a><br><a href="https://www.agilealliance.org/what-is-scrumban/" target="_blank" rel="noopener">https://www.agilealliance.org/what-is-scrumban/</a><br><a href="https://www.teambition.com/agile?utm_source=sitesolution&amp;utm_term=agile+development&amp;utm_campaign=template" target="_blank" rel="noopener">https://www.teambition.com/agile?utm_source=sitesolution&amp;utm_term=agile+development&amp;utm_campaign=template</a><br><a href="https://kanbantool.com/product" target="_blank" rel="noopener">https://kanbantool.com/product</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;精益看板在软件方面的八大实践&quot;&gt;&lt;a href=&quot;#精益看板在软件方面的八大实践&quot; class=&quot;headerlink&quot; title=&quot;精益看板在软件方面的八大实践&quot;&gt;&lt;/a&gt;精益看板在软件方面的八大实践&lt;/h2&gt;&lt;blockquote&gt;
-&lt;h3 id=&quot;建立看板
-      
-    
-    </summary>
-    
-      <category term="敏捷" scheme="http://yoursite.com/categories/%E6%95%8F%E6%8D%B7/"/>
-    
-    
-      <category term="精益看板" scheme="http://yoursite.com/tags/%E7%B2%BE%E7%9B%8A%E7%9C%8B%E6%9D%BF/"/>
-    
-      <category term="敏捷" scheme="http://yoursite.com/tags/%E6%95%8F%E6%8D%B7/"/>
-    
-      <category term="scrum" scheme="http://yoursite.com/tags/scrum/"/>
     
   </entry>
   
