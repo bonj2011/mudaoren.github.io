@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-08T15:52:36.203Z</updated>
+  <updated>2019-01-09T15:15:56.806Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图解HTTP——（五）与HTTP协作的Web服务器</title>
+    <link href="http://yoursite.com/2019/01/09/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E4%BA%94%EF%BC%89%E4%B8%8EHTTP%E5%8D%8F%E4%BD%9C%E7%9A%84Web%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    <id>http://yoursite.com/2019/01/09/图解HTTP——（五）与HTTP协作的Web服务器/</id>
+    <published>2019-01-09T15:16:13.841Z</published>
+    <updated>2019-01-09T15:15:56.806Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/mNo3l4M.png" target="_blank" rel="noopener">点击查看原图</a></p><p><img src="https://i.imgur.com/mNo3l4M.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/mNo3l4M.png&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/mNo3l4M.png&quot; alt
+      
+    
+    </summary>
+    
+      <category term="图解HTTP" scheme="http://yoursite.com/categories/%E5%9B%BE%E8%A7%A3HTTP/"/>
+    
+    
+      <category term="http协议" scheme="http://yoursite.com/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="Web" scheme="http://yoursite.com/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>图解HTTP——（四）返回结果的HTTP状态码</title>
+    <link href="http://yoursite.com/2019/01/09/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E5%9B%9B%EF%BC%89%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C%E7%9A%84HTTP%E7%8A%B6%E6%80%81%E7%A0%81/"/>
+    <id>http://yoursite.com/2019/01/09/图解HTTP——（四）返回结果的HTTP状态码/</id>
+    <published>2019-01-09T14:42:27.908Z</published>
+    <updated>2019-01-09T14:41:34.708Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.imgur.com/kcmMk43.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/kcmMk43.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="图解HTTP" scheme="http://yoursite.com/categories/%E5%9B%BE%E8%A7%A3HTTP/"/>
+    
+    
+      <category term="http协议" scheme="http://yoursite.com/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="状态码" scheme="http://yoursite.com/tags/%E7%8A%B6%E6%80%81%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>图解HTTP——（三）HTTP报文内的HTTP信息</title>
@@ -506,65 +562,6 @@
     
     
       <category term="书单" scheme="http://yoursite.com/tags/%E4%B9%A6%E5%8D%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>存款准备金</title>
-    <link href="http://yoursite.com/2018/11/18/%E5%AD%98%E6%AC%BE%E5%87%86%E5%A4%87%E9%87%91/"/>
-    <id>http://yoursite.com/2018/11/18/存款准备金/</id>
-    <published>2018-11-18T11:50:02.311Z</published>
-    <updated>2018-11-18T11:49:45.768Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><h2 id="存款准备金"><a href="#存款准备金" class="headerlink" title="存款准备金"></a>存款准备金</h2></blockquote><p>金融机构为保证客户提取存款和资金清算需要而准备的，在中央银行的存款。初始意义在于保证商业银行的支付和清算。</p><blockquote><h2 id="存款准备金率"><a href="#存款准备金率" class="headerlink" title="存款准备金率"></a>存款准备金率</h2></blockquote><p>中央银行要求的存款准备金占其存款总额的比例就是存款准备金率。</p><blockquote><h2 id="货币乘数"><a href="#货币乘数" class="headerlink" title="货币乘数"></a>货币乘数</h2></blockquote><p>一单位准备金所产生的货币量。</p><blockquote><h2 id="乘数效应"><a href="#乘数效应" class="headerlink" title="乘数效应"></a>乘数效应</h2></blockquote><p>中央银行的初始货币提供量与社会货币最终形成量之间存在着数倍扩张（或收缩）的效果。</p><p><strong>举例</strong><br>　　先假设最低准备金率是20%，也就是说当银行得到100元的存款时它必须留存20元，只能贷出80元。其次假设银行会放足80元。<br>　　现在有某君A往银行里存了100元，银行再将其中的80元放贷给B，如果B把贷来的80元又全部存入银行，银行再将其中的64原贷给了C，C又把64元存入银行，银行再向D贷出51.2元…依此类推，央行最先向市场投放了100元，市场上最后多的货币会是100+80+64+51.2+…</p><p>　　解这个数列的值是500，其实就是100*（1/0.2）=500</p><p>　　也就是实际的货币投放量。这里的1/0.2就是货币乘数也就是1除以法定准备金率。</p><p><strong>完整的货币（政策）乘数的计算公式是</strong>：m =（Rc+1）/(Rd+Re+Rc)。其中Rd、Re、Rc分别代表法定准备率、超额准备率和现金在存款中的比率。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;h2 id=&quot;存款准备金&quot;&gt;&lt;a href=&quot;#存款准备金&quot; class=&quot;headerlink&quot; title=&quot;存款准备金&quot;&gt;&lt;/a&gt;存款准备金&lt;/h2&gt;&lt;/blockquote&gt;
-&lt;p&gt;金融机构为保证客户提取存款和资金清算需要而准备的，在中央银行的
-      
-    
-    </summary>
-    
-      <category term="互联网金融" scheme="http://yoursite.com/categories/%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="金融" scheme="http://yoursite.com/tags/%E9%87%91%E8%9E%8D/"/>
-    
-      <category term="存款准备金" scheme="http://yoursite.com/tags/%E5%AD%98%E6%AC%BE%E5%87%86%E5%A4%87%E9%87%91/"/>
-    
-      <category term="乘数效应" scheme="http://yoursite.com/tags/%E4%B9%98%E6%95%B0%E6%95%88%E5%BA%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>其实它懂得比你想象的多</title>
-    <link href="http://yoursite.com/2018/11/17/%E5%85%B6%E5%AE%9E%E5%AE%83%E6%87%82%E5%BE%97%E6%AF%94%E4%BD%A0%E6%83%B3%E8%B1%A1%E7%9A%84%E5%A4%9A/"/>
-    <id>http://yoursite.com/2018/11/17/其实它懂得比你想象的多/</id>
-    <published>2018-11-17T11:58:15.536Z</published>
-    <updated>2018-11-17T11:57:48.579Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><h2 id="情景"><a href="#情景" class="headerlink" title="情景"></a>情景</h2></blockquote><p>　　一天，儿子在玩扭扭车。</p><p>　　妹妹兴冲冲的走过来，儿子老远就看到了，眼神中充满敌意。<br>　　妹妹还没走到跟前，儿子就迎上推了一把，把妹妹推到了。<br>　　可能是还小的缘故，妹妹并没有哭，很快爬起来了。</p><p>　　过了一会，儿子拿起妹妹的杯子准备喝水。<br>　　舅妈一把夺过了杯子，严肃的说“不要用我们的杯子喝水”。<br>　　儿子怔怔得站在那里，可怜巴巴的说“舅妈，我不打妹妹了”。</p><blockquote><h2 id="重新认识"><a href="#重新认识" class="headerlink" title="重新认识"></a>重新认识</h2></blockquote><p>　　这个时候儿子只有28个月。他讲的话，没人教过他。也没人给他暗示，舅妈不让他用妹妹的杯子是因为他推了妹妹。<br>　　一个28个月的孩子能通过舅妈的行为和表情中判断并联想出这件事情发生的原因，并主动做出和解的反应，这很让我惊讶。</p><blockquote><h2 id="改变教育方式"><a href="#改变教育方式" class="headerlink" title="改变教育方式"></a>改变教育方式</h2></blockquote><p>　　以上的情景，让我意识到，孩子的思维发育远远超出我原本的预期。所以，在教育孩子时，可以试着用成人的思考方式来处理。</p><blockquote><h2 id="发生上面的情景该如何处理？"><a href="#发生上面的情景该如何处理？" class="headerlink" title="发生上面的情景该如何处理？"></a>发生上面的情景该如何处理？</h2></blockquote><p>　　首先需要同理心，思考下孩子为何会做出这样的反应？ 重要的一点，不只需要自己思考，还需要直接从孩子那里得到答案。（不要直接告诉孩子如何做，让他自己去思考）</p><p>　　问孩子：为什么打妹妹呢？<br>　　答：妹妹会打我，抢我的玩具，我不喜欢妹妹。（妹妹只有15个月，处于感官发育期，经常用手拍人或者物）<br>　　问：哦，是因为妹妹经常拍你，抢你玩具你才会推她是吗？<br>　　答：是的。<br>　　问：妹妹是怎么打你得呢：<br>　　答：她这样打我。（做出手拍的样子）<br>　　问：妹妹这样拍你很疼吧？<br>　　答：是的。<br>　　告诉孩子：我知道了，妹妹经常这样拍你，拍得你很疼。其实啊，妹妹这是喜欢你，想跟你玩，她还不会控制摸你得力量，所以啊，她摸你得时候用的力气太大。（仅这样还不够，即使他知道了原因，他也不想挨打啊。因为孩子太小了，他怕被打怕玩具被抢，只会提前预防，除此之外他不知道该怎么应对。只能直接告诉他如何应对。）以后妹妹要拍你得时候，你就告诉妹妹，轻轻的啊，不能打我，不然我就打你喽。（因为妹妹太小，其实这样还是很难阻止事情的发生的，父母得好好盯着）<br>　　答：恩。<br>　　告诉孩子第二件事：妹妹一定是觉得你得玩具很好玩，她也想玩玩，我们跟她一起玩，她的玩具我们也一起玩，这样怎么样？<br>　　<strong>（上面的这两件事在平时要不断的重复告诉他）</strong><br>　　答：好的，我跟她一起玩。<br>　　<br>除此之外，平时需要必不可少的训练。在家里模拟妹妹拍他、抢玩具的情景，教他如何应变，不断的训练。（孩子的任何经历都可以在家里训练它的应变能力）</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;h2 id=&quot;情景&quot;&gt;&lt;a href=&quot;#情景&quot; class=&quot;headerlink&quot; title=&quot;情景&quot;&gt;&lt;/a&gt;情景&lt;/h2&gt;&lt;/blockquote&gt;
-&lt;p&gt;　　一天，儿子在玩扭扭车。&lt;/p&gt;
-&lt;p&gt;　　妹妹兴冲冲的走过来，儿子老远就看到了，眼
-      
-    
-    </summary>
-    
-      <category term="教育" scheme="http://yoursite.com/categories/%E6%95%99%E8%82%B2/"/>
-    
-    
-      <category term="教育" scheme="http://yoursite.com/tags/%E6%95%99%E8%82%B2/"/>
     
   </entry>
   
