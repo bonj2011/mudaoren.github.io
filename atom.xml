@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-10T15:26:44.757Z</updated>
+  <updated>2019-01-12T13:22:49.032Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,15 +21,15 @@
     <link href="http://yoursite.com/2019/01/10/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E5%85%AD%EF%BC%89HTTP%E9%A6%96%E9%83%A8/"/>
     <id>http://yoursite.com/2019/01/10/图解HTTP——（六）HTTP首部/</id>
     <published>2019-01-10T15:27:25.270Z</published>
-    <updated>2019-01-10T15:26:44.757Z</updated>
+    <updated>2019-01-12T13:22:49.032Z</updated>
     
-    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/3CbJIEO.png" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/3CbJIEO.png" alt=""></p>]]></content>
+    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/CnfaJAH.png" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/CnfaJAH.png" alt=""></p><blockquote><p>参考：<br><a href="https://my.oschina.net/u/588516/blog/621569" target="_blank" rel="noopener">https://my.oschina.net/u/588516/blog/621569</a><br><a href="https://www.jianshu.com/p/ff5ff6f3c353" target="_blank" rel="noopener">https://www.jianshu.com/p/ff5ff6f3c353</a><br><a href="https://imququ.com/post/x-forwarded-for-header-in-http.html" target="_blank" rel="noopener">https://imququ.com/post/x-forwarded-for-header-in-http.html</a><br><a href="https://www.freebuf.com/articles/web/140669.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/web/140669.html</a></p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/3CbJIEO.png&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/3CbJIEO.png&quot; alt=&quot;&quot;&gt;
+        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/CnfaJAH.png&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/CnfaJAH.png&quot; alt=&quot;&quot;&gt;
       
     
     </summary>
