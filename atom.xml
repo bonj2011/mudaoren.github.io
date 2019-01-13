@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-12T13:22:49.032Z</updated>
+  <updated>2019-01-13T15:41:10.242Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图解HTTP——（八）确认访问用户身份的认证</title>
+    <link href="http://yoursite.com/2019/01/13/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E5%85%AB%EF%BC%89%E7%A1%AE%E8%AE%A4%E8%AE%BF%E9%97%AE%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E7%9A%84%E8%AE%A4%E8%AF%81/"/>
+    <id>http://yoursite.com/2019/01/13/图解HTTP——（八）确认访问用户身份的认证/</id>
+    <published>2019-01-13T15:41:20.209Z</published>
+    <updated>2019-01-13T15:41:10.242Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/AozeDyQ.png" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/AozeDyQ.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/AozeDyQ.png&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/AozeDyQ.png&quot; alt=&quot;&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="图解HTTP" scheme="http://yoursite.com/categories/%E5%9B%BE%E8%A7%A3HTTP/"/>
+    
+    
+      <category term="http协议" scheme="http://yoursite.com/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="认证" scheme="http://yoursite.com/tags/%E8%AE%A4%E8%AF%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>图解HTTP——（七）确保Web安全的HTTPS</title>
+    <link href="http://yoursite.com/2019/01/13/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E4%B8%83%EF%BC%89%E7%A1%AE%E4%BF%9DWeb%E5%AE%89%E5%85%A8%E7%9A%84HTTPS/"/>
+    <id>http://yoursite.com/2019/01/13/图解HTTP——（七）确保Web安全的HTTPS/</id>
+    <published>2019-01-13T13:34:51.042Z</published>
+    <updated>2019-01-13T13:31:55.233Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/VpVh2X1.png" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/VpVh2X1.png" alt=""></p><p>从仅使用服务器端的公开密钥证书（服务器证书）建立HTTPS通信的过程:<br><img src="https://i.imgur.com/KgianC4.jpg" alt="从仅使用服务器端的公开密钥证书（服务器证书）建立HTTPS通信的过程"></p><p>CBC模式（Cipher Block Chaining）又名密码分组链接模式。在此模式下，将前一个明文块加密处理后和下一个明文块做XOR运算，使之重叠，然后再对运算结果做加密处理。对第一个明文块做加密时，要么使用前一段密文的最后一块，要么利用外部生成的初始向量（initialvector，IV）。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/VpVh2X1.png&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/VpVh2X1.png&quot; alt=&quot;&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="图解HTTP" scheme="http://yoursite.com/categories/%E5%9B%BE%E8%A7%A3HTTP/"/>
+    
+    
+      <category term="http协议" scheme="http://yoursite.com/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="https" scheme="http://yoursite.com/tags/https/"/>
+    
+      <category term="ssl" scheme="http://yoursite.com/tags/ssl/"/>
+    
+  </entry>
   
   <entry>
     <title>图解HTTP——（六）HTTP首部</title>
@@ -508,62 +564,6 @@
       <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
     
       <category term="mount" scheme="http://yoursite.com/tags/mount/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux环境变量设置</title>
-    <link href="http://yoursite.com/2018/12/06/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE/"/>
-    <id>http://yoursite.com/2018/12/06/Linux环境变量设置/</id>
-    <published>2018-12-05T16:00:06.077Z</published>
-    <updated>2018-12-05T15:59:49.194Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。</p><h2 id="1-Linux下的环境变量"><a href="#1-Linux下的环境变量" class="headerlink" title="1.Linux下的环境变量"></a>1.Linux下的环境变量</h2><p>Linux的环境变量存在于多个文件中，主要有以下几个文件：</p><ul><li>系统环境变量文件/etc/profile和/etc/environment。</li><li>用户环境变量文件~/.bash_profile、~/.bash_login和~/.profile。bash的login shell设定只会读取上面三个文件的其中一个， 而读取得顺序则是依照上面的顺序。</li></ul><h3 id="1-1-etc-profile-login-shell时读取）"><a href="#1-1-etc-profile-login-shell时读取）" class="headerlink" title="1.1 /etc/profile(login shell时读取）"></a>1.1 /etc/profile(login shell时读取）</h3><p>用户登录时才会读取的文件，是操作系统获取环境变量时第一个读取的文件。<br>这个文件会主动引用其他的文件/etc/profile.d 、/etc/profile.d/*.sh和/etc/bash.bashrc。因此虽然login时读取文件/etc/profile，实际上获取到的环境变量不止在/etc/profile中。</p><h3 id="1-2-etc-environment"><a href="#1-2-etc-environment" class="headerlink" title="1.2 /etc/environment"></a>1.2 /etc/environment</h3><p>用户在登录操作系统之后，操作系统配置环境时所使用的第二个文件。<br>顾名思义，该文件中保存了一系列环境变量，这些变量将对所有的用户和终端起效。</p><p>到这一级为止，文件定义的都是系统环境变量，之后的文件都是在定义用户变量。</p><h3 id="1-3-bash-profile-login-shell-才会读"><a href="#1-3-bash-profile-login-shell-才会读" class="headerlink" title="1.3 ~/.bash_profile (login shell 才会读)"></a>1.3 ~/.bash_profile (login shell 才会读)</h3><p>~/.bash_profile、~/.bash_login和~/.profile。bash的login shell设定只会读取上面三个文件的其中一个， 而读取得顺序则是依照上面的顺序。<br>在我使用的Ubuntu操作系统中，实际存在的是~/.profile。我们看一下文件的内容：</p><p><img src="https://i.imgur.com/f85RcMn.png" alt=""></p><p>if…then中又判断了第二个文件~/.bashrc是否存在，如果存在就会引用。<br>最后一行，以累加的方式对/etc/profile中设置过的path增加了~/bin等目录作为额外的执行文件存放目录。用户可以将自己建立的执行文件放到这个目录下（不需要再使用绝对路径或者相对路径执行了）。</p><h3 id="1-4-bashrc"><a href="#1-4-bashrc" class="headerlink" title="1.4 ~/.bashrc"></a>1.4 ~/.bashrc</h3><p>该文件包含了专用于一个用户的bash的环境信息，每次登录或者新开shell的时候（包括在图形界面下打开新的终端），该文件被读取。<br>该文件只会在新开的终端中起效。原有终端不会受到影响。</p><h3 id="1-5-bash-logout"><a href="#1-5-bash-logout" class="headerlink" title="1.5 ~/.bash_logout"></a>1.5 ~/.bash_logout</h3><p>每次退出bash的时候会执行。</p><h3 id="1-6-小结"><a href="#1-6-小结" class="headerlink" title="1.6 小结"></a>1.6 小结</h3><p><strong>login shell的读取顺序：</strong></p><p><img src="https://i.imgur.com/KiUjqJQ.png" alt=""></p><p>实线是主流程，虚线是被动应用的配置文件。</p><h2 id="2-环境变量的查看方法及相关命令"><a href="#2-环境变量的查看方法及相关命令" class="headerlink" title="2.环境变量的查看方法及相关命令"></a>2.环境变量的查看方法及相关命令</h2><ul><li>env查看当前用户的环境变量与常用变量</li><li>set查看shell所有变量（环境变量和用户自定义变量）</li><li>export若不带参数则显示用户变量的shell变量，若带参数，则将该shell参数添加至用户变量。如果在命令行直接使用这个参数设置变量（如export HELLO=”hello”），则变量只对当前shell（BASH）有效（临时的），重新登录后会失效。</li><li>source读入环境配置文件的指令。因为/etc/profile和~/.bash_profile在login是才会被读取，因此如果用户修改了这两个文件中的变量后，只能在重新登录后才会生效。此时可以使用source或者小数点加空格将新设置的环境变量读取到shell中。</li><li>echo $变量名，查看具体的变量设置。</li></ul><h2 id="3-常见的环境变量"><a href="#3-常见的环境变量" class="headerlink" title="3.常见的环境变量"></a>3.常见的环境变量</h2><ul><li>PATH：决定了shell将在哪些目录中寻找命令和程序</li><li>HOME：当前用户的主目录</li><li>MAIL：当前用户的邮件存放目录</li><li>SHELL：当前用户用的是那种Shell</li><li>HISTSIZE：保存历史命令记录的条数</li><li>LOGNAME：当前用户的登录名</li><li>HOSTNAME：主机的名称。</li><li>LANG/LANGUGE：和语言相关的环境变量，使用多种语言的用户可以修改此环境变量</li><li>PS1：基本提示符，对于root是#，对于普通用户为$，在我手中的ubuntu10.10中则是一个字符串，显示了用户名、系统名和当前目录名在内的信息。</li><li>PS2：是附属提示符，默认是”&gt;”。可以修改此环境变量来修改当前的命令符。</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;　　操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。&lt;/p&gt;
-&lt;h2 id=&quot;1-Linux下的环境变量&quot;&gt;&lt;a href=&quot;#1-
-      
-    
-    </summary>
-    
-      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
-    
-      <category term="环境变量" scheme="http://yoursite.com/tags/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>开源License</title>
-    <link href="http://yoursite.com/2018/11/24/%E5%BC%80%E6%BA%90License/"/>
-    <id>http://yoursite.com/2018/11/24/开源License/</id>
-    <published>2018-11-24T15:40:01.089Z</published>
-    <updated>2018-11-24T15:24:32.921Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.imgur.com/vFspvAv.png" alt=""></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/vFspvAv.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="License" scheme="http://yoursite.com/categories/License/"/>
-    
-    
-      <category term="开源" scheme="http://yoursite.com/tags/%E5%BC%80%E6%BA%90/"/>
-    
-      <category term="License" scheme="http://yoursite.com/tags/License/"/>
     
   </entry>
   
