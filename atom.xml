@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-13T15:41:10.242Z</updated>
+  <updated>2019-01-14T23:46:04.187Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图解HTTP——（九）基于HTTP的功能追加协议</title>
+    <link href="http://yoursite.com/2019/01/15/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E4%B9%9D%EF%BC%89%E5%9F%BA%E4%BA%8EHTTP%E7%9A%84%E5%8A%9F%E8%83%BD%E8%BF%BD%E5%8A%A0%E5%8D%8F%E8%AE%AE/"/>
+    <id>http://yoursite.com/2019/01/15/图解HTTP——（九）基于HTTP的功能追加协议/</id>
+    <published>2019-01-14T23:46:52.966Z</published>
+    <updated>2019-01-14T23:46:04.187Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/J3PjlH1.png" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/J3PjlH1.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/J3PjlH1.png&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/J3PjlH1.png&quot; alt=&quot;&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="图解HTTP" scheme="http://yoursite.com/categories/%E5%9B%BE%E8%A7%A3HTTP/"/>
+    
+    
+      <category term="http协议" scheme="http://yoursite.com/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+      <category term="spdy" scheme="http://yoursite.com/tags/spdy/"/>
+    
+      <category term="websocket" scheme="http://yoursite.com/tags/websocket/"/>
+    
+      <category term="ajax" scheme="http://yoursite.com/tags/ajax/"/>
+    
+      <category term="comet" scheme="http://yoursite.com/tags/comet/"/>
+    
+  </entry>
   
   <entry>
     <title>图解HTTP——（八）确认访问用户身份的认证</title>
@@ -537,33 +570,6 @@
       <category term="web" scheme="http://yoursite.com/tags/web/"/>
     
       <category term="spring" scheme="http://yoursite.com/tags/spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux挂载命令mount用法</title>
-    <link href="http://yoursite.com/2018/12/06/Linux%E6%8C%82%E8%BD%BD%E5%91%BD%E4%BB%A4mount%E7%94%A8%E6%B3%95/"/>
-    <id>http://yoursite.com/2018/12/06/Linux挂载命令mount用法/</id>
-    <published>2018-12-06T14:28:57.009Z</published>
-    <updated>2018-12-06T14:28:46.424Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　mount命令用于挂载文件系统到指定的加载点，他可以挂在ext3/vfat/nfs等文件系统。此命令的最常用于挂载cdrom，使我们可以访问cdrom中的数据，因为你将光盘插入cdrom中，Linux并不会自动挂载，必须使用Linux mount命令来手动完成挂载。此外可以挂载其他设备上的共享目录到指定的加载点。本文后者的使用。</p><h2 id="1-挂接命令-mount"><a href="#1-挂接命令-mount" class="headerlink" title="1.挂接命令(mount)"></a>1.挂接命令(mount)</h2><ul><li><strong>语法</strong></li></ul><pre><code>mount [-t vfstype] [-o options] device dir</code></pre><ol><li><p>-t vfstype 指定文件系统的类型，一般不需要指定，mount 会自动选择正确的类型。</p><blockquote><p>可挂载的文件类型包括：<br>光盘或光盘镜像：iso9660<br>DOS fat16文件系统：msdos<br>Windows 9x fat32文件系统：vfat<br>Windows NT ntfs文件系统：ntfs<br>Mount Windows文件网络共享：smbfs<br>UNIX(LINUX) 文件网络共享：nfs</p></blockquote></li><li><p>-o options 用来描述设备或档案的挂接方式。</p><blockquote><p>loop：用来把一个文件当成硬盘分区挂接上系统<br>ro：采用只读方式挂接设备<br>rw：采用读写方式挂接设备<br>iocharset：指定访问文件系统所用字符集</p></blockquote></li><li><p>device 要挂接(mount)的设备，共享目录的服务端。</p></li><li>dir 设备在本系统上的挂接点(mount point)。</li></ol><h2 id="2-挂载Windows共享目录"><a href="#2-挂载Windows共享目录" class="headerlink" title="2.挂载Windows共享目录"></a>2.挂载Windows共享目录</h2><p>Linux挂载Windows的共享目录，必须安装samba软件。Windows网络共享核心必须是SMB/CIFS。<br>先将Windows的目录设置为共享（假设ip为10.192.168.32，共享目录为F:/），再在Linux上挂载该Windows共享目录。</p><h3 id="2-1-建立本地挂载点-mount-point"><a href="#2-1-建立本地挂载点-mount-point" class="headerlink" title="2.1 建立本地挂载点(mount point)"></a>2.1 建立本地挂载点(mount point)</h3><pre><code># mkdir –p /mnt/share</code></pre><h3 id="2-2-执行挂载操作，将Windows的共享目录F，挂载到Linux的-mnt-share目录-如此就可以在linux系统上通过-mnt-share来访问windows系统磁盘上的文件了。"><a href="#2-2-执行挂载操作，将Windows的共享目录F，挂载到Linux的-mnt-share目录-如此就可以在linux系统上通过-mnt-share来访问windows系统磁盘上的文件了。" class="headerlink" title="2.2 执行挂载操作，将Windows的共享目录F，挂载到Linux的/mnt/share目录,如此就可以在linux系统上通过/mnt/share来访问windows系统磁盘上的文件了。"></a>2.2 执行挂载操作，将Windows的共享目录F，挂载到Linux的/mnt/share目录,如此就可以在linux系统上通过/mnt/share来访问windows系统磁盘上的文件了。</h3><pre><code># mount -t smbfs -o username=admin,password=123 //10.192.168.32/F$ /mnt/share</code></pre><blockquote><p>说明：<br>admin 和 123 是ip地址为10.192.168.32的windows计算机的一个用户名和密码，F$是这台计算机的一个磁盘共享。</p></blockquote><h2 id="3-挂载UNIX系统NFS文件共享"><a href="#3-挂载UNIX系统NFS文件共享" class="headerlink" title="3.挂载UNIX系统NFS文件共享"></a>3.挂载UNIX系统NFS文件共享</h2><p>Linux(UNIX)系统也有自己的网络共享，那就是NFS(网络文件系统)，下面我们就以SUN Solaris2.8和REDHAT as server 3 为例介绍在linux下如何mount nfs网络共享。<br>在linux客户端挂接(mount)NFS磁盘共享之前，必须先配置好NFS服务端。</p><h3 id="3-1-服务端配置（被挂载者）"><a href="#3-1-服务端配置（被挂载者）" class="headerlink" title="3.1 服务端配置（被挂载者）"></a>3.1 服务端配置（被挂载者）</h3><ul><li><strong>Solaris系统NFS服务端配置方法</strong></li></ul><p>1.修改/etc/dfs/dfstab, 增加共享目录</p><pre><code># share -F nfs -o rw /export/home/sunky</code></pre><p>2.启动nfs服务</p><pre><code># /etc/init.d/nfs.server start</code></pre><p>3.NFS服务启动以后，也可以使用下面的命令增加新的共享</p><pre><code># share /export/home/sunky1 # share /export/home/sunky2</code></pre><blockquote><p>说明：<br>注：/export/home/sunky和/export/home/sunky1是准备共享的目录</p></blockquote><ul><li><strong>linux系统NFS服务端配置方法</strong></li></ul><p>1.修改/etc/exports,增加共享目录</p><pre><code>/export/home/sharedir1 192.168.0.12(rw) /export/home/sharedir2 *(rw) /export/home/sharedir3 linux-client(rw)</code></pre><blockquote><p>说明：</p><ul><li>/export/home/sharedir1、sharedir2、sharedir3是准备共享的目录，而有权限挂载这些目录的客户端可以用IP、主机名、正则表达式等方式指定。如192.168.0.12、*、</li><li>linux-client是被允许挂接此共享linux客户机的IP地址或主机名。<br>如果使用主机名指定挂载的客户端，需要在/etc/hosts中配置客户端的Ip映射：192.168.0.12 linux-client</li><li>(rw)是挂载者对本共享目录所拥有的权限。</li></ul></blockquote><p>2.启动与停止NFS服务</p><pre><code>/etc/rc.d/init.d/portmap start (在REDHAT中PORTMAP是默认启动的) /etc/rc.d/init.d/nfs start 启动NFS服务 /etc/rc.d/init.d/nfs stop 停止NFS服务</code></pre><blockquote><p>说明：<br>修改/etc/export文件增加新的共享目录时，需要先停止NFS服务，再启动NFS服务才能使新增加的共享起作用。也可以使用命令exportfs -rv达到同样的效果。</p></blockquote><h3 id="3-2-客户端（挂载者）"><a href="#3-2-客户端（挂载者）" class="headerlink" title="3.2 客户端（挂载者）"></a>3.2 客户端（挂载者）</h3><h3 id="3-2-1-建立本地挂载点-mount-point"><a href="#3-2-1-建立本地挂载点-mount-point" class="headerlink" title="3.2.1 建立本地挂载点(mount point)"></a>3.2.1 建立本地挂载点(mount point)</h3><pre><code># mkdir –p /mnt/share</code></pre><h3 id="3-2-2执行挂载操作-将主机IP为192-168-5-88的NFS服务端共享目录-export-home-sharedir1挂载到客户端的-mnt-share目录。"><a href="#3-2-2执行挂载操作-将主机IP为192-168-5-88的NFS服务端共享目录-export-home-sharedir1挂载到客户端的-mnt-share目录。" class="headerlink" title="3.2.2执行挂载操作,将主机IP为192.168.5.88的NFS服务端共享目录/export/home/sharedir1挂载到客户端的/mnt/share目录。"></a>3.2.2执行挂载操作,将主机IP为192.168.5.88的NFS服务端共享目录/export/home/sharedir1挂载到客户端的/mnt/share目录。</h3><pre><code>#mount -t nfs -o rw 192.168.5.88:/export/home/sharedir1 /mnt/share</code></pre><p>现在你可以在客户端的/mnt/share目录下操作文件和目录了，而这些文件和目录实际上是在192.168.5.88上的/export/home/sharedir1这个目录中。</p><h2 id="4-解除挂载"><a href="#4-解除挂载" class="headerlink" title="4.解除挂载"></a>4.解除挂载</h2><p>不再使用挂载目录时不能直接删除，因为那样删除的是被挂载的服务端的目录内容。首先应该先解除挂载。</p><pre><code>umount /mnt/share</code></pre><blockquote><p>说明：<br>/mnt/share是挂载点（mount point）</p></blockquote><p>参考</p><blockquote><p>《鸟哥的Linux私房菜》<br><a href="http://man.linuxde.net/mount" target="_blank" rel="noopener">http://man.linuxde.net/mount</a><br><a href="https://www.linuxprobe.com/mount-detail-parameters.html" target="_blank" rel="noopener">https://www.linuxprobe.com/mount-detail-parameters.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;　　mount命令用于挂载文件系统到指定的加载点，他可以挂在ext3/vfat/nfs等文件系统。此命令的最常用于挂载cdrom，使我们可以访问cdrom中的数据，因为你将光盘插入cdrom中，Linux并不会自动挂载，必须使用Linux mount命令来手动完成挂载。此外
-      
-    
-    </summary>
-    
-      <category term="操作系统" scheme="http://yoursite.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-      <category term="linux" scheme="http://yoursite.com/tags/linux/"/>
-    
-      <category term="mount" scheme="http://yoursite.com/tags/mount/"/>
     
   </entry>
   
