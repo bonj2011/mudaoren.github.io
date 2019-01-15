@@ -306,15 +306,16 @@
     <link href="http://yoursite.com/2019/01/07/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E4%B8%80%EF%BC%89Web%E5%8F%8A%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/"/>
     <id>http://yoursite.com/2019/01/07/图解HTTP——（一）Web及网络协议基础/</id>
     <published>2019-01-07T15:21:43.197Z</published>
-    <updated>2019-01-07T15:55:57.406Z</updated>
+    <updated>2019-01-15T23:48:06.406Z</updated>
     
-    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/HgVOYEf.png" title="查看原图" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/HgVOYEf.png" alt="https://i.imgur.com/HgVOYEf.png"></p><p><img src="https://i.imgur.com/SfN1vNF.png" alt=""></p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>HTTP参考文档：<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP</a><br><a href="https://github.com/mudaoren/resource/blob/master/http/RFC2616-%E4%B8%AD%E6%96%87-%E5%B8%A6%E4%B9%A6%E7%AD%BE.pdf" target="_blank" rel="noopener">《图解HTTP》</a><br><a href="https://github.com/mudaoren/resource/blob/master/http/RFC2616-%E4%B8%AD%E6%96%87-%E5%B8%A6%E4%B9%A6%E7%AD%BE.pdf" target="_blank" rel="noopener">RFC2616</a></p></blockquote><p><a href="https://i.imgur.com/HgVOYEf.png" title="查看原图" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/HgVOYEf.png" alt="https://i.imgur.com/HgVOYEf.png"></p><p><img src="https://i.imgur.com/SfN1vNF.png" alt=""></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/HgVOYEf.png&quot; title=&quot;查看原图&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/HgVOYEf
+        &lt;blockquote&gt;
+&lt;p&gt;HTTP参考文档：&lt;br&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Web/HTTP&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://developer.mo
       
     
     </summary>
