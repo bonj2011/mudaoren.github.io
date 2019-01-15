@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-01-15T14:49:33.127Z</updated>
+  <updated>2019-01-15T15:53:57.380Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>图解HTTP——（十一）Web的攻击技术</title>
+    <link href="http://yoursite.com/2019/01/15/%E5%9B%BE%E8%A7%A3HTTP%E2%80%94%E2%80%94%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89Web%E7%9A%84%E6%94%BB%E5%87%BB%E6%8A%80%E6%9C%AF/"/>
+    <id>http://yoursite.com/2019/01/15/图解HTTP——（十一）Web的攻击技术/</id>
+    <published>2019-01-15T15:54:04.369Z</published>
+    <updated>2019-01-15T15:53:57.380Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://i.imgur.com/otFu28x.png" target="_blank" rel="noopener">点击查看原图</a><br><img src="https://i.imgur.com/otFu28x.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;https://i.imgur.com/otFu28x.png&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点击查看原图&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://i.imgur.com/otFu28x.png&quot; alt=&quot;&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="图解HTTP" scheme="http://yoursite.com/categories/%E5%9B%BE%E8%A7%A3HTTP/"/>
+    
+    
+      <category term="Web安全" scheme="http://yoursite.com/tags/Web%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="http协议" scheme="http://yoursite.com/tags/http%E5%8D%8F%E8%AE%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>图解HTTP——（十）构建Web内容的技术</title>
@@ -548,34 +575,6 @@
     
     
       <category term="缓存，分布式，高性能" scheme="http://yoursite.com/tags/%E7%BC%93%E5%AD%98%EF%BC%8C%E5%88%86%E5%B8%83%E5%BC%8F%EF%BC%8C%E9%AB%98%E6%80%A7%E8%83%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring的profile实现多国、多环境打包</title>
-    <link href="http://yoursite.com/2018/12/08/Spring%E7%9A%84profile%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%9B%BD%E3%80%81%E5%A4%9A%E7%8E%AF%E5%A2%83%E6%89%93%E5%8C%85/"/>
-    <id>http://yoursite.com/2018/12/08/Spring的profile实现多国、多环境打包/</id>
-    <published>2018-12-08T10:28:41.275Z</published>
-    <updated>2018-12-08T10:28:32.341Z</updated>
-    
-    <content type="html"><![CDATA[<p>全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。</p><p>解决方法有两种：<br>1）不同的环境打不同的安装包。<br>2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。</p><p>这两种方式我们都有使用过，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种方式，所有国家和环境使用同一个安装包，不同的国家激活不同的profile，激活方式使用系统环境变量的方法，同时将配置文件提取出来使用配置中心管理，安装包归一化。</p><p>Spring profile的配置方式可参考<br><a href="https://www.baeldung.com/spring-profiles" target="_blank" rel="noopener">https://www.baeldung.com/spring-profiles</a><br><a href="https://www.cnblogs.com/strugglion/p/7091021.html" target="_blank" rel="noopener">https://www.cnblogs.com/strugglion/p/7091021.html</a><br><a href="http://websystique.com/spring/spring-profile-example/" target="_blank" rel="noopener">http://websystique.com/spring/spring-profile-example/</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。&lt;/p&gt;
-&lt;p&gt;解决方法有两种：&lt;br&gt;1）不同的环境打不同的安装包。&lt;br&gt;2）不同的环境打相同的安装包，但不同的环境所加载的配置不
-      
-    
-    </summary>
-    
-      <category term="Spring" scheme="http://yoursite.com/categories/Spring/"/>
-    
-    
-      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
-    
-      <category term="profile" scheme="http://yoursite.com/tags/profile/"/>
     
   </entry>
   
