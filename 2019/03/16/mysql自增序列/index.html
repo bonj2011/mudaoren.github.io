@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="musql,自增序列,AUTO_INCREMENT," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="木道人" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
+<meta name="keywords" content="musql,自增序列,AUTO_INCREMENT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql自增序列">
+<meta property="og:url" content="http://yoursite.com/2019/03/16/mysql自增序列/index.html">
+<meta property="og:site_name" content="木道人">
+<meta property="og:description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-16T13:12:31.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql自增序列">
+<meta name="twitter:description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/16/mysql自增序列/"/>
+
+
+
+
+
+  <title>mysql自增序列 | 木道人</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木道人</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/16/mysql自增序列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木道人">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木道人">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mysql自增序列</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-16T21:13:16+08:00">
+                2019-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/musql/" itemprop="url" rel="index">
+                    <span itemprop="name">musql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一-变量类型"><a href="#一-变量类型" class="headerlink" title="一 变量类型"></a>一 变量类型</h2><p>mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。</p>
+<h2 id="二-重要的命令"><a href="#二-重要的命令" class="headerlink" title="二 重要的命令"></a>二 重要的命令</h2><h3 id="1-查看系统级自增序列种子值和间隔值"><a href="#1-查看系统级自增序列种子值和间隔值" class="headerlink" title="1. 查看系统级自增序列种子值和间隔值"></a>1. 查看系统级自增序列种子值和间隔值</h3><p>SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量</p>
+<p>MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为1。</p>
+<h3 id="2-设置增长初始值为n"><a href="#2-设置增长初始值为n" class="headerlink" title="2. 设置增长初始值为n"></a>2. 设置增长初始值为n</h3><p>SET @@auto_increment_offset = n;<br>取值范围是1-65535</p>
+<h3 id="3-设置增长幅度为2"><a href="#3-设置增长幅度为2" class="headerlink" title="3. 设置增长幅度为2"></a>3. 设置增长幅度为2</h3><p>SET @@auto_increment_increment = 2;<br>取值范围是1-65535</p>
+<p>做数据库的主从同步时需要在参数文件中设置自增长的两个相关配置：auto_increment_offset和auto_increment_increment。</p>
+<p>在主主同步配置时，需要将两台服务器的auto_increment_increment增长量都配置为2，而要把auto_increment_offset分别配置为1和2.这样才可以避免两台服务器同时做更新时自增长字段的值之间发生冲突。</p>
+<h3 id="4-查看序列下一个值"><a href="#4-查看序列下一个值" class="headerlink" title="4. 查看序列下一个值"></a>4. 查看序列下一个值</h3><pre><code>SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = &apos;table_name&apos;；
+</code></pre><h2 id="三-自增序列使用方法"><a href="#三-自增序列使用方法" class="headerlink" title="三 自增序列使用方法"></a>三 自增序列使用方法</h2><h2 id="1-创建表时指定"><a href="#1-创建表时指定" class="headerlink" title="1. 创建表时指定"></a>1. 创建表时指定</h2><pre><code>CREATE TABLE t_userinfo
+(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(30) NOT NULL
+) AUTO_INCREMENT = 100;
+</code></pre><p>可在建表时用“AUTO_INCREMENT=n”选项来指定自增序列的初始值。也可以通过脚本<br>    alter table t_userinfo auto_increment = n ;<br>设置表的唯一auto_increment字段起始值从n开始，此表数据量很大时，这样方式执行很慢。</p>
+<h2 id="2-通过alter设置"><a href="#2-通过alter设置" class="headerlink" title="2. 通过alter设置"></a>2. 通过alter设置</h2><pre><code>alter table t_userinfo modify id int auto_increment;
+</code></pre><h2 id="四-AUTO-INCREMENT说明"><a href="#四-AUTO-INCREMENT说明" class="headerlink" title="四 AUTO_INCREMENT说明"></a>四 AUTO_INCREMENT说明</h2><ul>
+<li>把NULL插入到一个AUTO_INCREMENT数据列时，MySQL将自动生成下一个序列编号。</li>
+<li>把0插入AUTO_INCREMENT数据列的效果与插入NULL值一样。建议使用null。</li>
+<li>当插入记录时，没有为AUTO_INCREMENT明确指定值，则等同插入NULL值。</li>
+<li>当插入记录时，如果为AUTO_INCREMENT数据列明确指定了一个数值，则会出现两种情况，情况一，如果插入的值与已有的编号重复，则会出现出错信息，因为AUTO_INCREMENT数据列的值必须是唯一的；情况二，如果插入的值大于已编号的值，则会把该插入到数据列中，而下一个编号将从这个新值开始递增。</li>
+<li>如果用UPDATE命令更新自增列，如果列值与已有的值重复，则会出错。如果大于已有值，则下一个编号从该值开始递增。</li>
+<li>如果一张表里有个字段为id的自增主键，向表里面插入了5条数据，删除id为3、4、5的数据，再把mysql重启，之后再插入一条数据，那么这条数据的id值存在两种情况：情况一，如果表的类型为MyISAM，那么是6。情况二，如果表的类型为InnoDB，则id为3。因为两种类型的存储引擎所存储的最大ID记录的方式不同，MyISAM表将最大的ID记录到了数据文件里，重启mysql自增主键的最大ID值也不会丢失； 而InnoDB则是把最大的ID值记录到了内存中，所以重启mysql或者对表进行了OPTIMIZE操作后，最大ID值将会丢失。 </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/musql/" rel="tag"># musql</a>
+          
+            <a href="/tags/自增序列/" rel="tag"># 自增序列</a>
+          
+            <a href="/tags/AUTO-INCREMENT/" rel="tag"># AUTO_INCREMENT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/13/DNS/" rel="next" title="DNS">
+                <i class="fa fa-chevron-left"></i> DNS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木道人</p>
+              <p class="site-description motion-element" itemprop="description">看风的必不撒种；望云的必不收割。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="0" target="_blank">0</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="1" target="_blank">1</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="[object Object]" title="2" target="_blank">2</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-变量类型"><span class="nav-text">一 变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-重要的命令"><span class="nav-text">二 重要的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-查看系统级自增序列种子值和间隔值"><span class="nav-text">1. 查看系统级自增序列种子值和间隔值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-设置增长初始值为n"><span class="nav-text">2. 设置增长初始值为n</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-设置增长幅度为2"><span class="nav-text">3. 设置增长幅度为2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-查看序列下一个值"><span class="nav-text">4. 查看序列下一个值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-自增序列使用方法"><span class="nav-text">三 自增序列使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建表时指定"><span class="nav-text">1. 创建表时指定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-通过alter设置"><span class="nav-text">2. 通过alter设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-AUTO-INCREMENT说明"><span class="nav-text">四 AUTO_INCREMENT说明</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木道人</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
