@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-16T13:12:31.646Z">
+<meta property="og:updated_time" content="2019-03-16T13:19:32.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql自增序列">
 <meta name="twitter:description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
@@ -362,13 +362,13 @@
 <p>做数据库的主从同步时需要在参数文件中设置自增长的两个相关配置：auto_increment_offset和auto_increment_increment。</p>
 <p>在主主同步配置时，需要将两台服务器的auto_increment_increment增长量都配置为2，而要把auto_increment_offset分别配置为1和2.这样才可以避免两台服务器同时做更新时自增长字段的值之间发生冲突。</p>
 <h3 id="4-查看序列下一个值"><a href="#4-查看序列下一个值" class="headerlink" title="4. 查看序列下一个值"></a>4. 查看序列下一个值</h3><pre><code>SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = &apos;table_name&apos;；
-</code></pre><h2 id="三-自增序列使用方法"><a href="#三-自增序列使用方法" class="headerlink" title="三 自增序列使用方法"></a>三 自增序列使用方法</h2><h2 id="1-创建表时指定"><a href="#1-创建表时指定" class="headerlink" title="1. 创建表时指定"></a>1. 创建表时指定</h2><pre><code>CREATE TABLE t_userinfo
+</code></pre><h2 id="三-自增序列使用方法"><a href="#三-自增序列使用方法" class="headerlink" title="三 自增序列使用方法"></a>三 自增序列使用方法</h2><h3 id="1-创建表时指定"><a href="#1-创建表时指定" class="headerlink" title="1. 创建表时指定"></a>1. 创建表时指定</h3><pre><code>CREATE TABLE t_userinfo
 (
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(30) NOT NULL
 ) AUTO_INCREMENT = 100;
 </code></pre><p>可在建表时用“AUTO_INCREMENT=n”选项来指定自增序列的初始值。也可以通过脚本<br>    alter table t_userinfo auto_increment = n ;<br>设置表的唯一auto_increment字段起始值从n开始，此表数据量很大时，这样方式执行很慢。</p>
-<h2 id="2-通过alter设置"><a href="#2-通过alter设置" class="headerlink" title="2. 通过alter设置"></a>2. 通过alter设置</h2><pre><code>alter table t_userinfo modify id int auto_increment;
+<h3 id="2-通过alter设置"><a href="#2-通过alter设置" class="headerlink" title="2. 通过alter设置"></a>2. 通过alter设置</h3><pre><code>alter table t_userinfo modify id int auto_increment;
 </code></pre><h2 id="四-AUTO-INCREMENT说明"><a href="#四-AUTO-INCREMENT说明" class="headerlink" title="四 AUTO_INCREMENT说明"></a>四 AUTO_INCREMENT说明</h2><ul>
 <li>把NULL插入到一个AUTO_INCREMENT数据列时，MySQL将自动生成下一个序列编号。</li>
 <li>把0插入AUTO_INCREMENT数据列的效果与插入NULL值一样。建议使用null。</li>
@@ -580,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-变量类型"><span class="nav-text">一 变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-重要的命令"><span class="nav-text">二 重要的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-查看系统级自增序列种子值和间隔值"><span class="nav-text">1. 查看系统级自增序列种子值和间隔值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-设置增长初始值为n"><span class="nav-text">2. 设置增长初始值为n</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-设置增长幅度为2"><span class="nav-text">3. 设置增长幅度为2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-查看序列下一个值"><span class="nav-text">4. 查看序列下一个值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-自增序列使用方法"><span class="nav-text">三 自增序列使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建表时指定"><span class="nav-text">1. 创建表时指定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-通过alter设置"><span class="nav-text">2. 通过alter设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-AUTO-INCREMENT说明"><span class="nav-text">四 AUTO_INCREMENT说明</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-变量类型"><span class="nav-text">一 变量类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-重要的命令"><span class="nav-text">二 重要的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-查看系统级自增序列种子值和间隔值"><span class="nav-text">1. 查看系统级自增序列种子值和间隔值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-设置增长初始值为n"><span class="nav-text">2. 设置增长初始值为n</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-设置增长幅度为2"><span class="nav-text">3. 设置增长幅度为2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-查看序列下一个值"><span class="nav-text">4. 查看序列下一个值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-自增序列使用方法"><span class="nav-text">三 自增序列使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建表时指定"><span class="nav-text">1. 创建表时指定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过alter设置"><span class="nav-text">2. 通过alter设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-AUTO-INCREMENT说明"><span class="nav-text">四 AUTO_INCREMENT说明</span></a></li></ol></div>
             
 
           </div>
