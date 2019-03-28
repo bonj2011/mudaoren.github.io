@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。 解决方法有两种：1）不同的环境打不同的安装包。2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。 这两种方式我们都有使用过，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种">
+<meta name="description" content="全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。 解决方法有两种：1）不同的环境打不同的安装包。2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。 这两种方式我们都有使用，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种方">
 <meta name="keywords" content="Spring,profile">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring的profile实现多国、多环境打包">
 <meta property="og:url" content="http://yoursite.com/2018/12/08/Spring的profile实现多国、多环境打包/index.html">
 <meta property="og:site_name" content="木道人">
-<meta property="og:description" content="全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。 解决方法有两种：1）不同的环境打不同的安装包。2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。 这两种方式我们都有使用过，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种">
+<meta property="og:description" content="全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。 解决方法有两种：1）不同的环境打不同的安装包。2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。 这两种方式我们都有使用，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-08T10:28:32.341Z">
+<meta property="og:updated_time" content="2019-03-28T23:00:50.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring的profile实现多国、多环境打包">
-<meta name="twitter:description" content="全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。 解决方法有两种：1）不同的环境打不同的安装包。2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。 这两种方式我们都有使用过，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种">
+<meta name="twitter:description" content="全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。 解决方法有两种：1）不同的环境打不同的安装包。2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。 这两种方式我们都有使用，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种方">
 
 
 
@@ -356,7 +356,7 @@
       
         <p>全球电商平台因为涉及到用户数据，因此需要在不同地区的机房或者不同区域的公有云上部署。另外还有开发环境、测试环境的区别。都存在不同的配置问题。</p>
 <p>解决方法有两种：<br>1）不同的环境打不同的安装包。<br>2）不同的环境打相同的安装包，但不同的环境所加载的配置不同。</p>
-<p>这两种方式我们都有使用过，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种方式，所有国家和环境使用同一个安装包，不同的国家激活不同的profile，激活方式使用系统环境变量的方法，同时将配置文件提取出来使用配置中心管理，安装包归一化。</p>
+<p>这两种方式我们都有使用，因为需要支撑全球，如果按照第一种方式，同一个版本需要打十几个包，造成安装包泛滥，后期容器化后又要出不同的镜像。后来改用第二种方式，所有国家和环境使用同一个安装包，不同的国家激活不同的profile，激活方式使用系统环境变量的方法，同时将配置文件提取出来使用配置中心管理，安装包归一化。</p>
 <p>Spring profile的配置方式可参考<br><a href="https://www.baeldung.com/spring-profiles" target="_blank" rel="noopener">https://www.baeldung.com/spring-profiles</a><br><a href="https://www.cnblogs.com/strugglion/p/7091021.html" target="_blank" rel="noopener">https://www.cnblogs.com/strugglion/p/7091021.html</a><br><a href="http://websystique.com/spring/spring-profile-example/" target="_blank" rel="noopener">http://websystique.com/spring/spring-profile-example/</a></p>
 
       
@@ -481,7 +481,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -492,7 +492,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

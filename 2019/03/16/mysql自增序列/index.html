@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="musql,自增序列,AUTO_INCREMENT," />
+  <meta name="keywords" content="mysql,自增序列,AUTO_INCREMENT," />
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
-<meta name="keywords" content="musql,自增序列,AUTO_INCREMENT">
+<meta name="keywords" content="mysql,自增序列,AUTO_INCREMENT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql自增序列">
 <meta property="og:url" content="http://yoursite.com/2019/03/16/mysql自增序列/index.html">
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-16T13:19:32.402Z">
+<meta property="og:updated_time" content="2019-03-28T22:57:39.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql自增序列">
 <meta name="twitter:description" content="一 变量类型mysql系统参数分为：全局变量和会话变量。这两类设置在设置后立刻生效，但mysql重启后就会失效，如果希望一直有效需要修改Mysql配置文件并重启。 二 重要的命令1. 查看系统级自增序列种子值和间隔值SHOW GLOBAL VARIABLES LIKE ‘auto_incre%’; – 全局变量 MySQL设置表字段属性AUTO_INCREMENT时，默认初始值为1，默认增长间隔为">
@@ -317,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/musql/" itemprop="url" rel="index">
-                    <span itemprop="name">musql</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -377,6 +377,9 @@
 <li>如果用UPDATE命令更新自增列，如果列值与已有的值重复，则会出错。如果大于已有值，则下一个编号从该值开始递增。</li>
 <li>如果一张表里有个字段为id的自增主键，向表里面插入了5条数据，删除id为3、4、5的数据，再把mysql重启，之后再插入一条数据，那么这条数据的id值存在两种情况：情况一，如果表的类型为MyISAM，那么是6。情况二，如果表的类型为InnoDB，则id为3。因为两种类型的存储引擎所存储的最大ID记录的方式不同，MyISAM表将最大的ID记录到了数据文件里，重启mysql自增主键的最大ID值也不会丢失； 而InnoDB则是把最大的ID值记录到了内存中，所以重启mysql或者对表进行了OPTIMIZE操作后，最大ID值将会丢失。 </li>
 </ul>
+<blockquote>
+<p>参考：<br><a href="https://www.cnblogs.com/wade-lt/p/9008058.html" target="_blank" rel="noopener">https://www.cnblogs.com/wade-lt/p/9008058.html</a></p>
+</blockquote>
 
       
     </div>
@@ -394,7 +397,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/musql/" rel="tag"># musql</a>
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
           
             <a href="/tags/自增序列/" rel="tag"># 自增序列</a>
           
@@ -507,7 +510,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -518,7 +521,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
