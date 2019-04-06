@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-28T22:57:39.487Z</updated>
+  <updated>2019-04-06T15:40:33.613Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>走钢丝的启示</title>
+    <link href="http://yoursite.com/2019/04/06/%E8%B5%B0%E9%92%A2%E4%B8%9D%E7%9A%84%E5%90%AF%E7%A4%BA/"/>
+    <id>http://yoursite.com/2019/04/06/走钢丝的启示/</id>
+    <published>2019-04-06T15:41:28.135Z</published>
+    <updated>2019-04-06T15:40:33.613Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　今天有幸现场观看杂技表演——高空走钢丝。从中获得许多启示。<br>　　自杂技演员拿着平衡杆脚踩上钢丝的那一刻起，就意味着一段旅程的开始。当他慢慢走到钢丝中间，对他而言，已没有了退路，停不行，放弃也不可，没有人能帮助他，他只能勇敢的走到对面，或者原路返回，但无论如何选择，都需要一步步走完。<br>　　人的一生会遇到很多事，需要做很多决定，有多少自己选择的路是有始有终的走完？困难、挫折、气馁、放弃，结果是永远无法成功的走到终点，当然也难全身而退。<br>　　选择太多往往就容易导致没有结果。<br>　　我没走过钢丝，不知道走钢丝的人是什么心理。换位思考一下，如果我是走钢丝的人，从迈出第一步后，心里想的一定是如何走好，如何走下去，不管遇到什么困难，只会想各种方法克服，心无旁骛。也许台下掌声雷动，纵然有观众竭力呼喊，对钢丝上那个人来讲，又有什么影响呢？他还是一样一步一步继续走下去。如果以走钢丝人的心态做事，成功的几率只会成倍增加。<br>　　走钢丝表演固然精彩，但如果让你每周看一场，你能坚持多久？钢丝表演也需要创新，也需要突破，花样要更多、难度要更大，否则观众也不愿意为一个一成不变的表演长期买单。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;　　今天有幸现场观看杂技表演——高空走钢丝。从中获得许多启示。&lt;br&gt;　　自杂技演员拿着平衡杆脚踩上钢丝的那一刻起，就意味着一段旅程的开始。当他慢慢走到钢丝中间，对他而言，已没有了退路，停不行，放弃也不可，没有人能帮助他，他只能勇敢的走到对面，或者原路返回，但无论如何选择，
+      
+    
+    </summary>
+    
+      <category term="思维方式" scheme="http://yoursite.com/categories/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/"/>
+    
+    
+      <category term="思维方式" scheme="http://yoursite.com/tags/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>mysql自增序列</title>
@@ -554,35 +579,6 @@
       <category term="大型网站" scheme="http://yoursite.com/tags/%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99/"/>
     
       <category term="高性能" scheme="http://yoursite.com/tags/%E9%AB%98%E6%80%A7%E8%83%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Web安全之ReDOS攻击</title>
-    <link href="http://yoursite.com/2018/12/16/Web%E5%AE%89%E5%85%A8%E4%B9%8BReDOS%E6%94%BB%E5%87%BB/"/>
-    <id>http://yoursite.com/2018/12/16/Web安全之ReDOS攻击/</id>
-    <published>2018-12-16T10:31:55.491Z</published>
-    <updated>2018-12-22T14:51:20.394Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><p>　　正则表达式（regular expression）又称为规则表达式，就是用一个“字符串”来描述一个特征，然后去检索、替换另一个符合这个特征“字符串”。</p><h2 id="正则表达式引擎分类"><a href="#正则表达式引擎分类" class="headerlink" title="正则表达式引擎分类"></a>正则表达式引擎分类</h2><p>　　正则表达式引擎分为两类：NFA和DFA。</p><ul><li>　　NFA：匹配过程面临很多的岔路，需要做出选择，一旦某条岔路失败，就需要回朔。类似于回溯法。执行复杂度最大为O（2^n)。</li><li>　　DFA：匹配过程是确定的，每个字母需要匹配一次。长度为n的正则表达式执行复杂度为O（2^n),长度为n的字符串，执行复杂度为O（n）</li></ul><p>　　构造DFA的代价远大于NFA，假设NFA的状态数为K，那么等价DFA的状态数目理论上可达2的k次方，不过实际上几乎不会出现这么极端的情况，可以肯定的是构造DFA会消耗更多的时间和内存。<br>　　但是DFA一旦构造好了之后，执行效率就非常理想，如果一个串的长度是n，那么匹配算法的执行复杂度是O(n);而NFA在匹配过程中，存在大量的分支和回朔，假设NFA的状态数为s，因为每输入一个字符可能达到的状态数做多为s，那么匹配算法的复杂度及时输入串的长度乘以状态数O(ns)。NFA所支持的高级特性比DFA要多，所以NFA常被使用。</p><h2 id="Redos攻击"><a href="#Redos攻击" class="headerlink" title="Redos攻击"></a>Redos攻击</h2><p>　　ReDoS(Regular expression Denial of Service) 正则表达式拒绝服务攻击。应用程序使用正则表达式对用户输入的数据进行有效性校验, 当正则表达式存在缺陷或者不严谨时, 攻击者可以通过构造特殊的字符串大量消耗服务器的系统资源，造成服务器的服务中断或停止。<br>　　不论是DFA还是NFA引擎，极端情况下执行复杂度可能达到O(2^n),这就会导致执行正则教研的线程执行缓慢并占用大量CPU资源，有时可能会将CPU耗尽。</p><h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>　　正则表达式<code>^(a+)+$</code>的回溯匹配算法：</p><p>　　<img src="https://i.imgur.com/qmd38sU.png" alt=""><br>　　对于aaaab，存在16种可能的路径（2^4），但是对于aaaaaaaaaaaaaaaab，则存在65536种可能的路径（2^16）。<br>　　通过<a href="https://regex101.com/" target="_blank" rel="noopener">https://regex101.com/</a> 网站进行测试：<br>　　1) 测试字符串aaaab<br>　　<img src="https://i.imgur.com/ohEtHJg.png" alt=""><br>　　<img src="https://i.imgur.com/OxYLQOE.png" alt=""><br>　　经过54步，耗时1ms。<br>　　2) 测试字符串aaaaab<br>　　<img src="https://i.imgur.com/BNvXae0.png" alt=""><br>　　经过103步，耗时1ms<br>　　3) 测试字符串aaaaaaaaaaaaaab<br>　　<img src="https://i.imgur.com/1GELwiZ.png" alt=""><br>　　经过49168步，耗时114ms。</p><h2 id="什么样的正则表达式易受攻击"><a href="#什么样的正则表达式易受攻击" class="headerlink" title="什么样的正则表达式易受攻击"></a>什么样的正则表达式易受攻击</h2><ol><li>重复分组</li><li>重复分组内存在:<ul><li>重复</li><li>交叉重叠</li></ul></li></ol><p>样例：</p><ul><li>(a+)+</li><li>([a-zA-Z]+)*</li><li>(a|aa)+</li><li>(a|a?)+</li><li>(.*a){x} | for x &gt; 10</li></ul><h2 id="哪些环节易受攻击"><a href="#哪些环节易受攻击" class="headerlink" title="哪些环节易受攻击"></a>哪些环节易受攻击</h2><p><img src="https://i.imgur.com/yoemEiG.png" alt=""><br>　　理论上网络系统的每一个环节都有正则表达式的存在，因此都有可能受到ReDos攻击。但实际上，黑客攻击自己的浏览器是没有意义的，因此除浏览器外使用正则表达式验证用户输入的其他设备上都应该经过准确的验证。</p><h2 id="如何测试"><a href="#如何测试" class="headerlink" title="如何测试"></a>如何测试</h2><p>　　使用微软测试工具<a href="https://pcwin.com/Utilities/Misc__Utilities/SDL_Regex_Fuzzer/download.htm" title="Downloading SDL Regex Fuzzer 1.1" target="_blank" rel="noopener">Microsoft SDL Regex Fuzzer</a>，测试<code>^(a+)+$</code>，测试结果是Failed。<a href="https://github.com/mudaoren/-/raw/master/RegexFuzzerSetup.zip" target="_blank" rel="noopener">点击下载。</a><br>　　<img src="https://i.imgur.com/cjuUvZH.png" alt=""></p><h2 id="如何防范"><a href="#如何防范" class="headerlink" title="如何防范"></a>如何防范</h2><p>　　Redos攻击很难完全消除，只能尽可能降低这种风险。常用的措施有：</p><ul><li>尽量明确不可信输入的字符串长度。</li><li>避免使用分组、重复等。</li><li>充分的测试。</li><li>完善的性能监控工具。</li></ul><p>参考资料：</p><blockquote><p>《精通正则表达式》<br>《编译原理龙书第二版》<br><a href="https://xz.aliyun.com/t/2723#toc-9" target="_blank" rel="noopener">https://xz.aliyun.com/t/2723#toc-9</a><br><a href="https://www.regular-expressions.info/catastrophic.html" target="_blank" rel="noopener">https://www.regular-expressions.info/catastrophic.html</a><br><a href="https://www.andseclab.com/2018/04/19/owasp%E6%B1%89%E5%8C%96%E6%94%BB%E5%87%BB%E7%B3%BB%E5%88%97%E5%A4%A7%E5%85%A8%E4%BA%94%E5%8D%81%E4%B8%80%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/" target="_blank" rel="noopener">https://www.andseclab.com/2018/04/19/owasp%E6%B1%89%E5%8C%96%E6%94%BB%E5%87%BB%E7%B3%BB%E5%88%97%E5%A4%A7%E5%85%A8%E4%BA%94%E5%8D%81%E4%B8%80%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1/</a><br><a href="https://www.freebuf.com/articles/network/124422.html" target="_blank" rel="noopener">https://www.freebuf.com/articles/network/124422.html</a></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;正则表达式&quot;&gt;&lt;a href=&quot;#正则表达式&quot; class=&quot;headerlink&quot; title=&quot;正则表达式&quot;&gt;&lt;/a&gt;正则表达式&lt;/h2&gt;&lt;p&gt;　　正则表达式（regular expression）又称为规则表达式，就是用一个“字符串”来描述一个特征，然后去检
-      
-    
-    </summary>
-    
-      <category term="安全隐私" scheme="http://yoursite.com/categories/%E5%AE%89%E5%85%A8%E9%9A%90%E7%A7%81/"/>
-    
-    
-      <category term="网络安全" scheme="http://yoursite.com/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
-    
-      <category term="ReDOS" scheme="http://yoursite.com/tags/ReDOS/"/>
-    
-      <category term="正则表达式" scheme="http://yoursite.com/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
     
   </entry>
   
