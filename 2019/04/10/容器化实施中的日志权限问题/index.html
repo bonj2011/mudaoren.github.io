@@ -89,12 +89,12 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="问题描述：　　商城的微服务创建的日志会输出到指定磁盘，提供给专门的运维监控系统分析。微服务在虚拟机上创建的目录默认权限是755，文件默认权限是644，others组中的用户均可正常读取。但在迁移到华为云的CCE后，容器中微服务创建的目录权限变成750，文件权限变成640，这导致others用户无法读取微服务创建的文件。 现象：docker中微服务创建的目录和文件的默认权限如下： drwxr-x--">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/hjLZjBe.png">
-<meta property="og:updated_time" content="2019-04-09T23:22:07.579Z">
+<meta property="og:image" content="https://i.imgur.com/LGy2g4a.png">
+<meta property="og:updated_time" content="2019-04-09T23:23:42.290Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="容器化实施中的日志文件权限问题">
 <meta name="twitter:description" content="问题描述：　　商城的微服务创建的日志会输出到指定磁盘，提供给专门的运维监控系统分析。微服务在虚拟机上创建的目录默认权限是755，文件默认权限是644，others组中的用户均可正常读取。但在迁移到华为云的CCE后，容器中微服务创建的目录权限变成750，文件权限变成640，这导致others用户无法读取微服务创建的文件。 现象：docker中微服务创建的目录和文件的默认权限如下： drwxr-x--">
-<meta name="twitter:image" content="https://i.imgur.com/hjLZjBe.png">
+<meta name="twitter:image" content="https://i.imgur.com/LGy2g4a.png">
 
 
 
@@ -448,10 +448,7 @@ umask $UMASK
 <p>另外，如果java的微服务日志还包含在启动脚本/bin/*.sh中创建的，那么就需要在shell中指定文件的权限了，这相对来说简单很多，在创建文件的脚本后执行命令赋权限即可。</p>
 <pre><code>exec chmod -R 644 $LOGS/my.log
 </code></pre><h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ol>
-<li>不管是tomcat还是java都是通过修改底层操作系统的文件权限来实现对文件权限的管理。在linux操作系统etc/profile和etc/bashrc中都有默认的umask设置。可以看到根据不同的uid设置了不同的umask。</li>
-</ol>
-<p><img src="https://i.imgur.com/hjLZjBe.png" alt=""></p>
-<ol start="2">
+<li>不管是tomcat还是java都是通过修改底层操作系统的文件权限来实现对文件权限的管理。在linux操作系统etc/profile和etc/bashrc中都有默认的umask设置。可以看到根据不同的uid设置了不同的umask。<br><img src="https://i.imgur.com/LGy2g4a.png" alt=""></li>
 <li><p>基于上一点的操作系统原理，自然可以想到是否可以通过直接修改日志目录的权限来控制目录中的文件权限？通过查阅找到了linux的操作系统命令<code>setfacl</code>，这个命令可以强制指定目录的所有子文件（目录）继承本目录的权限。<br>那我是不是可以直接在shell脚本中将微服务的日志目录创建好并赋予644权限呢？答案是肯定的，在shell脚本中创建日志目录后增加一行：</p>
 <p> setfacl -Rm “u::rw,g::r,o::r” $LOG_DIR<br>有了这个方法，tomcat和java应用的日志权限问题都可以迎刃而解了。</p>
 </li>
