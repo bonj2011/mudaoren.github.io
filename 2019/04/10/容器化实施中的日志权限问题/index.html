@@ -90,7 +90,7 @@
 <meta property="og:description" content="问题描述：　　商城的微服务创建的日志会输出到指定磁盘，提供给专门的运维监控系统分析。微服务在虚拟机上创建的目录默认权限是755，文件默认权限是644，others组中的用户均可正常读取。但在迁移到华为云的CCE后，容器中微服务创建的目录权限变成750，文件权限变成640，这导致others用户无法读取微服务创建的文件。 现象：docker中微服务创建的目录和文件的默认权限如下： drwxr-x--">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/NavZyvD.png">
-<meta property="og:updated_time" content="2019-04-09T23:12:18.031Z">
+<meta property="og:updated_time" content="2019-04-09T23:18:07.700Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="容器化实施中的日志文件权限问题">
 <meta name="twitter:description" content="问题描述：　　商城的微服务创建的日志会输出到指定磁盘，提供给专门的运维监控系统分析。微服务在虚拟机上创建的目录默认权限是755，文件默认权限是644，others组中的用户均可正常读取。但在迁移到华为云的CCE后，容器中微服务创建的目录权限变成750，文件权限变成640，这导致others用户无法读取微服务创建的文件。 现象：docker中微服务创建的目录和文件的默认权限如下： drwxr-x--">
@@ -360,7 +360,7 @@
 <h1 id="现象："><a href="#现象：" class="headerlink" title="现象："></a>现象：</h1><p>docker中微服务创建的目录和文件的默认权限如下：</p>
 <pre><code>drwxr-x--- 2 tomcat tomcat 4096 Jun 16 17:57 app-server
 -rw-r----- 1 tomcat tomcat0 Jun 16 17:57 server.log
-</code></pre><h1 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h1><p>##1.tomcat应用 ##<br>tomcat_home/bin/catalina.sh中的一段脚本：</p>
+</code></pre><h1 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h1><h2 id="1-tomcat应用"><a href="#1-tomcat应用" class="headerlink" title="1.tomcat应用"></a>1.tomcat应用</h2><p>tomcat_home/bin/catalina.sh中的一段脚本：</p>
 <pre><code>#   UMASK           (Optional) Override Tomcat&apos;s default UMASK of 0027
 # Set UMASK unless it has been overridden
 if [ -z &quot;$UMASK&quot; ]; then
@@ -368,7 +368,7 @@ if [ -z &quot;$UMASK&quot; ]; then
 fi
 umask $UMASK
 </code></pre><p><strong>解释</strong>：umask=0027的后三位表示tomcat创建的文件默认user|group|others三个用户组的权限，计算方法是（6-0）（6-2）（6-7），结果是640，最后一位代表的权限最小是0，权限数字不可能有负值。<br>所以tomcat中可以直接修改UMASK=”0022”，将日志文件的默认权限设置为644。</p>
-<p>##2.java应用##<br>直接使用java的应用不像tomcat一样，它没有umask参数。这时候想到log4j中有个配置参数filePermissions(2.9以上版本才增加的参数)，通过这个参数配置可以指定日志文件的权限。</p>
+<h2 id="2-java应用"><a href="#2-java应用" class="headerlink" title="2.java应用"></a>2.java应用</h2><p>直接使用java的应用不像tomcat一样，它没有umask参数。这时候想到log4j中有个配置参数filePermissions(2.9以上版本才增加的参数)，通过这个参数配置可以指定日志文件的权限。</p>
 <pre><code>&lt;File name=&quot;File&quot; fileName=&quot;server.log&quot; filePermissions=&quot;rw-r--r--&quot;&gt;
    &lt;PatternLayout pattern=&quot;%m%n&quot; /&gt;
 &lt;/File&gt;
@@ -666,7 +666,7 @@ umask $UMASK
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题描述："><span class="nav-text">问题描述：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#现象："><span class="nav-text">现象：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方法："><span class="nav-text">解决方法：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理"><span class="nav-text">原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题描述："><span class="nav-text">问题描述：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#现象："><span class="nav-text">现象：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方法："><span class="nav-text">解决方法：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-tomcat应用"><span class="nav-text">1.tomcat应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-java应用"><span class="nav-text">2.java应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理"><span class="nav-text">原理</span></a></li></ol></div>
             
 
           </div>
