@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="Vmall微服务特点 Vmall采用基于dubbo+zookeeper的RPC微服务化架构方案，划分40多个微服务。缓存层采用redis、memcache，持久层采用mysql，消息框架使用rocketMQ。 微服务间即存在RPC调用，又包含部分http调用。 生产环境同时部署在华为公有云的北京、廊坊和广州三地，三地间通过专线建立连接。  容器化策略 将服务分成有状态服务和无状态服务，因对数据要求">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-01T23:44:57.896Z">
+<meta property="og:updated_time" content="2018-11-05T23:10:29.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于dubbo的微服务部分容器化部署">
 <meta name="twitter:description" content="Vmall微服务特点 Vmall采用基于dubbo+zookeeper的RPC微服务化架构方案，划分40多个微服务。缓存层采用redis、memcache，持久层采用mysql，消息框架使用rocketMQ。 微服务间即存在RPC调用，又包含部分http调用。 生产环境同时部署在华为公有云的北京、廊坊和广州三地，三地间通过专线建立连接。  容器化策略 将服务分成有状态服务和无状态服务，因对数据要求">
@@ -364,29 +364,29 @@
 <li>分步骤实施，初始阶段选取两个微服务进行容器化灰度试点，保证容器化的风险可控。</li>
 <li>对docker swarm、k8s、mesos+Marathon、华为公有云CCE和华为IT平台的HIC的对比，鉴于成本、可靠性、稳定性等因素，决定采用华为公有云CCE。</li>
 </ul>
-<h2 id="面临的问题"><a href="#面临的问题" class="headerlink" title="面临的问题"></a><table><tr><td bgcolor="#54FF9F"><strong>面临的问题</strong></td></tr></table></h2><p>因为华为云的CCE是基于K8s的云服务引擎，很好的保证了高可用、弹性伸缩、监控告警、滚动升级、镜像管理等功能，所以我们只需要应对一下几个关键问题：</p>
+<h2 id="面临的问题"><a href="#面临的问题" class="headerlink" title="面临的问题"></a><table><tr><td bgcolor="#54FF9F"><strong>面临的问题</strong></td></tr></table></h2><p>华为云的CCE是基于K8s的云服务引擎，很好的保证了高可用、弹性伸缩、监控告警、滚动升级、镜像管理等功能，所以我们只需要应对一下几个关键问题：</p>
 <ul>
 <li>统一配置中心，容器化需要统一配置中心的支持。</li>
 <li>日志采集，需要解决日志的集中采集和处理问题。</li>
 <li>部分服务的容器化，需要解决容器服务的dubbo注册问题和容器服务与非容器服务之间的网络通信问题。</li>
 </ul>
 <h2 id="实施过程"><a href="#实施过程" class="headerlink" title="实施过程"></a><table><tr><td bgcolor="#54FF9F"><strong>实施过程</strong></td></tr></table></h2><p>1.统一配置中心。选用携程的apollo开源组件。<br>2.日志采集与处理。将应用日志输出到宿主机目录，通过统一开源组件收集。<br>3.容器部署：<br>　步骤一 镜像制作</p>
-<p>开机启动脚本</p>
-<pre><code>#!/bin/bash
-if [[&quot;${ELB_IP}&quot;x!=&quot;&quot;x]]&amp;&amp;[SERVICE_NAME] ; then
-    cp /etc/hosts /etc/hosts.temp
-    sed -i &apos;s/^.*$&apos;{SERVICE_NAME}&apos;/&apos;${ELB_IP}&apos; $&apos;{SERVICE_NAME}&apos;/g&apos; /etc/hosts.temp
-    cat /etc/hosts.temp &gt; /etc/hosts
-else
-    echo &quot;Please set env SERVICE_NAME and ELB_IP&quot;
-    return1
-fi
-source /etc/profile
-bash /root/myApp/bin/start.sh run
+<pre><code>开机启动脚本
+    #!/bin/bash
+    if [[&quot;${ELB_IP}&quot;x!=&quot;&quot;x]]&amp;&amp;[SERVICE_NAME] ; then
+        cp /etc/hosts /etc/hosts.temp
+        sed -i &apos;s/^.*$&apos;{SERVICE_NAME}&apos;/&apos;${ELB_IP}&apos; $&apos;{SERVICE_NAME}&apos;/g&apos; /etc/hosts.temp
+        cat /etc/hosts.temp &gt; /etc/hosts
+    else
+        echo &quot;Please set env SERVICE_NAME and ELB_IP&quot;
+        return1
+    fi
+    source /etc/profile
+    bash /root/myApp/bin/start.sh run
 </code></pre><p>　步骤二 镜像上传<br>　步骤三 创建cce集群<br>　步骤四 创建工作负载<br>　步骤五 创建负载均衡<br>　步骤六 为工作负载创建访问方式<br>  步骤七 域名访问方式<br>　　　　四层负载均衡和七层负载均衡</p>
 <p>遇到的问题？<br><strong>1）跨k8s集群的docker与zookeeper间的通信问题！</strong><br><strong>dubbo注册原理：</strong><br>dubbo服务提供者在注册服务到zookeeper时，如果dubbo:protocol中配置了本机IP和port会使用配置的参数到zookeeper注册，本机则会监听该port，如果服务的dubbo:protocol没有配置过本机IP和port时，dubbo服务提供者将通过网卡自己获取本机IP，同时port默认取20880，docker中的dubbo服务会获取到docker的私有ip。<br><strong>问题：</strong><br>实际试点时，dubbo和zookeeper是在单独的虚拟机上，并不属于k8s集群，而服务提供者在docker中，此时服务提供者将docker私有IP注册到zookeeper上，服务提供者定时向zookeeper发送TCP心跳保持连接，当消费者查找到这个docker的Ip，并去连接时就会出现找不到IP的问题，因为docker的私有Ip不能暴露到pod外。<br><strong>解决方法：</strong><br>方法一 通过iptables路由规则，通过多层桥接配置实现网络连通。<br>方法二 通过配置私网四层负载均衡，将负载均衡和docker做IP端口映射，并将负载均衡IP配置到dubbo:protocol中。消费者会访问负载均衡IP和端口，进而找到docker中的应用。在公有云上四层负载均衡是免费的，建议每个服务申请一个负载均衡，这样端口配置会更灵活。这里需要配套修改镜像，使用环境变量的方式将负载均衡IP替换docker的hosts文件中的私有IP，并在k8s的工作负载上配置环境变量。这个方法还存在一个缺点，相同负载均衡对应的相同服务注册到zookeeper上时，显示是完全相同的两条，无法区分。<br>方法三 升级dubbo到最新的2.6.4版本，该版本增加了对容器化的支持，它将注册IP、port与监听IP、port做了区分，向zookeeper注册时可以使用负载均衡的参数，docker服务本地监听仍然使用本地私有IP和port。</p>
 <p>日志输出问题<br>配置中心问题<br><a href="https://blog.csdn.net/liu306487103/article/details/52221986" target="_blank" rel="noopener">https://blog.csdn.net/liu306487103/article/details/52221986</a><br><a href="https://www.kancloud.cn/good-rain/micro-services/248954" target="_blank" rel="noopener">https://www.kancloud.cn/good-rain/micro-services/248954</a><br><a href="https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D</a></p>
-<p>VPC与子网<br>k8s<br>docker</p>
+<p>VPC与子网</p>
 
       
     </div>
@@ -510,7 +510,7 @@ bash /root/myApp/bin/start.sh run
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

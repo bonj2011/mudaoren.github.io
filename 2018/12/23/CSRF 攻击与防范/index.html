@@ -89,12 +89,12 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="CSRF（Cross Site Request Forgery），跨站点请求伪造，是一种常见的Web攻击方式。 1. CSRF如何攻击？　　CSRF攻击之所以会成功是由于请求操作的所有参数都能被攻击者所预知。　　1） 一个普通的银行用户A，通过银行网站http://huixfeng.bank.com/transfer?account=A&amp;amp;amount=20000&amp;amp;to=B， 向">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/QcuxlgF.png">
-<meta property="og:updated_time" content="2018-12-24T14:58:15.105Z">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxcegzn6j30mq08imy3.jpg">
+<meta property="og:updated_time" content="2019-04-27T01:16:09.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSRF 攻击与防范">
 <meta name="twitter:description" content="CSRF（Cross Site Request Forgery），跨站点请求伪造，是一种常见的Web攻击方式。 1. CSRF如何攻击？　　CSRF攻击之所以会成功是由于请求操作的所有参数都能被攻击者所预知。　　1） 一个普通的银行用户A，通过银行网站http://huixfeng.bank.com/transfer?account=A&amp;amp;amount=20000&amp;amp;to=B， 向">
-<meta name="twitter:image" content="https://i.imgur.com/QcuxlgF.png">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxcegzn6j30mq08imy3.jpg">
 
 
 
@@ -367,7 +367,7 @@
 </ul>
 <h3 id="3-1-验证码"><a href="#3-1-验证码" class="headerlink" title="3.1 验证码"></a>3.1 验证码</h3><p>　　重要操作增加验证码校验，强制用户完成互动。比如银行转账或消费时，当超过10000时自动触发验证码验证，当用户输入正确验证码后才能继续操作。但是这种方式严重影响用户体验，并不适合所有场景。</p>
 <h3 id="3-2-增加HTTP-Referer验证"><a href="#3-2-增加HTTP-Referer验证" class="headerlink" title="3.2 增加HTTP Referer验证"></a>3.2 增加HTTP Referer验证</h3><p>　　HTTP Referer是HTTP Header中的字段叫Referer，它记录了该HTTP请求的来源地址。</p>
-<p><img src="https://i.imgur.com/QcuxlgF.png" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxcegzn6j30mq08imy3.jpg" alt=""></p>
 <p>　　通常情况下，当用户登录一个网站后，在Web页面上的任何操作都是来源于这个网站，这个页面上的所有操作请求的Referer值就是操作所在的页面url。因此服务端可以通过对HTTP Referer进行验证，即可判断该请求是否合法。<br>　　还是以文章开头的例子，用户A在银行界面上发起的所有操作的HTTP Referer值都会带有该网站的域名。而攻击者通过木马网站触发的转账请求的HTTP Referer值是木马网站的url。银行服务端只需要增加对Referer的验证就可以判断该转账操作是否合法。</p>
 <p><strong>优点：</strong><br>　　简单方便。只需要在服务端增加拦截器对请求的HTTP Referer统一校验，没有侵入性。</p>
 <p><strong>缺点：</strong><br>　　1） Referer的值是浏览器提供，尽管你理论上HTTP协议和浏览器可以共同保证。但浏览器并不是完全可信的，有些浏览器比如IE6有方法可以篡改Referer值。<br>　　2） Referer记录下用户的访问来源，涉及到用户隐私保护，在某些地区如欧洲北美等地区用户保护组织并不认可通过Referer发送来源信息，用户可以自己在浏览器中设置禁止发送Referer信息。</p>
@@ -504,7 +504,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

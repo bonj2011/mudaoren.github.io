@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java基础," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -81,20 +81,20 @@
 
 
 
-<meta name="description" content="JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。 public static void main(String[] args) throws ClassNotFoundException,         SQLException {     // 加载m">
-<meta name="keywords" content="java基础">
+<meta name="description" content="mysql驱动的类加载过程 　　JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。 public static void main(String[] args) throws ClassNotFoundException,         SQLExceptio">
+<meta name="keywords" content="网站关键字, key, key1, key2, key3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql驱动的类加载过程">
+<meta property="og:title" content="木道人">
 <meta property="og:url" content="http://yoursite.com/2018/09/03/JDBC类加载过程分析/index.html">
 <meta property="og:site_name" content="木道人">
-<meta property="og:description" content="JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。 public static void main(String[] args) throws ClassNotFoundException,         SQLException {     // 加载m">
+<meta property="og:description" content="mysql驱动的类加载过程 　　JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。 public static void main(String[] args) throws ClassNotFoundException,         SQLExceptio">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/yseBq0f.png">
-<meta property="og:updated_time" content="2018-10-14T05:38:05.701Z">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/005BYqpgly1g2gx5likrsj30cq032jra.jpg">
+<meta property="og:updated_time" content="2019-04-27T01:10:18.622Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql驱动的类加载过程">
-<meta name="twitter:description" content="JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。 public static void main(String[] args) throws ClassNotFoundException,         SQLException {     // 加载m">
-<meta name="twitter:image" content="https://i.imgur.com/yseBq0f.png">
+<meta name="twitter:title" content="木道人">
+<meta name="twitter:description" content="mysql驱动的类加载过程 　　JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。 public static void main(String[] args) throws ClassNotFoundException,         SQLExceptio">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/005BYqpgly1g2gx5likrsj30cq032jra.jpg">
 
 
 
@@ -130,7 +130,7 @@
 
 
 
-  <title>mysql驱动的类加载过程 | 木道人</title>
+  <title> | 木道人</title>
   
 
 
@@ -284,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mysql驱动的类加载过程</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -306,28 +306,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -356,7 +334,8 @@
       
 
       
-        <p>　　JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。</p>
+        <h1 id="mysql驱动的类加载过程"><a href="#mysql驱动的类加载过程" class="headerlink" title="mysql驱动的类加载过程"></a><center>mysql驱动的类加载过程</center></h1><hr>
+<p>　　JDBC是开发中常用的驱动程序，但一直没有深入了解过其加载过程。JDBC驱动的加载也是线程上下文类加载器使用的经典案例。最近有时间研究一下源码，结合JVM线程上下文类加载器的知识做个总结。</p>
 <pre><code>public static void main(String[] args) throws ClassNotFoundException,
         SQLException
 {
@@ -365,8 +344,14 @@
     Connection connection = DriverManager.getConnection(
             &quot;jdbc://localhost:3306/mysql&quot;, &quot;username&quot;, &quot;password&quot;);
 }
-</code></pre><p>#1. Class.forName完成JDBC驱动的加载，底层是如何实现的？ #<br>    @CallerSensitive<br>    public static Class&lt;?&gt; forName(String className)<br>                throws ClassNotFoundException {<br>        Class&lt;?&gt; caller = Reflection.getCallerClass();<br>        return forName0(className, true, ClassLoader.getClassLoader(caller), caller);<br>    }</p>
-<p>　　forName继续调用forName0方法，但是forName0方法是个Native方法，看不到源码了，如下：</p>
+</code></pre><p>#1. Class.forName完成JDBC驱动的加载，底层是如何实现的？ #</p>
+<pre><code>@CallerSensitive
+public static Class&lt;?&gt; forName(String className)
+            throws ClassNotFoundException {
+    Class&lt;?&gt; caller = Reflection.getCallerClass();
+    return forName0(className, true, ClassLoader.getClassLoader(caller), caller);
+}
+</code></pre><p>　　forName继续调用forName0方法，但是forName0方法是个Native方法，看不到源码了，如下：</p>
 <pre><code>/** Called after security check for system loader access checks have been made. */
 private static native Class&lt;?&gt; forName0(String name, boolean initialize,
                                         ClassLoader loader,
@@ -683,7 +668,7 @@ private boolean hasNextService() {
         nextName = pending.next();
         return true;
     }
-</code></pre><p>上面的”META-INF/services/java.sql.Driver”是哪里来的？ 来看看我们的驱动包<br><img src="https://i.imgur.com/yseBq0f.png" alt=""><br>驱动包的这个路径下有个java.sql.Driver命名的文件，而文件中的内容只有一行<code>com.mysql.cj.jdbc.Driver</code>，就是mysql的驱动类名。也就是JDK会查找驱动包中META-INF/services/java.sql.Driver，找到文件中列出的驱动类。 后面不再深入，有兴趣的自己看下。loadInitialDrivers方法的while循环driversIterator.next()方法就是用最初传入的类加载器加载了JDBC的驱动。</p>
+</code></pre><p>上面的”META-INF/services/java.sql.Driver”是哪里来的？ 来看看我们的驱动包<br><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g2gx5likrsj30cq032jra.jpg" alt=""><br>驱动包的这个路径下有个java.sql.Driver命名的文件，而文件中的内容只有一行<code>com.mysql.cj.jdbc.Driver</code>，就是mysql的驱动类名。也就是JDK会查找驱动包中META-INF/services/java.sql.Driver，找到文件中列出的驱动类。 后面不再深入，有兴趣的自己看下。loadInitialDrivers方法的while循环driversIterator.next()方法就是用最初传入的类加载器加载了JDBC的驱动。</p>
 <p>PS：</p>
 <ul>
 <li>关于Reflection类的使用，可参考博文<a href="https://blog.csdn.net/aguda_king/article/details/72355807" title="JDK8的@CallerSensitive" target="_blank" rel="noopener">https://blog.csdn.net/aguda_king/article/details/72355807</a> </li>
@@ -704,12 +689,6 @@ private boolean hasNextService() {
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/java基础/" rel="tag"># java基础</a>
-          
-        </div>
-      
 
       
       
@@ -725,8 +704,8 @@ private boolean hasNextService() {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/07/CAS/" rel="prev" title="CAS">
-                CAS <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/07/CAS/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -804,7 +783,7 @@ private boolean hasNextService() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -888,7 +867,7 @@ private boolean hasNextService() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-DriverManager-getConnection做了什么事情？"><span class="nav-text">2.DriverManager.getConnection做了什么事情？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql驱动的类加载过程"><span class="nav-text">mysql驱动的类加载过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-DriverManager-getConnection做了什么事情？"><span class="nav-text">2.DriverManager.getConnection做了什么事情？</span></a></li></ol></div>
             
 
           </div>

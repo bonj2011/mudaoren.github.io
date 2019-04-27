@@ -89,13 +89,13 @@
 <meta property="og:site_name" content="木道人">
 <meta property="og:description" content="操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。 1.Linux下的环境变量Linux的环境变量存在于多个文件中，主要有以下几个文件：  系统环境变量文件/etc/profile和/etc/environment。 用户环境变量文件~/.bash_pro">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/f85RcMn.png">
-<meta property="og:image" content="https://i.imgur.com/KiUjqJQ.png">
-<meta property="og:updated_time" content="2019-03-28T23:02:34.331Z">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxblghjvj30fs08zjrj.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxc0tr9mj30rh09ht9p.jpg">
+<meta property="og:updated_time" content="2019-04-27T01:15:43.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux环境变量设置">
 <meta name="twitter:description" content="操作系统一般都是支持多用户多任务，在操作系统中可以为不同的用户设置不同的环境变量（用户环境变量），也可以为所有用户设置统一的环境变量（系统环境变量）。Linux和windows系统均是如此。 1.Linux下的环境变量Linux的环境变量存在于多个文件中，主要有以下几个文件：  系统环境变量文件/etc/profile和/etc/environment。 用户环境变量文件~/.bash_pro">
-<meta name="twitter:image" content="https://i.imgur.com/f85RcMn.png">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxblghjvj30fs08zjrj.jpg">
 
 
 
@@ -367,12 +367,12 @@
 <h3 id="1-2-etc-environment"><a href="#1-2-etc-environment" class="headerlink" title="1.2 /etc/environment"></a>1.2 /etc/environment</h3><p>用户在登录操作系统之后，操作系统配置环境时所使用的第二个文件。<br>顾名思义，该文件中保存了一系列环境变量，这些变量将对所有的用户和终端起效。</p>
 <p>到这一级为止，文件定义的都是系统环境变量，之后的文件都是在定义用户变量。</p>
 <h3 id="1-3-bash-profile-login-shell-才会读"><a href="#1-3-bash-profile-login-shell-才会读" class="headerlink" title="1.3 ~/.bash_profile (login shell 才会读)"></a>1.3 ~/.bash_profile (login shell 才会读)</h3><p>~/.bash_profile、~/.bash_login和~/.profile。bash的login shell设定只会读取上面三个文件的其中一个， 而读取得顺序则是依照上面的顺序。<br>在我使用的Ubuntu操作系统中，实际存在的是~/.profile。我们看一下文件的内容：</p>
-<p><img src="https://i.imgur.com/f85RcMn.png" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxblghjvj30fs08zjrj.jpg" alt=""></p>
 <p>if…then中又判断了第二个文件~/.bashrc是否存在，如果存在就会引用。<br>最后一行，以累加的方式对/etc/profile中设置过的path增加了~/bin等目录作为额外的执行文件存放目录。用户可以将自己建立的执行文件放到这个目录下（不需要再使用绝对路径或者相对路径执行了）。</p>
 <h3 id="1-4-bashrc"><a href="#1-4-bashrc" class="headerlink" title="1.4 ~/.bashrc"></a>1.4 ~/.bashrc</h3><p>该文件包含了专用于一个用户的bash的环境信息，每次登录或者新开shell的时候（包括在图形界面下打开新的终端），该文件被读取。<br>该文件只会在新开的终端中起效。原有终端不会受到影响。</p>
 <h3 id="1-5-bash-logout"><a href="#1-5-bash-logout" class="headerlink" title="1.5 ~/.bash_logout"></a>1.5 ~/.bash_logout</h3><p>每次退出bash的时候会执行。</p>
 <h3 id="1-6-小结"><a href="#1-6-小结" class="headerlink" title="1.6 小结"></a>1.6 小结</h3><p><strong>login shell的读取顺序：</strong></p>
-<p><img src="https://i.imgur.com/KiUjqJQ.png" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/005BYqpgly1g2gxc0tr9mj30rh09ht9p.jpg" alt=""></p>
 <p>实线是主流程，虚线是被动应用的配置文件。</p>
 <h2 id="2-环境变量的查看方法及相关命令"><a href="#2-环境变量的查看方法及相关命令" class="headerlink" title="2.环境变量的查看方法及相关命令"></a>2.环境变量的查看方法及相关命令</h2><ul>
 <li>env查看当前用户的环境变量与常用变量</li>
@@ -514,7 +514,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

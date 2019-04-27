@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="类加载," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码 public static void main(String[] args) throws ClassNotFoundEx">
-<meta name="keywords" content="类加载">
+<meta name="description" content="线程上下文类加载器的初始化 　　线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码 public static void main(String[] args) throws C">
+<meta name="keywords" content="网站关键字, key, key1, key2, key3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="线程上下文类加载器的初始化">
+<meta property="og:title" content="木道人">
 <meta property="og:url" content="http://yoursite.com/2018/09/11/线程上下文类加载器的初始化/index.html">
 <meta property="og:site_name" content="木道人">
-<meta property="og:description" content="线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码 public static void main(String[] args) throws ClassNotFoundEx">
+<meta property="og:description" content="线程上下文类加载器的初始化 　　线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码 public static void main(String[] args) throws C">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-14T05:52:31.055Z">
+<meta property="og:updated_time" content="2018-09-02T15:12:04.636Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="线程上下文类加载器的初始化">
-<meta name="twitter:description" content="线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码 public static void main(String[] args) throws ClassNotFoundEx">
+<meta name="twitter:title" content="木道人">
+<meta name="twitter:description" content="线程上下文类加载器的初始化 　　线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码 public static void main(String[] args) throws C">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title>线程上下文类加载器的初始化 | 木道人</title>
+  <title> | 木道人</title>
   
 
 
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">线程上下文类加载器的初始化</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -304,28 +304,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -354,7 +332,8 @@
       
 
       
-        <p>　　线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码</p>
+        <h1 id="线程上下文类加载器的初始化"><a href="#线程上下文类加载器的初始化" class="headerlink" title="线程上下文类加载器的初始化"></a><center>线程上下文类加载器的初始化</center></h1><hr>
+<p>　　线程上线文类加载器是JVM类加载模型中的一个特殊存在，在使用时，只需要执行Thread.currentThread().getContextClassLoader()就可以获取线程上线文类加载器，即当前线程的类加载器。但是这个类加载器是什么时候设置的呢？ 我们执行下面代码</p>
 <pre><code>public static void main(String[] args) throws ClassNotFoundException,
         SQLException
 {
@@ -470,12 +449,6 @@ Thread.currentThread().setContextClassLoader(loader);
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/类加载/" rel="tag"># 类加载</a>
-          
-        </div>
-      
 
       
       
@@ -485,8 +458,8 @@ Thread.currentThread().setContextClassLoader(loader);
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/07/CAS/" rel="next" title="CAS">
-                <i class="fa fa-chevron-left"></i> CAS
+              <a href="/2018/09/07/CAS/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -549,8 +522,17 @@ Thread.currentThread().setContextClassLoader(loader);
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -565,7 +547,7 @@ Thread.currentThread().setContextClassLoader(loader);
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -639,6 +621,22 @@ Thread.currentThread().setContextClassLoader(loader);
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程上下文类加载器的初始化"><span class="nav-text">线程上下文类加载器的初始化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
